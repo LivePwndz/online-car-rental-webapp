@@ -20,10 +20,10 @@ public class Clerk {
     private String lastName;
     @NotBlank(message = "email can't be empty")
     private String email;
-    @NotNull
+    @NotNull(message = "Create date can't be null")
     @DateTimeFormat(pattern = "yyyy-MM-dd-HH-mm-ss.zzz")
     private LocalDateTime createDate;
-    @NotNull
+    @NotNull(message = "Last Update date can't be null")
     @DateTimeFormat(pattern = "yyyy-MM-dd-HH-mm-ss.zzz")
     private LocalDateTime lastUpdate;
     public Clerk() {
