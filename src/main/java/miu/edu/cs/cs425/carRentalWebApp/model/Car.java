@@ -1,6 +1,9 @@
 package miu.edu.cs.cs425.carRentalWebApp.model;
 
+import org.hibernate.validator.constraints.Range;
+
 import javax.persistence.*;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -14,7 +17,7 @@ public class Car {
     private String plateNo;
     @NotBlank(message = "model is required")
     private String model;
-    @NotBlank(message = "maxNoDays is required")
+    @Range(min = 1, max = 30)
     private int maxNoDays;
     @NotBlank(message = "pricePerDay is required")
     private BigDecimal pricePerDay;
