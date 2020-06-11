@@ -1,9 +1,15 @@
 package miu.edu.cs.cs425.carRentalWebApp.service;
 
 import miu.edu.cs.cs425.carRentalWebApp.model.Car;
+import miu.edu.cs.cs425.carRentalWebApp.model.Clerk;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 
 public interface CarService {
-    public Car registerNewCar(Car car);
+    List<Car> getAllCars();
+    Car findCarById(Long id);
+    void updateCar(Car car);
+    void addNewCar(Car car);
 }
