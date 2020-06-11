@@ -5,8 +5,11 @@ import org.hibernate.validator.constraints.Range;
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 @Entity
 @Table(name = "cars")
 public class Car {
@@ -19,25 +22,25 @@ public class Car {
     private String model;
     @Range(min = 1, max = 30)
     private int maxNoDays;
-    @NotBlank(message = "pricePerDay is required")
+    @Min(10)
     private BigDecimal pricePerDay;
-    @NotBlank(message = "transmissionType is required")
+    @NotNull
     private TransmissionType transmissionType;
-    @NotBlank(message = "nuOfSeats is required")
+    @NotNull
     private int nuOfSeats;
-    @NotBlank(message = "nuOfDoors is required")
+    @Min(1)
     private int nuOfDoors;
 
     private String photoUrl;
-    @NotBlank(message = "createDate is required")
-    private LocalDate createDate;
-    @NotBlank(message = "lastUpdate is required")
-    private LocalDate lastUpdate;
+    @NotNull
+    private LocalDateTime createDate;
+    @NotNull
+    private LocalDateTime lastUpdate;
 
     public Car() {
     }
 
-    public Car(String plateNo, String model, int maxNoDays, BigDecimal pricePerDay, TransmissionType transmissionType, int nuOfSeats, int nuOfDoors, String photoUrl, LocalDate createDate, LocalDate lastUpdate) {
+    public Car(String plateNo, String model, int maxNoDays, BigDecimal pricePerDay, TransmissionType transmissionType, int nuOfSeats, int nuOfDoors, String photoUrl, LocalDateTime createDate, LocalDateTime lastUpdate) {
         this.plateNo = plateNo;
         this.model = model;
         this.maxNoDays = maxNoDays;
@@ -50,7 +53,7 @@ public class Car {
         this.lastUpdate = lastUpdate;
     }
 
-    public Car(Long id, String plateNo, String model, int maxNoDays, BigDecimal pricePerDay, TransmissionType transmissionType, int nuOfSeats, int nuOfDoors, String photoUrl, LocalDate createDate, LocalDate lastUpdate) {
+    public Car(Long id, String plateNo, String model, int maxNoDays, BigDecimal pricePerDay, TransmissionType transmissionType, int nuOfSeats, int nuOfDoors, String photoUrl, LocalDateTime createDate, LocalDateTime lastUpdate) {
         this.id = id;
         this.plateNo = plateNo;
         this.model = model;
@@ -136,19 +139,19 @@ public class Car {
         this.photoUrl = photoUrl;
     }
 
-    public LocalDate getCreateDate() {
+    public LocalDateTime getCreateDate() {
         return createDate;
     }
 
-    public void setCreateDate(LocalDate createDate) {
+    public void setCreateDate(LocalDateTime createDate) {
         this.createDate = createDate;
     }
 
-    public LocalDate getLastUpdate() {
+    public LocalDateTime getLastUpdate() {
         return lastUpdate;
     }
 
-    public void setLastUpdate(LocalDate lastUpdate) {
+    public void setLastUpdate(LocalDateTime lastUpdate) {
         this.lastUpdate = lastUpdate;
     }
 
