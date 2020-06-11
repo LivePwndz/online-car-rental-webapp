@@ -7,15 +7,10 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class CarServiceImp implements CarService {
-    @Autowired
-    CarService carService;
-
-    public CarServiceImp(CarService carService) {
-        this.carService = carService;
+    public CarServiceImp() {
     }
-
     @Override
     public Car registerNewCar(Car car) {
-        return carService.registerNewCar(car);
+        return null;
     }
 }
