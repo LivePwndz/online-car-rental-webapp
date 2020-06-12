@@ -3,6 +3,7 @@ package miu.edu.cs.cs425.carRentalWebApp.model;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -19,6 +20,7 @@ public class CarReservation {
     @NotNull(message = "End date can't be null")
     @DateTimeFormat(pattern = "yyyy-MM-dd-HH-mm-ss.zzz")
     private LocalDateTime endDate;
+    @NotNull(message="Car cant't be null")
     @ManyToOne
     @JoinColumn(name = "reservation_car_id_fk")
     private Car car;
