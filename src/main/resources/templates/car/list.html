@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:replace="fragments/head_default_tags :: head_default_tags">head default tags come here.</th:block>
+    <title>Online Car Rental | Car Management</title>
+</head>
+<body>
+<nav th:replace="fragments/admin_nav :: admin_nav"></nav>
+
+<div style="padding-top:1em;" class="container">
+    <h3>Manage Cars</h3>
+    <div>
+        <span style="float:right; margin-bottom: 10px;">
+                <a class="btn btn-outline-success btn-lg" href="/car/new">Add Car</a>
+            </span>
+    </div>
+    <!--hr/-->
+
+
+    <div style="font-size: 1em">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Plate No.</th>
+                <th scope="col">Model</th>
+                <th scope="col">Transmission Type</th>
+                <th scope="col">No. Of Seats</th>
+                <th scope="col">Max. Of Days</th>
+                <th scope="col">Updated At</th>
+                <th scope="col">&nbsp;</th>
+                <th scope="col">&nbsp;</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="car,iterStat : ${cars}">
+                <!--th:onclick="@{document.location='/elibrary/book/edit/{bookId}'(bookId=${book.bookId})}" -->
+                <th scope="row" th:text="${iterStat.count}+${'.'}"></th>
+                <td th:text="${car.plateNo}"></td>
+                <td th:text="${car.model}"></td>
+                <td th:text="${car.transmissionType}"></td>
+                <td th:text="${car.nuOfSeats}"></td>
+                <td th:text="${${car.maxNoDays}}"></td>
+                <td th:text="${car.lastUpdate}"></td>
+                <td><a th:href="@{'/car/edit/{carId}'(studentId=${car.id})}">Edit</a></td>
+                <td>
+                    <a data-toggle="modal" data-target="#confirmDeleteCarModal"
+                       th:href="@{'/car/delete/' + ${car.id}}">Delete</a>
+                    <!--                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">-->
+                    <!--                            Launch demo modal-->
+                    <!--                        </button>-->
+                </td>
+            </tr>
+            <tr th:if="${carCount < 1}">
+                <td colspan="9" th:align="center">No Car found</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<div th:replace="fragments/footer :: footer"></div>
+<th:block th:replace="fragments/js_scripts :: js_scripts">js scripts come here.</th:block>
+</body>
+</html>

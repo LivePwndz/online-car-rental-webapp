@@ -7,17 +7,17 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping(value = "/clerk")
-public class ClerkController {
+@RequestMapping(value = "/car")
+public class CarController {
 
     @GetMapping(value = "/list")
     public String displayLisfOfCars(){
-        return "clerk/list";
+        return "car/list";
     }
 
     @GetMapping(value = "/new")
     public String displayAddCarForm(Model model){
-        return "clerk/new";
+        return "car/new";
     }
 
 }
