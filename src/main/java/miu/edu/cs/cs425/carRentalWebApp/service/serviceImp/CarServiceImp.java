@@ -6,6 +6,7 @@ import miu.edu.cs.cs425.carRentalWebApp.service.CarService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CarServiceImp implements CarService {
@@ -21,8 +22,8 @@ public class CarServiceImp implements CarService {
     }
 
     @Override
-    public Car findCarById(Long id) {
-        return carRepository.findById(id).orElse(null);
+    public Optional<Car> findCarById(Long id) {
+        return carRepository.findById(id);
     }
 
     @Override
