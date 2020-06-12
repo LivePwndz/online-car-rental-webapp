@@ -8,8 +8,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
-@Table(name = "reservation")
-public class Resrvation {
+@Table(name = "reservations")
+public class CarReservation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -20,19 +20,19 @@ public class Resrvation {
     @DateTimeFormat(pattern = "yyyy-MM-dd-HH-mm-ss.zzz")
     private LocalDateTime endDate;
     @ManyToOne
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "reservation_car_id_fk")
     private Car car;
 
-    public Resrvation() {
+    public CarReservation() {
     }
 
-    public Resrvation(@NotNull(message = "Start date can't be null") LocalDateTime startDate, @NotNull(message = "End date can't be null") LocalDateTime endDate, Car car) {
+    public CarReservation(@NotNull(message = "Start date can't be null") LocalDateTime startDate, @NotNull(message = "End date can't be null") LocalDateTime endDate, Car car) {
         this.startDate = startDate;
         this.endDate = endDate;
         this.car = car;
     }
 
-    public Resrvation(Long id, @NotNull(message = "Start date can't be null") LocalDateTime startDate, @NotNull(message = "End date can't be null") LocalDateTime endDate, Car car) {
+    public CarReservation(Long id, @NotNull(message = "Start date can't be null") LocalDateTime startDate, @NotNull(message = "End date can't be null") LocalDateTime endDate, Car car) {
         this.id = id;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -73,7 +73,7 @@ public class Resrvation {
 
     @Override
     public String toString() {
-        return "Resrvation{" +
+        return "CarReservation{" +
                 "id=" + id +
                 ", startDate=" + startDate +
                 ", endDate=" + endDate +
