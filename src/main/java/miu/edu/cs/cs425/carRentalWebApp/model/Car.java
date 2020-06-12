@@ -18,6 +18,7 @@ public class Car {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NotBlank(message = "plateNo is required")
+    @Id
     private String plateNo;
     @NotBlank(message = "model is required")
     private String model;
