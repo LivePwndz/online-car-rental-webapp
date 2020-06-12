@@ -7,7 +7,6 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -26,7 +25,7 @@ public class Car {
     private BigDecimal pricePerDay;
     @NotNull
     private TransmissionType transmissionType;
-    @NotNull
+    @Min(2)
     private int nuOfSeats;
     @Min(1)
     private int nuOfDoors;

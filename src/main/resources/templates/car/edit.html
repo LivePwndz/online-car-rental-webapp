@@ -2,16 +2,16 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <th:block th:replace="fragments/head_default_tags :: head_default_tags">head default tags come here.</th:block>
-    <title>Online Car Rental | Add Car</title>
+    <title>Online Car Rental | Edit Car</title>
 </head>
 <body>
 <nav th:replace="fragments/admin_nav :: admin_nav"></nav>
 <div style="padding-top:1em;" class="container">
     <div style="margin-bottom: 1em;">
-        <h2>Add Car</h2>
+        <h2>Edit Car</h2>
     </div>
 
-    <form id="newBookForm" method="post" th:object="${car}" action="/car/new">
+    <form id="updateCarForm" method="post" th:object="${car}" th:action="@{'/car/edit/{carId}'(carId=${car.id})}">
         <fieldset>
             <input type="hidden" name="id"/>
             <div class="row">
@@ -19,7 +19,7 @@
                     <div class="form-group">
                         <label for="plateNo">Plate No.</label>
                         <input th:value = "${car.plateNo}" id="plateNo" name="plateNo" type="text" class="form-control"
-                               autofocus required>
+                               autofocus readonly>
                     </div>
                 </div>
             </div>
