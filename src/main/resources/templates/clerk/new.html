@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:replace="fragments/head_default_tags :: head_default_tags">head default tags come here.</th:block>
+    <title>Online Car Rental | Add Clerk</title>
+</head>
+<body>
+<nav th:replace="fragments/admin_nav :: admin_nav"></nav>
+<div style="padding-top:1em;" class="container">
+    <div style="margin-bottom: 1em;">
+        <h2>Add Clerk</h2>
+    </div>
+
+    <form id="newBookForm" method="post" action="/car/new">
+        <fieldset>
+            <input type="hidden" name="bookId"/>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="plateNo">Email</label>
+                        <input id="plateNo" name="plateNo" type="text" class="form-control"
+                               autofocus required>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="firstName">First Name</label>
+                        <input id="firstName" name="firstName" type="text" class="form-control" required>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="middleName">Middle Name</label>
+                        <input id="middleName" name="middleName" type="text" class="form-control">
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="lastName">Last Name</label>
+                        <input id="lastName" name="middleName" type="text" class="form-control" required>
+                    </div>
+                </div>
+
+            </div>
+
+            <div style="float:right;">
+                <a href="/clerk/list" class="btn btn-outline-warning">Cancel</a>&nbsp;&nbsp;&nbsp;
+                <button id="btnSubmit" type="submit" class="btn btn-outline-success">Save Clerk</button>
+            </div>
+        </fieldset>
+    </form>
+</div>
+
+<div th:replace="fragments/footer :: footer"></div>
+<th:block th:replace="fragments/js_scripts :: js_scripts">js scripts come here.</th:block>
+</body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:replace="fragments/head_default_tags :: head_default_tags">head default tags come here.</th:block>
+    <title>Online Car Rental | Clerk Management</title>
+</head>
+<body>
+<nav th:replace="fragments/admin_nav :: admin_nav"></nav>
+
+<div style="padding-top:1em;" class="container">
+    <h3>Manage Clerks</h3>
+    <div>
+        <span style="float:right; margin-bottom: 10px;">
+                <a class="btn btn-outline-success btn-lg" href="/clerk/new">Add Clerk</a>
+            </span>
+    </div>
+    <!--hr/-->
+
+
+    <div style="font-size: 1em">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Email</th>
+                <th scope="col">First Name</th>
+                <th scope="col">Last Name</th>
+                <th scope="col">Updated At</th>
+                <th scope="col">&nbsp;</th>
+                <th scope="col">&nbsp;</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="clerk,iterStat : ${clerks}">
+                <!--th:onclick="@{document.location='/elibrary/book/edit/{bookId}'(bookId=${book.bookId})}" -->
+                <th scope="row" th:text="${iterStat.count}+${'.'}"></th>
+                <td th:text="${clerk.email}"></td>
+                <td th:text="${clerk.firstName}"></td>
+                <td th:text="${clerk.lastName}"></td>
+                <td th:text="${clerk.middleName}"></td>
+                <td th:text="${clerk.lastUpdate}"></td>
+                <td><a th:href="@{'/clerk/edit/{clerkId}'(studentId=${clerk.id})}">Edit</a></td>
+                <td>
+                    <a data-toggle="modal" data-target="#confirmDeleteClerkModal"
+                       th:href="@{'/clerk/delete/' + ${clerk.id}}">Delete</a>
+                    <!--                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">-->
+                    <!--                            Launch demo modal-->
+                    <!--                        </button>-->
+                </td>
+            </tr>
+            <tr th:if="${clerkCount < 1}">
+                <td colspan="7" th:align="center">No Clerk found</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<div th:replace="fragments/footer :: footer"></div>
+<th:block th:replace="fragments/js_scripts :: js_scripts">js scripts come here.</th:block>
+</body>
+</html>
