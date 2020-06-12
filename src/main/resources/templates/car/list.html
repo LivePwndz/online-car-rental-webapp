@@ -40,9 +40,9 @@
                 <td th:text="${car.model}"></td>
                 <td th:text="${car.transmissionType}"></td>
                 <td th:text="${car.nuOfSeats}"></td>
-                <td th:text="${${car.maxNoDays}}"></td>
+                <td th:text="${car.maxNoDays}"></td>
                 <td th:text="${car.lastUpdate}"></td>
-                <td><a th:href="@{'/car/edit/{carId}'(studentId=${car.id})}">Edit</a></td>
+                <td><a th:href="@{'/car/edit/{carId}'(carId=${car.id})}">Edit</a></td>
                 <td>
                     <a data-toggle="modal" data-target="#confirmDeleteCarModal"
                        th:href="@{'/car/delete/' + ${car.id}}">Delete</a>

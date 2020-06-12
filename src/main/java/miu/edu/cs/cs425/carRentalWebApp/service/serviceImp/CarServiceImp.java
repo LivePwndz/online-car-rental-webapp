@@ -1,11 +1,8 @@
 package miu.edu.cs.cs425.carRentalWebApp.service.serviceImp;
 
 import miu.edu.cs.cs425.carRentalWebApp.model.Car;
-import miu.edu.cs.cs425.carRentalWebApp.model.Clerk;
 import miu.edu.cs.cs425.carRentalWebApp.repository.CarRepository;
-import miu.edu.cs.cs425.carRentalWebApp.repository.ClerkRepository;
 import miu.edu.cs.cs425.carRentalWebApp.service.CarService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -36,7 +33,7 @@ public class CarServiceImp implements CarService {
 
     @Override
     public void addNewCar(Car car) {
-
+        carRepository.save(car);
     }
 
 
