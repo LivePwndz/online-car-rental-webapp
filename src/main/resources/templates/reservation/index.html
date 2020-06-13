@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:replace="fragments/head_default_tags :: head_default_tags">head default tags come here.</th:block>
+    <title>Online Car Rental | Home</title>
+</head>
+<body>
+<nav th:replace="fragments/customer_nav :: customer_nav"></nav>
+
+<div style="padding-top:1em;" class="container">
+    <div>
+        <span class="h2" style="margin-right: 10px;">When do you need it?</span>
+        <a style="line-height: 2;" class="btn btn-outline-success btn-lg" href="/reservation/new">Rent Now!</a>
+    </div>
+
+    <hr/>
+    <div style="font-size: 1em">
+        <img width="100%" th:src="@{/images/car-cus-banner-white-bg.jpg}"/><br/><br/>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Diverse fleet</h5>
+                    <p class="card-text">Our diverse fleet of cars makes it easy for you to choose the right car for the
+                        job</p>
+                    <a href="#" class="btn btn-primary">Browse Our Fleet</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Car Delivery/Pickup</h5>
+                    <p class="card-text">
+                        Place your reservation and our team will deliver it at a preferred location.
+                    </p>
+                    <a href="#" class="btn btn-primary">Make Reservation</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<div th:replace="fragments/footer :: footer"></div>
+<th:block th:replace="fragments/js_scripts :: js_scripts">js scripts come here.</th:block>
+</body>
+</html>
