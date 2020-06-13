@@ -18,7 +18,6 @@ public class CarSeeder implements CommandLineRunner {
     @Autowired
     private CarRepository carRepository;
 
-
     private void seedCar() {
         Car car = new Car();
 
