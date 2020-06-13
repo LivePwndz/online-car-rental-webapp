@@ -18,21 +18,13 @@ public class CustomerRepositoryTest {
 
     private Customer initCustomer(){
        Address address = new Address();
-       address.setAddressId((long) 1);
        address.setHouseNumber("1000A");
        address.setStreet("1000 N 4th");
        address.setCity("Houston");
        address.setZipCode(5000);
        address.setState("IOWA");
 
-//        Customer customer = new Customer();
-//        customer.getAddress().setHouseNumber("1000A");
-//        customer.getAddress().setStreet("1000 N 4th");
-//        customer.getAddress().setCity("Houston");
-//        customer.getAddress().setZipCode(5000);
-//        customer.getAddress().setState("IOWA");
-
-       Customer customer = new Customer();
+      Customer customer = new Customer();
        customer.setDrivingLicense("I12ABC");
        customer.setFirstName("Alex");
        customer.setMiddleName("James");
@@ -43,6 +35,12 @@ public class CustomerRepositoryTest {
        customer.setAddress(address);
 
        return customer;
+    }
+    @Test
+    public void shouldAddCustomerWithAddress(){
+        Customer customer = initCustomer();
+        Customer savedCustormer = customerRepository.save(customer);
+        Assertions.assertEquals(savedCustormer.getId(), 1);
     }
     @Test
     public void shouldNotAddWhenDrivingLicenseIsNull(){
