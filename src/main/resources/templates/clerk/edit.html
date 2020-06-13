@@ -8,9 +8,9 @@
 <nav th:replace="fragments/admin_nav :: admin_nav"></nav>
 <div style="padding-top:1em;" class="container">
     <div style="margin-bottom: 1em;">
-        <h2>Add Clerk</h2>
+        <h2>Edit Clerk</h2>
     </div>
-    <form id="newBookClerk" method="post" th:object="${clerk}" action="/clerk/new">
+    <form id="updateClerkForm" method="post" th:object="${clerk}" th:action="@{'/clerk/edit/{clerkId}'(clerkId=${clerk.id})}">
         <table border="0" cellpadding="10">
             <tr>
                 <td>FirstName: </td>
@@ -29,7 +29,7 @@
                 <td><input type="text" th:field="*{email}" /></td>
             </tr>
             <tr>
-                <td colspan="2"><button type="submit">save</button></td>
+                <td colspan="2"><button type="submit">Update</button></td>
             </tr>
         </table>
     </form>
