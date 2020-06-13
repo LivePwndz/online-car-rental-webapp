@@ -34,4 +34,8 @@ public class ClerkServiceImpl implements ClerkService {
     public void addNewClerk(Clerk clerk) {
         clerkRepository.save(clerk);
     }
+    @Override
+    public void deleteClerk(Long clerkId) {
+        clerkRepository.deleteById(clerkId);
+    }
 }
