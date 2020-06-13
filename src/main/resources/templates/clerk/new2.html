@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:replace="fragments/head_default_tags :: head_default_tags">head default tags come here.</th:block>
+    <title>Online Car Rental | Add Clerk</title>
+</head>
+<body>
+<nav th:replace="fragments/admin_nav :: admin_nav"></nav>
+<div style="padding-top:1em;" class="container">
+    <div style="margin-bottom: 1em;">
+        <h2>Add Clerk</h2>
+    </div>
+    <form id="newBookClerk" method="post" th:object="${clerk}" action="/clerk/new">
+        <table border="0" cellpadding="10">
+            <tr>
+                <td>FirstName: </td>
+                <td><input type="text" th:field="*{firstName}" /></td>
+            </tr>
+            <tr>
+                <td> MiddleName: </td>
+                <td><input type="text" th:field="*{middleName}" /></td>
+            </tr>
+            <tr>
+                <td>LastName: </td>
+                <td><input type="text" th:field="*{lastName}" /></td>
+            </tr>
+            <tr>
+                <td> Email : </td>
+                <td><input type="text" th:field="*{email}" /></td>
+            </tr>
+            <tr>
+                <td colspan="2"><button type="submit">save</button></td>
+            </tr>
+        </table>
+    </form>
+
+
+</div>
+
+<div th:replace="fragments/footer :: footer"></div>
+<th:block th:replace="fragments/js_scripts :: js_scripts">js scripts come here.</th:block>
+</body>
+</html>
