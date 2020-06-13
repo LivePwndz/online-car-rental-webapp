@@ -43,6 +43,12 @@ public class CustomerRepositoryTest {
         Assertions.assertEquals(savedCustormer.getId(), 1);
     }
     @Test
+    public void shouldAddAddress(){
+        Customer customer = initCustomer();
+        Customer savedCustormer = customerRepository.save(customer);
+        Assertions.assertEquals(savedCustormer.getAddress().getAddressId(), 1);
+    }
+    @Test
     public void shouldNotAddWhenDrivingLicenseIsNull(){
         try {
             Customer customer = initCustomer();
