@@ -1,0 +1,30 @@
+<nav th:fragment="customer_nav" class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <a style="padding-right: 2em;" class="navbar-brand" th:href="@{/}">Online Car Rental</a>
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01"
+            aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarColor01">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item" style="border-left: white 1px solid; padding-left: 2em; padding-right: 2em;">
+                <a class="nav-link" title="Customers" th:href="@{/customer/list}">Customers</a>
+            </li>
+
+            <li class="nav-item" style="border-left: white 1px solid; padding-left: 2em; padding-right: 2em;">
+                <a class="nav-link" title="Our Fleet" th:href="@{/fleet/list}">Browse Fleet</a>
+            </li>
+
+            <li class="nav-item" style="border-left: white 1px solid; padding-left: 2em; padding-right: 2em;">
+                <a title="Reservation Management" class="nav-link" th:href="@{/reservation/list}">Reservations</a>
+            </li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0">
+            <span style="color:#fff;padding-left: 2em; padding-right: 1em;">Welcome, Customer</span>
+            <!--<a style="color: #ffffff; margin-right: 0em;" class="nav-link" href="#">John Doe</a>-->
+            <!--<input class="form-control mr-sm-2" type="text" placeholder="Search">-->
+            <!-- a href="#" class="btn btn-secondary">Sign In</a-->
+        </form>
+    </div>
+</nav>

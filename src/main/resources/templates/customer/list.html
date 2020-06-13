@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:replace="fragments/head_default_tags :: head_default_tags">head default tags come here.</th:block>
+    <title>Online Car Rental | Customer Management</title>
+</head>
+<body>
+<nav th:replace="fragments/customer_nav :: customer_nav"></nav>
+
+<div style="padding-top:1em;" class="container">
+    <h3>Manage Customers</h3>
+    <div>
+        <span style="float:right; margin-bottom: 10px;">
+                <a class="btn btn-outline-success btn-lg" th:href="@{/customer/new}">Add Customer</a>
+            </span>
+    </div>
+    <!--hr/-->
+
+
+    <div style="font-size: 1em">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Email</th>
+                <th scope="col">First Name</th>
+                <th scope="col">Last Name</th>
+                <th scope="col">Address</th>
+                <th scope="col">Updated At</th>
+                <th scope="col">&nbsp;</th>
+                <th scope="col">&nbsp;</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="customer,iterStat : ${customers}">
+                <!--th:onclick="@{document.location='/elibrary/book/edit/{bookId}'(bookId=${book.bookId})}" -->
+                <th scope="row" th:text="${iterStat.count}+${'.'}"></th>
+                <td th:text="${customer.email}"></td>
+                <td th:text="${customer.firstName}"></td>
+                <td th:text="${customer.lastName}"></td>
+                <td th:text="${customer.middleName}"></td>
+                <td th:text="${customer.address}"></td>
+                <td th:text="${customer.lastUpdate}"></td>
+                <td><a th:href="@{'/customer/edit/' + ${customer.id}}">Edit</a></td>
+                <td>
+                    <a data-toggle="modal" data-target="#confirmDeleteCustomerModal"
+                       th:href="@{'/customer/delete/' + ${customer.id}}">Delete</a>
+                    <!--                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">-->
+                    <!--                            Launch demo modal-->
+                    <!--                        </button>-->
+                </td>
+            </tr>
+            <tr th:if="${customerCount < 1}">
+                <td colspan="8" th:align="center">No Customer found</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<div th:replace="fragments/footer :: footer"></div>
+<th:block th:replace="fragments/js_scripts :: js_scripts">js scripts come here.</th:block>
+</body>
+</html>
