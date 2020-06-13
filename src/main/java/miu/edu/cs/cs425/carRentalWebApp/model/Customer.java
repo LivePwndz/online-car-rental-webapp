@@ -29,7 +29,7 @@ public class Customer {
     @DateTimeFormat(pattern = "yyyy-MM-dd-HH-mm-ss.zzz")
     private LocalDateTime lastUpdate;
     @NotNull(message = "Address Id can't be empty")
-    @OneToOne
+    @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "address_id", nullable = false)
     private Address address;
 
