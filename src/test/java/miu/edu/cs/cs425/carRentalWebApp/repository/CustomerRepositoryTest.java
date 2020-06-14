@@ -40,7 +40,7 @@ public class CustomerRepositoryTest {
     public void shouldAddCustomerWithAddress(){
         Customer customer = initCustomer();
         Customer savedCustormer = customerRepository.save(customer);
-        Assertions.assertEquals(savedCustormer.getId(), 1);
+        Assertions.assertEquals(savedCustormer.getId(), 2);
     }
     @Test
     public void shouldAddAddress(){

@@ -25,7 +25,11 @@ public class Address {
     }
 
     public Address(String houseNumber, String street, String city, Integer zipCode, String state) {
-        this(null, houseNumber, street, city, zipCode, state);
+        this.houseNumber = houseNumber;
+        this.street = street;
+        this.city = city;
+        this.zipCode = zipCode;
+        this.state = state;
     }
 
     public Address() {

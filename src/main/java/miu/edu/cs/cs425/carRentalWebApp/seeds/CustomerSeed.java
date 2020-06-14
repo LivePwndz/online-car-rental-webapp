@@ -5,9 +5,11 @@ import miu.edu.cs.cs425.carRentalWebApp.model.Customer;
 import miu.edu.cs.cs425.carRentalWebApp.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 
+@Component
 public class CustomerSeed implements CommandLineRunner {
     @Autowired
     private CustomerRepository customerRepository;

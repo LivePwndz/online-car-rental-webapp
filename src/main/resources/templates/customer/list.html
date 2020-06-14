@@ -11,7 +11,8 @@
     <h3>Manage Customers</h3>
     <div>
         <span style="float:right; margin-bottom: 10px;">
-                <a class="btn btn-outline-success btn-lg" th:href="@{/customer/new}">Add Customer</a>
+                <a class="btn btn-outline-success btn-lg" href="/customer/new">Add Customer</a>
+
             </span>
     </div>
     <!--hr/-->
@@ -22,25 +23,39 @@
             <thead>
             <tr>
                 <th scope="col">#</th>
+                <th scope="col">Driving License</th>
+                <th scope="col"> FirstName</th>
+                <th scope="col"> Middle Name</th>
+                <th scope="col">lastName</th>
+                <th scope="col">phoneNo</th>
                 <th scope="col">Email</th>
-                <th scope="col">First Name</th>
-                <th scope="col">Last Name</th>
+
                 <th scope="col">Address</th>
-                <th scope="col">Updated At</th>
-                <th scope="col">&nbsp;</th>
-                <th scope="col">&nbsp;</th>
+<!--                <th scope="col">House Number</th>-->
+<!--                <th scope="col">Street</th>-->
+<!--                <th scope="col">City</th>-->
+<!--                <th scope="col">ZIP Code</th>-->
+<!--                <th scope="col"> State</th>-->
+<!--                <th scope="col">&nbsp;</th>-->
+<!--                <th scope="col">&nbsp;</th>-->
             </tr>
             </thead>
             <tbody>
-            <tr th:each="customer,iterStat : ${customers}">
+            <tr th:each="customer, iterStat : ${customers}">
                 <!--th:onclick="@{document.location='/elibrary/book/edit/{bookId}'(bookId=${book.bookId})}" -->
                 <th scope="row" th:text="${iterStat.count}+${'.'}"></th>
-                <td th:text="${customer.email}"></td>
+                <td th:text="${customer.drivingLicense}"></td>
                 <td th:text="${customer.firstName}"></td>
-                <td th:text="${customer.lastName}"></td>
                 <td th:text="${customer.middleName}"></td>
-                <td th:text="${customer.address}"></td>
-                <td th:text="${customer.lastUpdate}"></td>
+                <td th:text="${customer.lastName}"></td>
+                <td th:text="${customer.phoneNo}"></td>
+                <td th:text="${customer.email}"></td>
+
+                <td th:text="${customer.address.houseNumber}"></td>
+                <td th:text="${customer.address.street}"></td>
+                <td th:text="${customer.address.city}"></td>
+                <td th:text="${customer.address.zipCode}"></td>
+                <td th:text="${customer.address.state}"></td>
                 <td><a th:href="@{'/customer/edit/' + ${customer.id}}">Edit</a></td>
                 <td>
                     <a data-toggle="modal" data-target="#confirmDeleteCustomerModal"
