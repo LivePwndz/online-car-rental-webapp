@@ -2,9 +2,10 @@ package miu.edu.cs.cs425.carRentalWebApp.controller;
 
 
 import miu.edu.cs.cs425.carRentalWebApp.model.Address;
+import miu.edu.cs.cs425.carRentalWebApp.model.Car;
 import miu.edu.cs.cs425.carRentalWebApp.model.Customer;
+import miu.edu.cs.cs425.carRentalWebApp.service.CarService;
 import miu.edu.cs.cs425.carRentalWebApp.service.CustomerService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -16,10 +17,12 @@ import java.util.List;
 @Controller
 @RequestMapping(value = {"/","/customer"})
 public class CustomerController {
-    private CustomerService customerService;
-    @Autowired
-    public CustomerController(CustomerService customerService) {
+    private final CustomerService customerService;
+    private final CarService carService;
+
+    public CustomerController(CustomerService customerService, CarService carService) {
         this.customerService = customerService;
+        this.carService = carService;
     }
 
     @GetMapping(value = {"/","/carRentalWebApp/customer","/customer"})
@@ -76,7 +79,11 @@ public class CustomerController {
     }
 
     @GetMapping(value = "/car/all/list")
-    public String displayLisfOfCars(){
+    public String displayLisfOfCars(Model model){
+        List<Car> cars = carService.getAllCars();
+        model.addAttribute("cars", cars);
+        model.addAttribute("count", cars.size());
+        model.addAttribute("counterHelper", new CounterHelper());
         return "customer/all_car_list";
     }
 

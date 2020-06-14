@@ -15,92 +15,52 @@
     <hr/>
 
     <div class="row" style="padding-bottom: 15px">
-        <div class="col-sm-4">
-            <div class="card" style="width: 18rem;">
-                <img class="card-img-top" th:src="@{'/images/default-car.png'}" alt="Card image cap">
-                <div class="card-body">
-                    <h5 class="card-title">2019 Ford Fiesta</h5>
-                    <table class="table table-sm table-borderless">
-                        <tbody>
-                        <tr>
-                            <th scope="row">Transmission</th>
-                            <td>Manual</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">Capacity</th>
-                            <td>4 seats, 4 doors</td>
-                        </tr>
-                        <tr>
-                            <th title="Maximum no. of days allowed to be rented" scope="row">Duration limit</th>
-                            <td colspan="2">20 days</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">Price</th>
-                            <td colspan="2">$5.00 per day</td>
-                        </tr>
-                        </tbody>
-                    </table>
+        <th:block th:each="car, iterStat : ${cars}">
+            <div class="col-sm-4">
+                <div class="card" style="width: 18rem;">
+                    <img class="card-img-top" th:src="@{'/images/default-car.png'}" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title" th:text="${car.model}"></h5>
+                        <table class="table table-sm table-borderless">
+                            <tbody>
+                            <tr>
+                                <th scope="row">Transmission</th>
+                                <td th:text="${car.transmissionType}">Manual</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Capacity</th>
+                                <td><span th:text="@{${car.nuOfSeats}+' seats'}">4 seats</span>, <span
+                                        th:text="@{${car.nuOfDoors}+' doors'}">4 doors</span></td>
+                            </tr>
+                            <tr>
+                                <th title="Maximum no. of days allowed to be rented" scope="row">Duration limit</th>
+                                <td colspan="2" th:text="@{${car.maxNoDays}+' days'}">20 days</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Price</th>
+                                <td colspan="2" th:text="@{'$'+${car.pricePerDay}+' per day'}">$5.00 per day</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="col-sm-4">
-            <div class="card" style="width: 18rem;">
-                <img class="card-img-top" th:src="@{/images/default-car.png}" alt="Card image cap">
-                <div class="card-body">
-                    <h5 class="card-title">2011 Kiira EV</h5>
-                    <table class="table table-sm table-borderless">
-                        <tbody>
-                        <tr>
-                            <th scope="row">Transmission</th>
-                            <td>Automatic</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">Capacity</th>
-                            <td>4 seats, 2 doors</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">Duration limit</th>
-                            <td colspan="2">30 days</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">Price</th>
-                            <td colspan="2">$20.00 per day</td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-4">
-            <div class="card" style="width: 18rem;">
-                <img class="card-img-top" th:src="@{'/images/default-car.png'}" alt="Card image cap">
-                <div class="card-body">
-                    <h5 class="card-title">2020 Tesla Model 3</h5>
-                    <table class="table table-sm table-borderless">
-                        <tbody>
-                        <tr>
-                            <th scope="row">Transmission</th>
-                            <td>Automatic</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">Capacity</th>
-                            <td>4 seats, 5 doors</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">Duration limit</th>
-                            <td colspan="2">10 days</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">Price</th>
-                            <td colspan="2">$10.00 per day</td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
+            <th:block th:if="${iterStat.count%3 == 0}">
+                </div><div class="row" style="padding-bottom: 15px">
+            </th:block>
 
+        </th:block>
     </div>
+
+    <th:block th:if="${count == 0}">
+        <div class="col-sm-12">
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">Car catalog empty</h5>
+                </div>
+            </div>
+        </div>
+    </th:block>
 
 </div>
 
