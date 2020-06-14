@@ -6,6 +6,7 @@ import miu.edu.cs.cs425.carRentalWebApp.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 @Service
 public class CustomerServiceImpl implements CustomerService {
@@ -40,7 +41,7 @@ public class CustomerServiceImpl implements CustomerService {
                 existingCustomer.setMiddleName(customer.getMiddleName());
                 existingCustomer.setLastName(customer.getLastName());
                 existingCustomer.setEmail(customer.getEmail());
-                existingCustomer.setLastUpdate(customer.getLastUpdate());
+                existingCustomer.setLastUpdate(LocalDateTime.now());
                 existingCustomer.setDrivingLicense(customer.getDrivingLicense());
                 existingCustomer.setPhoneNo(customer.getPhoneNo());
                 existingCustomer.getAddress().setHouseNumber(customer.getAddress().getHouseNumber());
@@ -48,7 +49,7 @@ public class CustomerServiceImpl implements CustomerService {
                 existingCustomer.getAddress().setState(customer.getAddress().getState());
                 existingCustomer.getAddress().setZipCode(customer.getAddress().getZipCode());
                 existingCustomer.getAddress().setStreet(customer.getAddress().getStreet());
-                return existingCustomer;
+                return customerRepository.save(existingCustomer);
         }
 
         return null;

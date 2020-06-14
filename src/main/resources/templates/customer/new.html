@@ -72,17 +72,17 @@
             </div>
             <div class="form-group">
                 <label for="street">Street</label>
-                <input type="text" class="form-control" id="street" placeholder="1234 Main St" th:value = "${customer.address.street}">
+                <input type="text" class="form-control" name="address.street" id="street" placeholder="1234 Main St" th:value = "${customer.address.street}">
             </div>
 
             <div class="form-row">
                 <div class="form-group col-md-5">
-                    <label for="inputCity">City</label>
-                    <input type="text" class="form-control" id="inputCity" th:value = "${customer.address.city}">
+                    <label for="city">City</label>
+                    <input type="text" class="form-control" name="address.city" id="city" th:value = "${customer.address.city}">
                 </div>
                 <div class="form-group col-md-5">
-                    <label for="inputState">State</label>
-                    <select id="inputState" class="form-control" th:value = "${customer.address.state}">
+                    <label for="state">State</label>
+                    <select id="state" class="form-control" name="address.state" th:value = "${customer.address.state}">
                         <option selected>Choose...</option>
                         <option>Iowa</option>
                         <option>Illinois</option>
@@ -92,7 +92,7 @@
                 </div>
                 <div class="form-group col-md-2">
                     <label for="zipCode">ZIP code</label>
-                    <input type="text" class="form-control" id="zipCode" th:value = "${customer.address.zipCode}">
+                    <input type="text" class="form-control" name="address.zipCode" id="zipCode" th:value = "${customer.address.zipCode}">
                 </div>
             </div>
 

@@ -7,12 +7,11 @@ import miu.edu.cs.cs425.carRentalWebApp.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Controller
 @RequestMapping(value = {"/","/customer"})
@@ -31,7 +30,9 @@ public class CustomerController {
 
     @GetMapping(value = "/list")
     public String displayLisfOfCustomers(Model model){
-        model.addAttribute("customers",customerService.getAllCustomers());
+        List<Customer> customer = customerService.getAllCustomers();
+        model.addAttribute("customers", customer);
+        model.addAttribute("customerCount",customer.size());
         return "customer/list";
     }
 
@@ -49,5 +50,24 @@ public class CustomerController {
         customerService.addCustomer(customer);
         return "redirect:/customer/list";
     }
+@GetMapping(value = {"/carRentalWebApp/customer/delete/{id}", "/customer/delete/{id}"})
+    public String deleteCustomer(@PathVariable("id") Long id){
+        customerService.deleteCustomerById(id);
+        return "redirect:/carRentalWebApp/customer/list";
+    }
+@GetMapping("customer/edit/{id}")
+    public ModelAndView editCustomerForm(@PathVariable Long id){
+      
+        ModelAndView modelAndView = new ModelAndView("customer/edit");
+        Customer customer = customerService.getCustomerById(id);
+        modelAndView.addObject("customer", customer);
+        return modelAndView;
+}
+@PostMapping(value = {"/customer/update"})
+    public String updateCustomer(@ModelAttribute("customer") Customer customer){
+
+       Customer savedCustomer= customerService.updateCustomer(customer);
+       return "redirect:/customer/list";
+}
 
 }
