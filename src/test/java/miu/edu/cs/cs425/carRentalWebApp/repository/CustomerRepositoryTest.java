@@ -29,18 +29,18 @@ public class CustomerRepositoryTest {
        customer.setFirstName("Alex");
        customer.setMiddleName("James");
        customer.setLastName("Smith");
+       customer.setPhoneNo("+1000000000");
        customer.setEmail("james@miu.edu");
        customer.setCreateDate(LocalDateTime.now());
        customer.setLastUpdate(LocalDateTime.now());
        customer.setAddress(address);
-
        return customer;
     }
     @Test
     public void shouldAddCustomerWithAddress(){
         Customer customer = initCustomer();
         Customer savedCustormer = customerRepository.save(customer);
-        Assertions.assertEquals(savedCustormer.getId(), 1);
+        Assertions.assertEquals(savedCustormer.getId(), 2);
     }
     @Test
     public void shouldAddAddress(){
@@ -76,6 +76,16 @@ public class CustomerRepositoryTest {
             Customer savedCustomer = customerRepository.save(customer);
         }catch (Exception ex){
             Assertions.assertTrue(ex.getMessage().contains("Last Name can't be empty"));
+        }
+    }
+    @Test
+    public void shouldNotAddWhenPhoneNumberIsEmpty(){
+        try{
+            Customer customer = initCustomer();
+            customer.setPhoneNo(null);
+            Customer savedCustomer = customerRepository.save(customer);
+        }catch (Exception ex){
+            Assertions.assertTrue(ex.getMessage().contains("Phone number is required"));
         }
     }
     @Test

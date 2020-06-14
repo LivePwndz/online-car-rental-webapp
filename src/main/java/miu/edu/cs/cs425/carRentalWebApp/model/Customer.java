@@ -20,6 +20,8 @@ public class Customer {
     private String middleName;
     @NotBlank(message="Last Name can't be empty")
     private String lastName;
+    @NotBlank(message = "Phone number is required")
+    private String phoneNo;
     @NotBlank(message="email can't be empty")
     private String email;
     @NotNull(message = "Create date can't be null")
@@ -36,23 +38,27 @@ public class Customer {
     public Customer() {
     }
 
-    public Customer(@NotNull String drivingLicense, @NotBlank(message = "First Name can't be empty") String firstName, String middleName, @NotBlank(message = "Last Name can't be empty") String lastName, @NotBlank(message = "email can't be empty") String email, @NotNull(message = "Create date can't be null") LocalDateTime createDate, @NotNull(message = "Last Update date can't be null") LocalDateTime lastUpdate, Address address) {
+    public Customer(@NotNull String drivingLicense, @NotBlank(message = "First Name can't be empty") String firstName, String middleName, @NotBlank(message = "Last Name can't be empty") String lastName,
+                    @NotBlank(message="Phone number is required") String phoneNo, @NotBlank(message = "email can't be empty") String email, @NotNull(message = "Create date can't be null") LocalDateTime createDate, @NotNull(message = "Last Update date can't be null") LocalDateTime lastUpdate, Address address) {
         this.drivingLicense = drivingLicense;
         this.firstName = firstName;
         this.middleName = middleName;
         this.lastName = lastName;
+        this.phoneNo = phoneNo;
         this.email = email;
         this.createDate = createDate;
         this.lastUpdate = lastUpdate;
         this.address = address;
     }
 
-    public Customer(Long id, @NotNull String drivingLicense, @NotBlank(message = "First Name can't be empty") String firstName, String middleName, @NotBlank(message = "Last Name can't be empty") String lastName, @NotBlank(message = "email can't be empty") String email, @NotNull(message = "Create date can't be null") LocalDateTime createDate, @NotNull(message = "Last Update date can't be null") LocalDateTime lastUpdate, Address address) {
+    public Customer(Long id, @NotNull String drivingLicense, @NotBlank(message = "First Name can't be empty") String firstName, String middleName, @NotBlank(message = "Last Name can't be empty") String lastName,
+                    @NotBlank(message="Phone number is required") String phoneNo, @NotBlank(message = "email can't be empty") String email, @NotNull(message = "Create date can't be null") LocalDateTime createDate, @NotNull(message = "Last Update date can't be null") LocalDateTime lastUpdate, Address address) {
         this.id = id;
         this.drivingLicense = drivingLicense;
         this.firstName = firstName;
         this.middleName = middleName;
         this.lastName = lastName;
+        this.phoneNo=phoneNo;
         this.email = email;
         this.createDate = createDate;
         this.lastUpdate = lastUpdate;
@@ -99,6 +105,10 @@ public class Customer {
         this.lastName = lastName;
     }
 
+    public String getPhoneNo() { return phoneNo; }
+
+    public void setPhoneNo(String phoneNo) { this.phoneNo = phoneNo; }
+
     public String getEmail() {
         return email;
     }
@@ -139,6 +149,7 @@ public class Customer {
                 ", firstName='" + firstName + '\'' +
                 ", middleName='" + middleName + '\'' +
                 ", lastName='" + lastName + '\'' +
+                ", phoneNo='" + phoneNo + '\'' +
                 ", email='" + email + '\'' +
                 ", createDate=" + createDate +
                 ", lastUpdate=" + lastUpdate +

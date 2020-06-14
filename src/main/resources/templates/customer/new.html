@@ -11,14 +11,14 @@
         <h2>Add Customer</h2>
     </div>
 
-    <form id="newCustomerForm" method="post" th:action="@{/customer/new}">
+    <form id="newCustomerForm" method="post" action="/customer/new" th:object="${customer}">
         <fieldset class="form-group">
             <div class="row">
                 <div class="col-md-12">
                     <div class="form-group">
-                        <label for="plateNo">Email</label>
-                        <input id="plateNo" name="plateNo" type="text" class="form-control"
-                               autofocus required>
+                        <label for="drivingLicense">Driving License</label>
+                        <input id="drivingLicense" name="drivingLicense" type="text" class="form-control" th:value = "${customer.drivingLicense}" autofocus required>
+
                     </div>
                 </div>
             </div>
@@ -26,20 +26,33 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label for="firstName">First Name</label>
-                        <input id="firstName" name="firstName" type="text" class="form-control" required>
+                        <input id="firstName" name="firstName" type="text" class="form-control" th:value = "${customer.firstName}"                                required>
+
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
                         <label for="middleName">Middle Name</label>
-                        <input id="middleName" name="middleName" type="text" class="form-control">
+                        <input id="middleName" name="middleName" type="text" class="form-control" th:value = "${customer.middleName}"                                required>
                     </div>
                 </div>
 
                 <div class="col-md-4">
                     <div class="form-group">
                         <label for="lastName">Last Name</label>
-                        <input id="lastName" name="middleName" type="text" class="form-control" required>
+                        <input id="lastName" name="lastName" type="text" class="form-control" th:value = "${customer.lastName}"                                required>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="phoneNo">Phone No</label>
+                        <input id="phoneNo" name="phoneNo" type="text" class="form-control" th:value = "${customer.phoneNo}"                                required>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="email"> Email</label>
+                        <input id="email" name="email" type="text" class="form-control" th:value = "${customer.email}"                                required>
                     </div>
                 </div>
 
@@ -48,19 +61,28 @@
 
         <fieldset class="form-group">
             <legend>Address</legend>
+            <!-- div class="form-group">
+                <label th:for="${'address.houseNumber'}">House Number</label>
+                <input type="text" class="form-control" name="houseNumber" id="houseNumber" th:field="*{address.houseNumber}" >
+            </div-->
+
+            <div class="form-group">
+                <label for="houseNumber">House Number</label>
+                <input type="text" class="form-control" name="address.houseNumber" id="houseNumber" th:value="${customer.address.houseNumber}" >
+            </div>
             <div class="form-group">
                 <label for="street">Street</label>
-                <input type="text" class="form-control" id="street" placeholder="1234 Main St">
+                <input type="text" class="form-control" name="address.street" id="street" placeholder="1234 Main St" th:value = "${customer.address.street}">
             </div>
 
             <div class="form-row">
                 <div class="form-group col-md-5">
-                    <label for="inputCity">City</label>
-                    <input type="text" class="form-control" id="inputCity">
+                    <label for="city">City</label>
+                    <input type="text" class="form-control" name="address.city" id="city" th:value = "${customer.address.city}">
                 </div>
                 <div class="form-group col-md-5">
-                    <label for="inputState">State</label>
-                    <select id="inputState" class="form-control">
+                    <label for="state">State</label>
+                    <select id="state" class="form-control" name="address.state" th:value = "${customer.address.state}">
                         <option selected>Choose...</option>
                         <option>Iowa</option>
                         <option>Illinois</option>
@@ -69,20 +91,16 @@
                     </select>
                 </div>
                 <div class="form-group col-md-2">
-                    <label for="zipCode">ZIP</label>
-                    <input type="text" class="form-control" id="zipCode">
+                    <label for="zipCode">ZIP code</label>
+                    <input type="text" class="form-control" name="address.zipCode" id="zipCode" th:value = "${customer.address.zipCode}">
                 </div>
             </div>
-            <div class="form-row">
-                <div class="form-group col-md-5">
-                    <label for="phone">Phone</label>
-                    <input type="tel" class="form-control" id="phone">
-                </div>
-            </div>
+
 
             <div class="form-group" style="float:right;">
                 <a href="/customer/list" class="btn btn-outline-warning">Cancel</a>&nbsp;&nbsp;&nbsp;
                 <button id="btnSubmit" type="submit" class="btn btn-outline-success">Save Customer</button>
+
             </div>
         </fieldset>
     </form>

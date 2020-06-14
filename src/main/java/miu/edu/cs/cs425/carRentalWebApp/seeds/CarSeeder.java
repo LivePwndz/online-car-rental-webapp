@@ -11,13 +11,11 @@ import java.time.LocalDateTime;
 
 import static miu.edu.cs.cs425.carRentalWebApp.model.TransmissionType.MANUAL;
 
-
 @Component
 public class CarSeeder implements CommandLineRunner {
 
     @Autowired
     private CarRepository carRepository;
-
 
     private void seedCar() {
         Car car = new Car();
