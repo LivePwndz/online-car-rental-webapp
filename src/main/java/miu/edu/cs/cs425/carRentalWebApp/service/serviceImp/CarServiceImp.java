@@ -1,13 +1,12 @@
 package miu.edu.cs.cs425.carRentalWebApp.service.serviceImp;
 
 import miu.edu.cs.cs425.carRentalWebApp.model.Car;
-import miu.edu.cs.cs425.carRentalWebApp.model.Clerk;
 import miu.edu.cs.cs425.carRentalWebApp.repository.CarRepository;
-import miu.edu.cs.cs425.carRentalWebApp.repository.ClerkRepository;
 import miu.edu.cs.cs425.carRentalWebApp.service.CarService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Service
@@ -36,6 +35,14 @@ public class CarServiceImp implements CarService {
     @Override
     public void addNewCar(Car car) {
 
+    }
+
+    @Override
+    public List<Car> getAllAvailableCars(String startDateStr, String endDateStr) {
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate startDate = LocalDate.parse(startDateStr, dtf);
+        List<Car> cars = carRepository.findCarByCarReservationsEmptyOrCarReservationsEndDateLessThan(startDate);
+        return cars;
     }
 
 

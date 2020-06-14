@@ -9,6 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import static miu.edu.cs.cs425.carRentalWebApp.model.TransmissionType.MANUAL;
@@ -36,8 +37,8 @@ public class CarReservationTest{
         Car savedCar = carRepository.save(car);
 
         CarReservation carReservation = new CarReservation();
-        carReservation.setStartDate(LocalDateTime.now());
-        carReservation.setEndDate(LocalDateTime.of(2015, 03, 02, 11, 30));
+        carReservation.setStartDate(LocalDate.now());
+        carReservation.setEndDate(LocalDate.now().plusDays(20));
         carReservation.setCar(savedCar);
         return carReservation;
     }

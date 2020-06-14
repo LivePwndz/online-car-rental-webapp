@@ -15,9 +15,10 @@ public class CustomerSeed implements CommandLineRunner {
     private CustomerRepository customerRepository;
     @Override
     public void run(String... args) throws Exception {
-        customerSeeder();
+        customerSeeder("james@miu.edu");
     }
-    private void customerSeeder(){
+
+     Customer customerSeeder(String email){
         Address address = new Address();
         address.setHouseNumber("1000A");
         address.setStreet("1000 N 4th");
@@ -31,10 +32,11 @@ public class CustomerSeed implements CommandLineRunner {
         customer.setMiddleName("James");
         customer.setLastName("Smith");
         customer.setPhoneNo("+1000000000");
-        customer.setEmail("james@miu.edu");
+        customer.setEmail(email);
         customer.setCreateDate(LocalDateTime.now());
         customer.setLastUpdate(LocalDateTime.now());
         customer.setAddress(address);
-        customerRepository.save(customer);
+        return  customerRepository.save(customer);
     }
+
 }

@@ -11,20 +11,20 @@
     <div>
         <form class="form-inline" method="get" th:action="@{/customer/car/dates/list}">
             <label class="h4" style="margin-right: 10px;">When do you need a car? </label>
-            <label class="sr-only" for="fromDate">FROM</label>
+            <label class="sr-only" for="startDate">FROM</label>
             <div class="input-group mr-sm-2">
                 <div class="input-group-prepend">
                     <div class="input-group-text">FROM</div>
                 </div>
-                <input type="date" class="form-control" id="fromDate" title="Select From Date">
+                <input required type="date" name="startDate" class="form-control" id="startDate" title="Select From Date">
             </div>
 
-            <label class="sr-only" for="toDate">TO</label>
+            <label class="sr-only" for="endDate">TO</label>
             <div class="input-group mr-sm-2">
                 <div class="input-group-prepend">
                     <div class="input-group-text">TO</div>
                 </div>
-                <input type="date" class="form-control" id="toDate" title="Select To Date">
+                <input required type="date" name="endDate" class="form-control" id="endDate" title="Select To Date">
             </div>
             <button type="submit" class="btn btn-outline-success">Submit</button>
         </form>

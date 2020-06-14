@@ -39,8 +39,8 @@
                 <th scope="row" th:text="${iterStat.count}+${'.'}"></th>
                 <td th:text="${reservation.code}"></td>
                 <td th:text="${reservation.car.model}"></td>
-                <td th:text="${reservation.fromDate}"></td>
-                <td th:text="${reservation.toDate}"></td>
+                <td th:text="${reservation.startDate}"></td>
+                <td th:text="${reservation.endDate}"></td>
                 <td th:text="${reservation.status}"></td>
                 <td th:text="${reservation.createDate}"></td>
                 <td th:text="${reservation.lastUpdate}"></td>
@@ -53,7 +53,7 @@
                     <!--                        </button>-->
                 </td>
             </tr>
-            <tr th:if="${reservationCount < 1}">
+            <tr th:if="${count < 1}">
                 <td colspan="11" th:align="center">No Reservation found</td>
             </tr>
             </tbody>

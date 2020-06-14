@@ -6,6 +6,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "CUSTOMER")
@@ -34,6 +35,9 @@ public class Customer {
     @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "address_id", nullable = false)
     private Address address;
+
+    @OneToMany( mappedBy = "customer")
+    private List<CarReservation> carReservations;
 
     public Customer() {
     }
@@ -139,6 +143,14 @@ public class Customer {
 
     public void setAddress(Address address) {
         this.address = address;
+    }
+
+    public List<CarReservation> getCarReservations() {
+        return carReservations;
+    }
+
+    public void setCarReservations(List<CarReservation> carReservations) {
+        this.carReservations = carReservations;
     }
 
     @Override

@@ -9,6 +9,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "cars")
@@ -43,6 +44,9 @@ public class Car {
     @NotNull(message = "LastUpdate date can't be null")
     @DateTimeFormat(pattern = "yyyy-MM-dd-HH-mm-ss.zzz")
     private LocalDateTime lastUpdate;
+
+    @OneToMany( mappedBy = "car")
+    private List<CarReservation> carReservations;
 
     public Car() {
     }
@@ -160,6 +164,14 @@ public class Car {
 
     public void setLastUpdate(LocalDateTime lastUpdate) {
         this.lastUpdate = lastUpdate;
+    }
+
+    public List<CarReservation> getCarReservations() {
+        return carReservations;
+    }
+
+    public void setCarReservations(List<CarReservation> carReservations) {
+        this.carReservations = carReservations;
     }
 
     @Override
