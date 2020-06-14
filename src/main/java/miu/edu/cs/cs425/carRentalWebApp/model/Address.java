@@ -1,6 +1,8 @@
 package miu.edu.cs.cs425.carRentalWebApp.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.StringJoiner;
 
 @Entity
@@ -9,30 +11,35 @@ public class Address {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long addressId;
+    @NotBlank(message = "add house number")
     private String houseNumber;
+    @NotBlank(message = "add street number")
     private String street;
+    @NotBlank(message = "add city")
     private String city;
+    @NotNull(message = "add house zip code")
     private Integer zipCode;
+    @NotBlank(message = "add state")
     private String state;
 
-    public Address(Long addressId, String houseNumber, String street, String city, Integer zipCode, String state) {
+    public Address() {
+    }
+
+    public Address(@NotBlank(message = "add house number") String houseNumber, @NotBlank(message = "add street number") String street, @NotBlank(message = "add city") String city, @NotNull(message = "add house zip code") Integer zipCode, @NotBlank(message = "add state") String state) {
+        this.houseNumber = houseNumber;
+        this.street = street;
+        this.city = city;
+        this.zipCode = zipCode;
+        this.state = state;
+    }
+
+    public Address(Long addressId, @NotBlank(message = "add house number") String houseNumber, @NotBlank(message = "add street number") String street, @NotBlank(message = "add city") String city, @NotNull(message = "add house zip code") Integer zipCode, @NotBlank(message = "add state") String state) {
         this.addressId = addressId;
         this.houseNumber = houseNumber;
         this.street = street;
         this.city = city;
         this.zipCode = zipCode;
         this.state = state;
-    }
-
-    public Address(String houseNumber, String street, String city, Integer zipCode, String state) {
-        this.houseNumber = houseNumber;
-        this.street = street;
-        this.city = city;
-        this.zipCode = zipCode;
-        this.state = state;
-    }
-
-    public Address() {
     }
 
     public Long getAddressId() {
