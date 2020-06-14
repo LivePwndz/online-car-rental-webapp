@@ -25,4 +25,29 @@ public class CustomerController {
         return "customer/new";
     }
 
+    @GetMapping(value = "/car/dates")
+    public String displayCarReservationDates(){
+        return "customer/dates";
+    }
+
+    @GetMapping(value = "/car/all/list")
+    public String displayLisfOfCars(){
+        return "customer/all_car_list";
+    }
+
+    @GetMapping(value = "/car/dates/list")
+    public String displayListOfCarsAvailable(){
+        return "customer/filtered_car_list";
+    }
+
+    @GetMapping(value = "/car/reserve")
+    public String displayCarReservationForm(){
+        return "customer/place_reservation";
+    }
+
+    @GetMapping(value = "/car/reserve/list")
+    public String displayCustomerReservationList(){
+        return "customer/reservation_list";
+    }
+
 }

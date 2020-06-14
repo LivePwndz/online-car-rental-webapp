@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <th:block th:replace="fragments/head_default_tags :: head_default_tags">head default tags come here.</th:block>
+    <title>Online Car Rental | Home</title>
+</head>
+<body>
+<nav th:replace="fragments/customer_nav :: customer_nav"></nav>
+
+<div style="padding-top:1em;" class="container">
+
+    <div>
+        <span class="h4" style="margin-right: 10px;">Please review and complete your car reservation</span>
+    </div>
+
+    <hr/>
+
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="row">
+                <div style="width:100%" class="card  border-0">
+                    <div class="card-body">
+                        <h5 class="card-title">Delivery Address</h5>
+                        <p class="card-text">
+                            Jean de Dieu
+                            <br/> 1000 N. 4th. Str
+                            <br/> Fairfield, Iowa 52557-0001
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="card  border-0" style="width:100%">
+                    <div class="card-body">
+                        <h5 class="card-title">Payment Details</h5>
+                        <p class="card-text"><b>MasterCard</b> ending in 5696</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="card rounded-0 border-0" style="width: 100%">
+                    <div class="card-body">
+                        <span class="card-title h5">
+                            Reservation Details
+                        </span>
+                        <table class="table table-sm table-borderless">
+                            <tbody>
+                            <tr>
+                                <th scope="row">Car</th>
+                                <td colspan="2">2019 Ford Fiesta</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Transmission</th>
+                                <td colspan="2">Manual</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Capacity</th>
+                                <td colspan="2">4 seats, 4 doors</td>
+                            </tr>
+                            <tr>
+                                <th title="Duration" scope="row">Rent Duration</th>
+                                <td colspan="2">Jun 27 - Jun 29, 2020 (3 days)</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Price</th>
+                                <td colspan="2">$5.00 per day</td>
+                            </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="card">
+                <div class="card-body">
+                    <a href="#" class="btn btn-success btn-block">Place Your Reservation</a>
+                    <table class="table table-sm">
+                        <tbody>
+                        <tr>
+                            <th scope="row">Car</th>
+                            <td>2019 Ford Fiesta</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Rent for 10 days</th>
+                            <td>$50.00</td>
+                        </tr>
+
+                        <tr>
+                            <th scope="row">Delivery cost</th>
+                            <td colspan="2">$1.00</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Reservation Total</th>
+                            <th colspan="2">$51.00</th>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <a th:href="@{/customer/car/dates}" class="btn btn-link">Cancel</a>
+        </div>
+    </div>
+
+</div>
+
+<div th:replace="fragments/footer :: footer"></div>
+<th:block th:replace="fragments/js_scripts :: js_scripts">js scripts come here.</th:block>
+</body>
+</html>

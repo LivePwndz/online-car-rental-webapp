@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:replace="fragments/head_default_tags :: head_default_tags">head default tags come here.</th:block>
+    <title>Online Car Rental | Home</title>
+</head>
+<body>
+<nav th:replace="fragments/customer_nav :: customer_nav"></nav>
+
+<div style="padding-top:1em;" class="container">
+    <div>
+        <form class="form-inline" method="get" th:action="@{/customer/car/dates}">
+            <label class="h4" style="margin-right: 10px;">List of cars available</label>
+            <label class="sr-only" for="fromDate">FROM</label>
+            <div class="input-group mr-sm-2">
+                <div class="input-group-prepend">
+                    <div class="input-group-text">FROM</div>
+                </div>
+                <input readonly value="2020-06-13" type="date" class="form-control" id="fromDate" placeholder="Select Date">
+            </div>
+
+            <label class="sr-only" for="toDate">TO</label>
+            <div class="input-group mr-sm-2">
+                <div class="input-group-prepend">
+                    <div class="input-group-text">TO</div>
+                </div>
+                <input readonly value="2020-06-30" type="date" class="form-control" id="toDate" placeholder="Select Date">
+            </div>
+            <button type="submit" class="btn btn-outline-success">Change Dates</button>
+        </form>
+    </div>
+    <hr/>
+
+    <div class="row" style="padding-bottom: 15px">
+        <div class="col-sm-4">
+            <div class="card" style="width: 18rem;">
+                <img class="card-img-top" th:src="@{'/images/default-car.png'}" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">2019 Ford Fiesta</h5>
+                    <table class="table table-sm table-borderless">
+                        <tbody>
+                        <tr>
+                            <th scope="row">Transmission</th>
+                            <td>Manual</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Capacity</th>
+                            <td>4 seats, 4 doors</td>
+                        </tr>
+                        <tr>
+                            <th title="Maximum no. of days allowed to be rented" scope="row">Duration limit</th>
+                            <td colspan="2">20 days</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Price</th>
+                            <td colspan="2">$5.00 per day</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <a th:href="@{/customer/car/reserve}" class="btn btn-primary">Select</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="card" style="width: 18rem;">
+                <img class="card-img-top" th:src="@{/images/default-car.png}" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">2011 Kiira EV</h5>
+                    <table class="table table-sm table-borderless">
+                        <tbody>
+                        <tr>
+                            <th scope="row">Transmission</th>
+                            <td>Automatic</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Capacity</th>
+                            <td>4 seats, 2 doors</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Duration limit</th>
+                            <td colspan="2">30 days</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Price</th>
+                            <td colspan="2">$20.00 per day</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <a href="#" class="btn btn-primary">Select</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="card" style="width: 18rem;">
+                <img class="card-img-top" th:src="@{'/images/default-car.png'}" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">2020 Tesla Model 3</h5>
+                    <table class="table table-sm table-borderless">
+                        <tbody>
+                        <tr>
+                            <th scope="row">Transmission</th>
+                            <td>Automatic</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Capacity</th>
+                            <td>4 seats, 5 doors</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Duration limit</th>
+                            <td colspan="2">10 days</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Price</th>
+                            <td colspan="2">$10.00 per day</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <a href="#" class="btn btn-primary">Select</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<div th:replace="fragments/footer :: footer"></div>
+<th:block th:replace="fragments/js_scripts :: js_scripts">js scripts come here.</th:block>
+</body>
+</html>

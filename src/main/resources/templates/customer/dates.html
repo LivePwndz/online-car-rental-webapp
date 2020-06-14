@@ -9,8 +9,26 @@
 
 <div style="padding-top:1em;" class="container">
     <div>
-        <span class="h2" style="margin-right: 10px;">When do you need it?</span>
-        <a style="line-height: 2;" class="btn btn-outline-success btn-lg" href="/reservation/new">Rent Now!</a>
+        <form class="form-inline" method="get" th:action="@{/customer/car/dates/list}">
+            <label class="h4" style="margin-right: 10px;">When do you need a car? </label>
+            <label class="sr-only" for="fromDate">FROM</label>
+            <div class="input-group mr-sm-2">
+                <div class="input-group-prepend">
+                    <div class="input-group-text">FROM</div>
+                </div>
+                <input type="date" class="form-control" id="fromDate" title="Select From Date">
+            </div>
+
+            <label class="sr-only" for="toDate">TO</label>
+            <div class="input-group mr-sm-2">
+                <div class="input-group-prepend">
+                    <div class="input-group-text">TO</div>
+                </div>
+                <input type="date" class="form-control" id="toDate" title="Select To Date">
+            </div>
+            <button type="submit" class="btn btn-outline-success">Submit</button>
+        </form>
+
     </div>
 
     <hr/>
