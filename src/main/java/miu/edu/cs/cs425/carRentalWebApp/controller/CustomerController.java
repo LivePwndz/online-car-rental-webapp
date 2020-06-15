@@ -8,6 +8,8 @@ import miu.edu.cs.cs425.carRentalWebApp.model.Customer;
 import miu.edu.cs.cs425.carRentalWebApp.service.CarService;
 import miu.edu.cs.cs425.carRentalWebApp.service.CustomerService;
 import miu.edu.cs.cs425.carRentalWebApp.service.ReservationService;
+import miu.edu.cs.cs425.carRentalWebApp.service.dto.CarReservationDto;
+import miu.edu.cs.cs425.carRentalWebApp.service.dto.NewReservationDto;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -109,8 +111,23 @@ public class CustomerController {
         return "customer/filtered_car_list";
     }
 
-    @GetMapping(value = "/car/reserve")
-    public String displayCarReservationForm() {
+    @GetMapping(value = "/car/reserve/{carId}", params = {"startDate", "endDate"})
+    public String displayCarReservationForm(Model model
+            , @PathVariable Long carId
+            , @RequestParam String startDate
+            , @RequestParam String endDate) {
+
+        NewReservationDto newReservationDto = new NewReservationDto(carId, startDate, endDate);
+        CarReservationDto reservationDto = carService.getReservationDto(carId, startDate, endDate);
+        model.addAttribute("reservationDto", reservationDto);
+        model.addAttribute("newReservationDto", newReservationDto);
+        return "customer/place_reservation";
+    }
+
+    @PostMapping(value = "/car/reserve")
+    public String addCarReservationForm(@ModelAttribute("newReservationDto") NewReservationDto newReservationDto) {
+
+        // TODO add car reservation
         return "customer/place_reservation";
     }
 
