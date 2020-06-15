@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <th:block th:replace="fragments/head_default_tags :: head_default_tags">head default tags come here.</th:block>
+    <title>Online Car Rental | Home</title>
+</head>
+<body>
+<nav th:replace="fragments/customer_nav :: customer_nav"></nav>
+
+<div style="padding-top:1em;" class="container">
+
+    <div>
+        <span class="text-success" style="margin-right: 10px;">Success! Your car reservation has complete.</span>
+    </div>
+
+    <hr/>
+
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="card">
+                <div class="card-body">
+                    <span class="card-title h5">
+                        Reservation Details
+                    </span>
+                    <table class="table table-sm" th:object="${reservationInfoDto}">
+                        <tbody>
+                        <tr>
+                            <th scope="row">Car</th>
+                            <td th:text="${reservationInfoDto.model}">2019 Ford Fiesta</td>
+                        </tr>
+
+                        <tr>
+                            <th scope="row">Reservation Code</th>
+                            <td>CXM000-1091</td>
+                        </tr>
+
+                        <tr>
+                            <th scope="row">Pickup Date</th>
+                            <td>Jun 27, 2020</td>
+                        </tr>
+
+                        <tr>
+                            <th scope="row">Reservation Total</th>
+                            <th colspan="2" th:text="@{'$'+${reservationInfoDto.totalCostOfReservation}}">$51.00</th>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <a th:href="@{/}" class="btn btn-link">Home</a>
+        </div>
+    </div>
+
+</div>
+
+<div th:replace="fragments/footer :: footer"></div>
+<th:block th:replace="fragments/js_scripts :: js_scripts">js scripts come here.</th:block>
+</body>
+</html>

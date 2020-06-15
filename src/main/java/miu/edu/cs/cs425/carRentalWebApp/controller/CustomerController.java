@@ -10,6 +10,7 @@ import miu.edu.cs.cs425.carRentalWebApp.service.CustomerService;
 import miu.edu.cs.cs425.carRentalWebApp.service.ReservationService;
 import miu.edu.cs.cs425.carRentalWebApp.service.dto.CarReservationDto;
 import miu.edu.cs.cs425.carRentalWebApp.service.dto.NewReservationDto;
+import miu.edu.cs.cs425.carRentalWebApp.service.dto.PlaceRerservationInfoDto;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -125,10 +126,10 @@ public class CustomerController {
     }
 
     @PostMapping(value = "/car/reserve")
-    public String addCarReservationForm(@ModelAttribute("newReservationDto") NewReservationDto newReservationDto) {
-
+    public String addCarReservationForm(Model model, @ModelAttribute("newReservationDto") NewReservationDto newReservationDto) {
+        model.addAttribute("reservationInfoDto", new PlaceRerservationInfoDto());
         // TODO add car reservation
-        return "customer/place_reservation";
+        return "customer/place_reservation_notification";
     }
 
     @GetMapping(value = "/car/reserve/list")
