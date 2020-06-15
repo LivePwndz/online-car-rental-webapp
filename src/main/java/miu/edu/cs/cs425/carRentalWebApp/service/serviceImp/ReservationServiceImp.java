@@ -1,13 +1,9 @@
 package miu.edu.cs.cs425.carRentalWebApp.service.serviceImp;
 
-import miu.edu.cs.cs425.carRentalWebApp.model.Car;
-import miu.edu.cs.cs425.carRentalWebApp.model.CarReservation;
-import miu.edu.cs.cs425.carRentalWebApp.model.Customer;
-import miu.edu.cs.cs425.carRentalWebApp.model.ReservationStatus;
-import miu.edu.cs.cs425.carRentalWebApp.repository.CarRepository;
-import miu.edu.cs.cs425.carRentalWebApp.repository.CustomerRepository;
-import miu.edu.cs.cs425.carRentalWebApp.repository.ReservationRepository;
+import miu.edu.cs.cs425.carRentalWebApp.model.*;
+import miu.edu.cs.cs425.carRentalWebApp.repository.*;
 import miu.edu.cs.cs425.carRentalWebApp.service.ReservationService;
+import miu.edu.cs.cs425.carRentalWebApp.service.dto.CheckoutNotificationDto;
 import miu.edu.cs.cs425.carRentalWebApp.service.dto.NewReservationDto;
 import miu.edu.cs.cs425.carRentalWebApp.service.dto.PlaceRerservationInfoDto;
 import org.springframework.stereotype.Service;
@@ -25,11 +21,15 @@ public class ReservationServiceImp implements ReservationService {
     private final ReservationRepository reservationRepository;
     private final CarRepository carRepository;
     private final CustomerRepository customerRepository;
+    private final ClerkRepository clerkRepository;
+    private final CheckoutRecordRepository checkoutRecordRepository;
 
-    public ReservationServiceImp(ReservationRepository reservationRepository, CarRepository carRepository, CustomerRepository customerRepository) {
+    public ReservationServiceImp(ReservationRepository reservationRepository, CarRepository carRepository, CustomerRepository customerRepository, ClerkRepository clerkRepository, CheckoutRecordRepository checkoutRecordRepository) {
         this.reservationRepository = reservationRepository;
         this.carRepository = carRepository;
         this.customerRepository = customerRepository;
+        this.clerkRepository = clerkRepository;
+        this.checkoutRecordRepository = checkoutRecordRepository;
     }
 
     @Override
@@ -80,10 +80,53 @@ public class ReservationServiceImp implements ReservationService {
 
     @Override
     public CarReservation findById(Long reservationId) {
+        return getCarReservation(reservationId);
+    }
+
+    @Override
+    public CheckoutNotificationDto addNewCheckoutRecord(Long reservationId) {
+        CarReservation carReservation = getCarReservation(reservationId);
+        Clerk clerk = getClerk(1L);
+
+        CheckoutRecord checkoutRecord = new CheckoutRecord();
+        checkoutRecord.setClerk(clerk);
+        checkoutRecord.setReservation(carReservation);
+        checkoutRecord.setCreateDate(LocalDateTime.now());
+        checkoutRecord.setLastUpdate(LocalDateTime.now());
+
+        CheckoutRecord savedCheckoutRecord = checkoutRecordRepository.save(checkoutRecord);
+        Car car = carReservation.getCar();
+        Customer customer = carReservation.getCustomer();
+
+        carReservation.setStatus(ReservationStatus.CHECKED_OUT);
+        carReservation.setLastUpdate(LocalDateTime.now());
+        reservationRepository.save(carReservation);
+
+        return new CheckoutNotificationDto(car.getModel()
+                , car.getPlateNo()
+                , customer.getFirstName()
+                , customer.getLastName()
+                , clerk.getFirstName()
+                , ReservationUtils.formatLocalDateToUIString(carReservation.getCreateDate().toLocalDate())
+                , ReservationUtils.formatLocalDateToUIString(carReservation.getEndDate()) );
+    }
+
+    private Clerk getClerk(long clerkId) {
+        Optional<Clerk> carReservationOptional = clerkRepository.findById(clerkId);
+        if(!carReservationOptional.isPresent()){
+            throw new EntityNotFoundException("Clerk with id "+clerkId+" not found.");
+        }
+
+        return carReservationOptional.get();
+    }
+
+    private CarReservation getCarReservation(Long reservationId) {
         Optional<CarReservation> carReservationOptional = reservationRepository.findById(reservationId);
         if(!carReservationOptional.isPresent()){
-           throw new EntityNotFoundException("Reservation with id "+reservationId+" not found.");
+            throw new EntityNotFoundException("Reservation with id "+reservationId+" not found.");
         }
+
         return carReservationOptional.get();
+
     }
 }

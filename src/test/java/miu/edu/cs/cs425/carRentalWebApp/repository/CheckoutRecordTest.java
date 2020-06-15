@@ -51,8 +51,8 @@ public class CheckoutRecordTest {
         customer.setAddress(address);
         return  customerRepository.save(customer);
     }
-    private ChekoutRecord initCheckoutRecord(){
-        ChekoutRecord chekoutRecord = new ChekoutRecord();
+    private CheckoutRecord initCheckoutRecord(){
+        CheckoutRecord checkoutRecord = new CheckoutRecord();
         Clerk clerk = new Clerk();
         //clerk.setId(5L);
         clerk.setFirstName("clerk1");
@@ -87,24 +87,24 @@ public class CheckoutRecordTest {
         carReservation.setCustomer(customer);
         reservationRepository.save(carReservation);
 
-        chekoutRecord.setClerckId(clerk);
-        chekoutRecord.setReservationId(carReservation);
-        chekoutRecord.setCreateDate(LocalDateTime.now());
-        chekoutRecord.setUpdateDate(LocalDateTime.now());
-        return chekoutRecord;
+        checkoutRecord.setClerk(clerk);
+        checkoutRecord.setReservation(carReservation);
+        checkoutRecord.setCreateDate(LocalDateTime.now());
+        checkoutRecord.setLastUpdate(LocalDateTime.now());
+        return checkoutRecord;
     }
     @Test
     public void shouldAddCheckoutRecord(){
-        ChekoutRecord chekoutRecord = initCheckoutRecord();
-        ChekoutRecord savedRecord = checkoutRecordRepository.save(chekoutRecord);
+        CheckoutRecord checkoutRecord = initCheckoutRecord();
+        CheckoutRecord savedRecord = checkoutRecordRepository.save(checkoutRecord);
         Assertions.assertEquals(1, savedRecord.getCheckoutId());
     }
     @Test
     public void shouldNotAddCheckoutRecordWhenReservationIdIsEmpty(){
         try {
-            ChekoutRecord chekoutRecord = initCheckoutRecord();
-            chekoutRecord.setReservationId(null);
-            ChekoutRecord savedRecord = checkoutRecordRepository.save(chekoutRecord);
+            CheckoutRecord checkoutRecord = initCheckoutRecord();
+            checkoutRecord.setReservation(null);
+            CheckoutRecord savedRecord = checkoutRecordRepository.save(checkoutRecord);
         }catch (Exception ex){
             Assertions.assertTrue(ex.getMessage().contains("Reservation Id can't be empty"));
         }
@@ -112,9 +112,9 @@ public class CheckoutRecordTest {
     @Test
     public void shouldNotAddCheckoutRecordWhenClerkIdIsEmpty(){
         try {
-            ChekoutRecord chekoutRecord = initCheckoutRecord();
-            chekoutRecord.setClerckId(null);
-            ChekoutRecord savedRecord = checkoutRecordRepository.save(chekoutRecord);
+            CheckoutRecord checkoutRecord = initCheckoutRecord();
+            checkoutRecord.setClerk(null);
+            CheckoutRecord savedRecord = checkoutRecordRepository.save(checkoutRecord);
         }catch (Exception ex){
             Assertions.assertTrue(ex.getMessage().contains("Clerk Id can't be empty"));
         }

@@ -1,11 +1,10 @@
 package miu.edu.cs.cs425.carRentalWebApp.model;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 @Entity
-public class ChekoutRecord {
+public class CheckoutRecord {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long checkoutId;
@@ -16,24 +15,24 @@ public class ChekoutRecord {
     @ManyToOne
     private Clerk clerckId;
     private LocalDateTime createDate;
-    private LocalDateTime updateDate;
+    private LocalDateTime lastUpdate;
 
-    public ChekoutRecord() {
+    public CheckoutRecord() {
     }
 
-    public ChekoutRecord(CarReservation reservationId, Clerk clerckId, LocalDateTime createDate, LocalDateTime updateDate) {
+    public CheckoutRecord(CarReservation reservationId, Clerk clerckId, LocalDateTime createDate, LocalDateTime lastUpdate) {
         this.reservationId = reservationId;
         this.clerckId = clerckId;
         this.createDate = createDate;
-        this.updateDate = updateDate;
+        this.lastUpdate = lastUpdate;
     }
 
-    public ChekoutRecord(Long checkoutId, CarReservation reservationId, Clerk clerckId, LocalDateTime createDate, LocalDateTime updateDate) {
+    public CheckoutRecord(Long checkoutId, CarReservation reservationId, Clerk clerckId, LocalDateTime createDate, LocalDateTime lastUpdate) {
         this.checkoutId = checkoutId;
         this.reservationId = reservationId;
         this.clerckId = clerckId;
         this.createDate = createDate;
-        this.updateDate = updateDate;
+        this.lastUpdate = lastUpdate;
     }
 
     public Long getCheckoutId() {
@@ -48,7 +47,7 @@ public class ChekoutRecord {
         return reservationId;
     }
 
-    public void setReservationId(CarReservation reservationId) {
+    public void setReservation(CarReservation reservationId) {
         this.reservationId = reservationId;
     }
 
@@ -56,7 +55,7 @@ public class ChekoutRecord {
         return clerckId;
     }
 
-    public void setClerckId(Clerk clerckId) {
+    public void setClerk(Clerk clerckId) {
         this.clerckId = clerckId;
     }
 
@@ -68,22 +67,22 @@ public class ChekoutRecord {
         this.createDate = createDate;
     }
 
-    public LocalDateTime getUpdateDate() {
-        return updateDate;
+    public LocalDateTime getLastUpdate() {
+        return lastUpdate;
     }
 
-    public void setUpdateDate(LocalDateTime updateDate) {
-        this.updateDate = updateDate;
+    public void setLastUpdate(LocalDateTime updateDate) {
+        this.lastUpdate = updateDate;
     }
 
     @Override
     public String toString() {
-        return "ChekoutRecord{" +
+        return "CheckoutRecord{" +
                 "checkoutId=" + checkoutId +
                 ", reservationId=" + reservationId +
                 ", clerckId=" + clerckId +
                 ", createDate=" + createDate +
-                ", updateDate=" + updateDate +
+                ", updateDate=" + lastUpdate +
                 '}';
     }
 }

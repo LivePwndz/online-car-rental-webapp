@@ -81,7 +81,7 @@ public class ClerkController {
         CarReservation carReservation = reservationService.findById(reservationId);
 
         ReservationStatus reservationStatus = carReservation.getStatus();
-        if (!reservationStatus.equals(ReservationStatus.PENDING_CHECKOUT)) {
+        if (reservationStatus.equals(ReservationStatus.PENDING_CHECKOUT)) {
             return getPendingCheckoutReservationDetails(model, carReservation);
         } else{
             return getCheckoutReservationDetails(model, carReservation);
@@ -117,8 +117,8 @@ public class ClerkController {
     @PostMapping(value = "/reservation/checkout")
     public String checkoutCar(Model model, @ModelAttribute("newCarCheckoutDto") NewCarCheckoutDto newCarCheckoutDto) {
         // TODO add new car checkout record
-
-        model.addAttribute("checkoutNotificationDto", new CheckoutNotificationDto());
+        CheckoutNotificationDto checkoutNotificationDto = reservationService.addNewCheckoutRecord(newCarCheckoutDto.getReservationId());
+        model.addAttribute("checkoutNotificationDto", checkoutNotificationDto);
         return "clerk/checkout_reservation_notification";
     }
 
