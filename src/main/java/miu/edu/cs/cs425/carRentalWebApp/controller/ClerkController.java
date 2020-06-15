@@ -38,7 +38,7 @@ public class ClerkController {
     public String displayLisfOfClerks(Model model) {
         List<Clerk> clerks = clerkService.getAllClerck();
         model.addAttribute("clerks", clerks);
-        model.addAttribute("clerksCount", clerks.size());
+        model.addAttribute("clerkCount", clerks.size());
         return "clerk/list";
     }
 
