@@ -10,7 +10,7 @@
 <div style="padding-top:1em;" class="container">
 
     <div>
-        <span class="h4" style="margin-right: 10px;">Please review and complete your car reservation</span>
+        <span class="h4" style="margin-right: 10px;">Reservation, Car & Checkout Details</span>
     </div>
 
     <hr/>
@@ -66,9 +66,10 @@
                                 <th scope="row">Price</th>
                                 <td colspan="2" th:text="@{'$'+${reservationDto.pricePerDay}+' per day'}">$5.00 per day</td>
                             </tr>
+
                             <tr>
                                 <th scope="row">Reservation Status</th>
-                                <td colspan="2">DRAFT</td>
+                                <td colspan="2">CHECKED OUT</td>
                             </tr>
                             </tbody>
                         </table>
@@ -80,36 +81,47 @@
         <div class="col-sm-6">
             <div class="card">
                 <div class="card-body">
-                    <form class="form-inline" method="post" th:action="@{/customer/car/reserve}" th:object="${newReservationDto}">
-                        <input type="hidden" name="carId" th:value="${newReservationDto.carId}"/>
-                        <input type="hidden" name="startDateStr" th:value="${newReservationDto.startDateStr}"/>
-                        <input type="hidden" name="endDateStr" th:value="${newReservationDto.endDateStr}"/>
-                        <button type="submit" class="btn btn-success btn-block">Place Your Reservation</button>
+                    <form class="form-inline" method="post" th:action="@{/clerk/reservation/check-in}" th:object="${newCarCheckoutDto}">
+                        <input type="hidden" name="reservationId" th:value="${newCarCheckoutDto.reservationId}"/>
+                        <button type="submit" class="btn btn-success btn-block">Check in Car</button>
                     </form>
-                    <table class="table table-sm" th:object="${reservationDto}">
+                    <table class="table table-sm" th:object="${newCarCheckoutDto}">
                         <tbody>
                         <tr>
                             <th scope="row">Car</th>
-                            <td th:text="${reservationDto.model}">2019 Ford Fiesta</td>
-                        </tr>
-                        <tr>
-                            <th scope="row" >Rent for <span th:text="${reservationDto.totalNoOfDays}">10</span> days</th>
-                            <td th:text="@{'$'+${reservationDto.totalCostOfRent}}">$50.00</td>
+                            <td th:text="${newCarCheckoutDto.carModel}">2019 Ford Fiesta</td>
                         </tr>
 
                         <tr>
-                            <th scope="row">Delivery cost</th>
-                            <td colspan="2" th:text="@{'$'+${reservationDto.costOfDelivery}}">$1.00</td>
+                            <th scope="row">License Plate</th>
+                            <td th:text="${newCarCheckoutDto.carLicensePlate}">JBS 1782 Jefferson, IA</td>
                         </tr>
+
                         <tr>
-                            <th scope="row">Reservation Total</th>
-                            <th colspan="2" th:text="@{'$'+${reservationDto.totalCostOfReservation}}">$51.00</th>
+                            <th scope="row">Customer Name</th>
+                            <td><span th:text="${newCarCheckoutDto.customerFirstName}">First Name</span> <span th:text="${newCarCheckoutDto.customerLastName}">Last Name</span></td>
                         </tr>
+
+                        <tr>
+                            <th scope="row">Reservation Code</th>
+                            <td th:text="${newCarCheckoutDto.reservationCode}">MLNC-22020-06-23</td>
+                        </tr>
+
+                        <tr>
+                            <th scope="row">Checkout Clerk Name</th>
+                            <td >Mr. Trump Pence</td>
+                        </tr>
+
+                        <tr>
+                            <th scope="row">Checkout Date</th>
+                            <td >Jun 20, 2020</td>
+                        </tr>
+
                         </tbody>
                     </table>
                 </div>
             </div>
-            <a th:href="@{/customer/car/dates?startDate=&endDate=}" class="btn btn-link">Cancel</a>
+            <a th:href="@{/customer/car/dates?startDate=&endDate=}" class="btn btn-link">Back</a>
         </div>
     </div>
 

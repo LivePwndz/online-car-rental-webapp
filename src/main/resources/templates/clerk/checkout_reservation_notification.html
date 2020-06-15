@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <th:block th:replace="fragments/head_default_tags :: head_default_tags">head default tags come here.</th:block>
+    <title>Online Car Rental | Home</title>
+</head>
+<body>
+<nav th:replace="fragments/customer_nav :: customer_nav"></nav>
+
+<div style="padding-top:1em;" class="container">
+
+    <div>
+        <span class="text-success" style="margin-right: 10px; font-size: 1.5rem;">Thank you!  Car checkout has been successfully.</span>
+    </div>
+
+    <hr/>
+
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="card">
+                <div class="card-body">
+                    <span class="card-title h5">
+                        Checkout Details
+                    </span>
+                    <table class="table table-sm  table-borderless" th:object="${checkoutNotificationDto}">
+                        <tbody>
+                        <tr>
+                            <th scope="row">Car</th>
+                            <td th:text="${checkoutNotificationDto.carModel}">2019 Ford Fiesta</td>
+                        </tr>
+
+                        <tr>
+                            <th scope="row">License Plate</th>
+                            <td th:text="${checkoutNotificationDto.carLicensePlate}">JBS 1782 Jefferson, IA</td>
+                        </tr>
+
+                        <tr>
+                            <th scope="row">Customer Name</th>
+                            <td><span th:text="${checkoutNotificationDto.customerFirstName}">First Name</span> <span th:text="${checkoutNotificationDto.customerLastName}">Last Name</span></td>
+                        </tr>
+
+
+                        <tr>
+                            <th scope="row">Checkout Clerk Name</th>
+                            <td th:text="${checkoutNotificationDto.checkoutClerkName}">Mr. Trump Pence</td>
+                        </tr>
+
+                        <tr>
+                            <th scope="row">Car Return Date</th>
+                            <td th:text="${checkoutNotificationDto.returnDateStr}">Jun 23, 2020</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <a th:href="@{/}" class="btn btn-link">Home</a>
+        </div>
+    </div>
+
+</div>
+
+<div th:replace="fragments/footer :: footer"></div>
+<th:block th:replace="fragments/js_scripts :: js_scripts">js scripts come here.</th:block>
+</body>
+</html>

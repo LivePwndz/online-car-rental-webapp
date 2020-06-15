@@ -69,11 +69,11 @@
     </th:block>
 </div>
 
-    <th:block th:if="${count == 0}">
+    <th:block th:if="${count < 1}">
         <div class="col-sm-12">
             <div class="card" style="width: 100%;">
                 <div class="card-body">
-                    <h5 class="card-title">Car catalog empty</h5>
+                    <h5 class="card-title text-center">Oops! Looks like no car is available on the selected dates. <a th:href="@{'/customer/car/dates?startDate='+${reservationStartDate}+'&endDate='+${reservationEndDate}}" class="btn btn-link">Change dates?</a></h5>
                 </div>
             </div>
         </div>

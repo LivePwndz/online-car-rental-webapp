@@ -10,7 +10,7 @@
 <div style="padding-top:1em;" class="container">
 
     <div>
-        <span class="h4" style="margin-right: 10px;">Please review and complete your car reservation</span>
+        <span class="h4" style="margin-right: 10px;">Reservation & Car Details</span>
     </div>
 
     <hr/>
@@ -66,6 +66,10 @@
                                 <th scope="row">Price</th>
                                 <td colspan="2" th:text="@{'$'+${reservationDto.pricePerDay}+' per day'}">$5.00 per day</td>
                             </tr>
+                            <tr>
+                                <th scope="row">Reservation Status</th>
+                                <td colspan="2">PENDING CHECKOUT</td>
+                            </tr>
                             </tbody>
                         </table>
 
@@ -76,10 +80,8 @@
         <div class="col-sm-6">
             <div class="card">
                 <div class="card-body">
-                    <form class="form-inline" method="post" th:action="@{/customer/car/reserve}" th:object="${newReservationDto}">
-                        <input type="hidden" name="carId" th:value="${newReservationDto.carId}"/>
-                        <input type="hidden" name="startDateStr" th:value="${newReservationDto.startDateStr}"/>
-                        <input type="hidden" name="endDateStr" th:value="${newReservationDto.endDateStr}"/>
+                    <form class="form-inline" method="post" th:action="@{/clerk/reservation/checkout}" th:object="${newCarCheckoutDto}">
+                        <input type="hidden" name="reservationId" th:value="${newCarCheckoutDto.reservationId}"/>
                         <button type="submit" class="btn btn-success btn-block">Checkout Car</button>
                     </form>
                     <table class="table table-sm" th:object="${newCarCheckoutDto}">
@@ -115,7 +117,7 @@
                         </tr>
 
                         <tr>
-                            <th scope="row">Return Date</th>
+                            <th scope="row">Expected Return Date</th>
                             <td th:text="${newCarCheckoutDto.returnDateStr}">Jun 23, 2020</td>
                         </tr>
                         </tbody>

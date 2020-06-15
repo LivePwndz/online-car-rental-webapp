@@ -1,9 +1,12 @@
 package miu.edu.cs.cs425.carRentalWebApp.service.serviceImp;
 
 import miu.edu.cs.cs425.carRentalWebApp.model.Car;
+import miu.edu.cs.cs425.carRentalWebApp.model.CarReservation;
+import miu.edu.cs.cs425.carRentalWebApp.model.Customer;
 import miu.edu.cs.cs425.carRentalWebApp.repository.CarRepository;
 import miu.edu.cs.cs425.carRentalWebApp.service.CarService;
 import miu.edu.cs.cs425.carRentalWebApp.service.dto.CarReservationDto;
+import miu.edu.cs.cs425.carRentalWebApp.service.dto.NewCarCheckoutDto;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
@@ -98,6 +101,21 @@ public class CarServiceImp implements CarService {
                 +" ("+totalNoOfDays+" day/s)";
         dto.setDurationDescription(durationDescription);
         return dto;
+    }
+
+    @Override
+    public NewCarCheckoutDto getNewCheckoutDto(CarReservation carReservation) {
+        Car car = carReservation.getCar();
+        Customer customer = carReservation.getCustomer();
+        return new NewCarCheckoutDto(
+                carReservation.getId()
+                , car.getModel()
+                , car.getPlateNo()
+                , customer.getFirstName()
+                , customer.getLastName()
+                , customer.getDrivingLicense(), carReservation.getCode()
+                , ReservationUtils.formatLocalDateToUIString(carReservation.getCreateDate().toLocalDate())
+                , ReservationUtils.formatLocalDateToUIString(carReservation.getEndDate()));
     }
 
 

@@ -1,4 +1,4 @@
-package miu.edu.cs.cs425.carRentalWebApp.controller;
+package miu.edu.cs.cs425.carRentalWebApp.service.dto;
 
 public class NewCarCheckoutDto {
     private Long reservationId;
@@ -12,6 +12,10 @@ public class NewCarCheckoutDto {
     private String returnDateStr;
 
     public NewCarCheckoutDto() {
+    }
+
+    public NewCarCheckoutDto(Long reservationId) {
+        this.reservationId = reservationId;
     }
 
     public NewCarCheckoutDto(Long reservationId, String carModel, String carLicensePlate, String customerFirstName, String customerLastName, String drivingLicenseNo, String reservationCode, String dateOfReservationStr, String returnDateStr) {
