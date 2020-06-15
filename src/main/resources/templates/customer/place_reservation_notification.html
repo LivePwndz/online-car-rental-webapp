@@ -10,7 +10,7 @@
 <div style="padding-top:1em;" class="container">
 
     <div>
-        <span class="text-success" style="margin-right: 10px;">Success! Your car reservation has complete.</span>
+        <span class="text-success" style="margin-right: 10px; font-size: 1.5rem;">Thank you! Your car reservation has been placed successfully.</span>
     </div>
 
     <hr/>
@@ -22,7 +22,7 @@
                     <span class="card-title h5">
                         Reservation Details
                     </span>
-                    <table class="table table-sm" th:object="${reservationInfoDto}">
+                    <table class="table table-sm table-borderless" th:object="${reservationInfoDto}">
                         <tbody>
                         <tr>
                             <th scope="row">Car</th>
@@ -31,12 +31,12 @@
 
                         <tr>
                             <th scope="row">Reservation Code</th>
-                            <td>CXM000-1091</td>
+                            <td th:text="${reservationInfoDto.reservationCode}">CXM000-1091</td>
                         </tr>
 
                         <tr>
                             <th scope="row">Pickup Date</th>
-                            <td>Jun 27, 2020</td>
+                            <td th:text="${reservationInfoDto.pickupDateStr}">Jun 27, 2020</td>
                         </tr>
 
                         <tr>

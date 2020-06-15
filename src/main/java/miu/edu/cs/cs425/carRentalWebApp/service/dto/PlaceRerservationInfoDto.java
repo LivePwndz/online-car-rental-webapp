@@ -8,6 +8,16 @@ public class PlaceRerservationInfoDto {
     private String pickupDateStr;
     private BigDecimal totalCostOfReservation;
 
+    public PlaceRerservationInfoDto() {
+    }
+
+    public PlaceRerservationInfoDto(String model, String reservationCode, String pickupDateStr, BigDecimal totalCostOfReservation) {
+        this.model = model;
+        this.reservationCode = reservationCode;
+        this.pickupDateStr = pickupDateStr;
+        this.totalCostOfReservation = totalCostOfReservation;
+    }
+
     public String getModel() {
         return model;
     }

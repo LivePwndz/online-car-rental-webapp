@@ -127,8 +127,9 @@ public class CustomerController {
 
     @PostMapping(value = "/car/reserve")
     public String addCarReservationForm(Model model, @ModelAttribute("newReservationDto") NewReservationDto newReservationDto) {
-        model.addAttribute("reservationInfoDto", new PlaceRerservationInfoDto());
         // TODO add car reservation
+        PlaceRerservationInfoDto rerservationInfoDto = reservationService.addNewReservation(newReservationDto);
+        model.addAttribute("reservationInfoDto", rerservationInfoDto);
         return "customer/place_reservation_notification";
     }
 
