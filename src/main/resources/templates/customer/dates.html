@@ -16,7 +16,7 @@
                 <div class="input-group-prepend">
                     <div class="input-group-text">FROM</div>
                 </div>
-                <input required type="date" name="startDate" class="form-control" id="startDate" title="Select From Date">
+                <input required type="date" th:value="${reservationStartDate}" name="startDate" class="form-control" id="startDate" title="Select From Date">
             </div>
 
             <label class="sr-only" for="endDate">TO</label>
@@ -24,7 +24,7 @@
                 <div class="input-group-prepend">
                     <div class="input-group-text">TO</div>
                 </div>
-                <input required type="date" name="endDate" class="form-control" id="endDate" title="Select To Date">
+                <input required type="date" th:value="${reservationEndDate}" name="endDate" class="form-control" id="endDate" title="Select To Date">
             </div>
             <button type="submit" class="btn btn-outline-success">Submit</button>
         </form>

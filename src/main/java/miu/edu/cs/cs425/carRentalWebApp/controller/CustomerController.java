@@ -82,10 +82,13 @@ public class CustomerController {
         return "redirect:/customer/list";
     }
 
-    @GetMapping(value = "/car/dates")
-    public String displayCarReservationDates() {
+    @GetMapping(value = "/car/dates", params = {"startDate", "endDate"})
+    public String displayCarReservationDates(Model model, @RequestParam String startDate, @RequestParam String endDate) {
+        model.addAttribute("reservationStartDate", startDate);
+        model.addAttribute("reservationEndDate", endDate);
         return "customer/dates";
     }
+
 
     @GetMapping(value = "/car/all/list")
     public String displayLisfOfCars(Model model) {

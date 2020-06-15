@@ -40,7 +40,7 @@ public class CarReservationSeeder implements CommandLineRunner {
 
         Car car = new Car();
         car.setPlateNo("IA220AA-0098");
-        car.setModel("TOYOTA");
+        car.setModel("TOYOTA XL");
         car.setMaxNoDays(20);
         car.setPricePerDay(new BigDecimal(20));
         car.setTransmissionType(MANUAL);

@@ -41,8 +41,7 @@ public class CarServiceImp implements CarService {
     public List<Car> getAllAvailableCars(String startDateStr, String endDateStr) {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDate startDate = LocalDate.parse(startDateStr, dtf);
-        List<Car> cars = carRepository.findCarByCarReservationsEmptyOrCarReservationsEndDateLessThan(startDate);
-        return cars;
+        return carRepository.findCarByCarReservationsEmptyOrCarReservationsEndDateLessThan(startDate);
     }
 
 
