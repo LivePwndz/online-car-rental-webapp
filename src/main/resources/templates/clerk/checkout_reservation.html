@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <th:block th:replace="fragments/head_default_tags :: head_default_tags">head default tags come here.</th:block>
+    <title>Online Car Rental | Home</title>
+</head>
+<body>
+<nav th:replace="fragments/customer_nav :: customer_nav"></nav>
+
+<div style="padding-top:1em;" class="container">
+
+    <div>
+        <span class="h4" style="margin-right: 10px;">Please review and complete your car reservation</span>
+    </div>
+
+    <hr/>
+
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="row">
+                <div style="width:100%" class="card  border-0">
+                    <div class="card-body">
+                        <h5 class="card-title">Delivery Address</h5>
+                        <p class="card-text">
+                            Jean de Dieu
+                            <br/> 1000 N. 4th. Str
+                            <br/> Fairfield, Iowa 52557-0001
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="card  border-0" style="width:100%">
+                    <div class="card-body">
+                        <h5 class="card-title">Payment Details</h5>
+                        <p class="card-text"><b>MasterCard</b> ending in 5696</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="card rounded-0 border-0" style="width: 100%">
+                    <div class="card-body">
+                        <span class="card-title h5">
+                            Reservation Details
+                        </span>
+                        <table class="table table-sm table-borderless" th:object="${reservationDto}">
+                            <tbody>
+                            <tr>
+                                <th scope="row">Car</th>
+                                <td colspan="2" th:text="${reservationDto.model}">2019 Ford Fiesta</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Transmission</th>
+                                <td th:text="${reservationDto.transmissionType}">Manual</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Capacity</th>
+                                <td><span th:text="@{${reservationDto.nuOfSeats}+' seats'}">4 seats</span>, <span
+                                        th:text="@{${reservationDto.nuOfDoors}+' doors'}">4 doors</span></td>
+                            </tr>
+                            <tr>
+                                <th title="Duration" scope="row">Rent Duration</th>
+                                <td colspan="2" th:text="${reservationDto.durationDescription}">Jun 27 - Jun 29, 2020 (3 days)</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Price</th>
+                                <td colspan="2" th:text="@{'$'+${reservationDto.pricePerDay}+' per day'}">$5.00 per day</td>
+                            </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="card">
+                <div class="card-body">
+                    <form class="form-inline" method="post" th:action="@{/customer/car/reserve}" th:object="${newReservationDto}">
+                        <input type="hidden" name="carId" th:value="${newReservationDto.carId}"/>
+                        <input type="hidden" name="startDateStr" th:value="${newReservationDto.startDateStr}"/>
+                        <input type="hidden" name="endDateStr" th:value="${newReservationDto.endDateStr}"/>
+                        <button type="submit" class="btn btn-success btn-block">Checkout Car</button>
+                    </form>
+                    <table class="table table-sm" th:object="${newCarCheckoutDto}">
+                        <tbody>
+                        <tr>
+                            <th scope="row">Car</th>
+                            <td th:text="${newCarCheckoutDto.carModel}">2019 Ford Fiesta</td>
+                        </tr>
+
+                        <tr>
+                            <th scope="row">License Plate</th>
+                            <td th:text="${newCarCheckoutDto.carLicensePlate}">JBS 1782 Jefferson, IA</td>
+                        </tr>
+
+                        <tr>
+                            <th scope="row">Customer Name</th>
+                            <td><span th:text="${newCarCheckoutDto.customerFirstName}">First Name</span> <span th:text="${newCarCheckoutDto.customerLastName}">Last Name</span></td>
+                        </tr>
+
+                        <tr>
+                            <th scope="row">Driver's License No.</th>
+                            <td th:text="${newCarCheckoutDto.drivingLicenseNo}">MLN-83984-IA-KY</td>
+                        </tr>
+
+                        <tr>
+                            <th scope="row">Reservation Code</th>
+                            <td th:text="${newCarCheckoutDto.reservationCode}">MLNC-22020-06-23</td>
+                        </tr>
+
+                        <tr>
+                            <th scope="row">Date of Reservation</th>
+                            <td th:text="${newCarCheckoutDto.dateOfReservationStr}">Jun 20, 2020</td>
+                        </tr>
+
+                        <tr>
+                            <th scope="row">Return Date</th>
+                            <td th:text="${newCarCheckoutDto.returnDateStr}">Jun 23, 2020</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <a th:href="@{/customer/car/dates?startDate=&endDate=}" class="btn btn-link">Back</a>
+        </div>
+    </div>
+
+</div>
+
+<div th:replace="fragments/footer :: footer"></div>
+<th:block th:replace="fragments/js_scripts :: js_scripts">js scripts come here.</th:block>
+</body>
+</html>

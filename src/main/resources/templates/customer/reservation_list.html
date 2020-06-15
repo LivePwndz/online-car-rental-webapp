@@ -44,7 +44,7 @@
                 <td th:text="${reservation.status}"></td>
                 <td th:text="${reservation.createDate}"></td>
                 <td th:text="${reservation.lastUpdate}"></td>
-                <td><a th:href="@{'/customer/car/reserve/' + ${reservation.id}}">Details</a></td>
+                <td><a th:href="@{'/clerk/reservation/' + ${reservation.id}}">Details</a></td>
                 <td>
                     <a data-toggle="modal" data-target="#confirmDeleteModal"
                        th:href="@{'/customer/car/reserve/delete/' + ${reservation.id}}">Delete</a>

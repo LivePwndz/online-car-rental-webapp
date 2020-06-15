@@ -10,4 +10,5 @@ import java.util.List;
 public interface ReservationService {
     List<CarReservation> getAllReservations();
     PlaceRerservationInfoDto addNewReservation(NewReservationDto newReservationDto);
+    CarReservation findById(Long reservationId);
 }

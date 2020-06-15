@@ -8,9 +8,10 @@ import java.time.format.TextStyle;
 import java.util.Locale;
 
 public class ReservationUtils {
+    private  static DateTimeFormatter standardDateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
     public static LocalDate convertFromStringToLocalDate(String dateStr) {
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        return LocalDate.parse(dateStr, dtf);
+        return LocalDate.parse(dateStr, standardDateFormat);
     }
 
     public static BigDecimal calculateTotalCostOfReservation(BigDecimal pricePerDay, String startDateStr, String endDateStr) {
@@ -29,9 +30,13 @@ public class ReservationUtils {
         return totalCostOfRent.add(costOfDelivery);
     }
 
-    public static String formatDateToUIString(LocalDate localDate) {
+    public static String formatLocalDateToUIString(LocalDate localDate) {
         return localDate.getMonth().getDisplayName(TextStyle.SHORT, Locale.US)+" "
         +localDate.getDayOfMonth()+", "
         +localDate.getYear();
+    }
+
+    public static String formatLocalDateToStandardString(LocalDate localDate) {
+        return localDate.format(standardDateFormat);
     }
 }

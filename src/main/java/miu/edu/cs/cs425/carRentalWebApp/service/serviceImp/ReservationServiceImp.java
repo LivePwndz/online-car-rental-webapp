@@ -74,7 +74,16 @@ public class ReservationServiceImp implements ReservationService {
         CarReservation savedCarReservation = reservationRepository.save(carReservation);
         BigDecimal totalCostOfReservation = ReservationUtils.calculateTotalCostOfReservation(car.getPricePerDay(), newReservationDto.getStartDateStr(), newReservationDto.getEndDateStr());
 
-        return new PlaceRerservationInfoDto(car.getModel(), code, ReservationUtils.formatDateToUIString(endDate), totalCostOfReservation);
+        return new PlaceRerservationInfoDto(car.getModel(), code, ReservationUtils.formatLocalDateToUIString(endDate), totalCostOfReservation);
 
+    }
+
+    @Override
+    public CarReservation findById(Long reservationId) {
+        Optional<CarReservation> carReservationOptional = reservationRepository.findById(reservationId);
+        if(!carReservationOptional.isPresent()){
+           throw new EntityNotFoundException("Reservation with id "+reservationId+" not found.");
+        }
+        return carReservationOptional.get();
     }
 }
