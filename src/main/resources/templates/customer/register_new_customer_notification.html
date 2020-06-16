@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <th:block th:replace="fragments/head_default_tags :: head_default_tags">head default tags come here.</th:block>
+    <title>Online Car Rental | Home</title>
+</head>
+<body>
+<nav th:replace="fragments/home_nav :: home_nav"></nav>
+
+<div style="padding-top:1em;" class="container">
+
+    <div>
+        <span class="text-success" style="margin-right: 10px; font-size: 1.5rem;">Thank you! You have successfully registered..</span>
+    </div>
+
+    <hr/>
+
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="card">
+                <div class="card-body">
+                    <table class="table table-sm table-borderless">
+                        <tbody>
+                        <tr>
+                            <th scope="row">Your login email:</th>
+                            <td th:text="${customerEmail}"> customer email</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <a th:href="@{/}" class="btn btn-link">Home</a>
+        </div>
+    </div>
+
+</div>
+
+<div th:replace="fragments/footer :: footer"></div>
+<th:block th:replace="fragments/js_scripts :: js_scripts">js scripts come here.</th:block>
+</body>
+</html>

@@ -54,10 +54,27 @@ public class CustomerController {
         return "customer/new";
     }
 
+
+
     @PostMapping(value = "/new")
     public String addCustomerForm(@ModelAttribute("customer") NewCustomerDto customer) {
         customerService.addCustomer(customer);
         return "redirect:/customer/list";
+    }
+
+    @GetMapping(value = "/register")
+    public String displayCustomerRegistrationForm(Model model) {
+        NewCustomerDto customer = new NewCustomerDto();
+        customer.setAddress(new Address());
+        model.addAttribute("customer", customer);
+        return "customer/new";
+    }
+
+    @PostMapping(value = "/register")
+    public String registerCustomer(Model model, @ModelAttribute("customer") NewCustomerDto customer) {
+        customerService.addCustomer(customer);
+        model.addAttribute("customerEmail", customer.getEmail());
+        return "customer/register_new_customer_notification";
     }
 
     @GetMapping(value = {"/carRentalWebApp/customer/delete/{id}", "/customer/delete/{id}"})

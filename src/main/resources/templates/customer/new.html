@@ -5,13 +5,13 @@
     <title>Online Car Rental | Add Customer</title>
 </head>
 <body>
-<nav th:replace="fragments/customer_nav :: customer_nav"></nav>
+<nav th:replace="fragments/home_nav :: home_nav"></nav>
 <div style="padding-top:1em;" class="container">
     <div style="margin-bottom: 1em;">
-        <h2>Add Customer</h2>
+        <h2>Customer Registration</h2>
     </div>
 
-    <form id="newCustomerForm" method="post" action="/customer/new" th:object="${customer}">
+    <form id="newCustomerForm" method="post" action="/customer/register" th:object="${customer}">
         <fieldset class="form-group">
             <div class="row">
                 <div class="col-md-4">
@@ -105,8 +105,8 @@
 
 
             <div class="form-group" style="float:right;">
-                <a href="/customer/list" class="btn btn-outline-warning">Cancel</a>&nbsp;&nbsp;&nbsp;
-                <button id="btnSubmit" type="submit" class="btn btn-outline-success">Save Customer</button>
+                <a th:href="@{/}" class="btn btn-outline-warning">Cancel</a>&nbsp;&nbsp;&nbsp;
+                <button id="btnSubmit" type="submit" class="btn btn-outline-success">Register</button>
 
             </div>
         </fieldset>
