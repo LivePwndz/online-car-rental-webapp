@@ -1,8 +1,10 @@
 package miu.edu.cs.cs425.carRentalWebApp.service.serviceImp;
 
+import miu.edu.cs.cs425.carRentalWebApp.model.Address;
 import miu.edu.cs.cs425.carRentalWebApp.model.Customer;
 import miu.edu.cs.cs425.carRentalWebApp.repository.CustomerRepository;
 import miu.edu.cs.cs425.carRentalWebApp.service.CustomerService;
+import miu.edu.cs.cs425.carRentalWebApp.service.dto.NewCustomerDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,14 +28,45 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public Customer addCustomer(Customer customer) {
-        String email = customer.getEmail();
+    public NewCustomerDto addCustomer(NewCustomerDto newCustomerDto) {
+        String email = newCustomerDto.getEmail();
         Optional<Customer> customerOptional = customerRepository.findByEmail(email);
         if(customerOptional.isPresent()){
             throw new IllegalStateException("Customer with email "+email+" already exist.");
         }
 
-        return customerRepository.save(customer);
+        if(!newCustomerDto.getPassword().equals(newCustomerDto.getConfirmPassword())){
+            throw new IllegalStateException("Password and confirmed password do not match");
+        }
+
+        Customer customer = new Customer();
+        customer.setFirstName(newCustomerDto.getFirstName());
+        customer.setMiddleName(newCustomerDto.getMiddleName());
+        customer.setLastName(newCustomerDto.getLastName());
+        customer.setEmail(newCustomerDto.getEmail());
+        customer.setPassword(newCustomerDto.getPassword());
+        customer.setCreateDate(LocalDateTime.now());
+        customer.setLastUpdate(LocalDateTime.now());
+        customer.setDrivingLicense(newCustomerDto.getDrivingLicense());
+        customer.setPhoneNo(newCustomerDto.getPhoneNo());
+
+        Address address = newCustomerDto.getAddress();
+
+        customer.setAddress(address);
+        Customer savedCustomer = customerRepository.save(customer);
+
+        return new NewCustomerDto(savedCustomer.getId()
+                , savedCustomer.getDrivingLicense()
+                , savedCustomer.getFirstName()
+                , savedCustomer.getMiddleName()
+                , savedCustomer.getLastName()
+                , savedCustomer.getPhoneNo()
+                , savedCustomer.getEmail()
+                ,null
+                , null
+                , savedCustomer.getCreateDate()
+                , savedCustomer.getLastUpdate()
+                , savedCustomer.getAddress());
     }
 
     @Override

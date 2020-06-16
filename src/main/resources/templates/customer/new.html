@@ -23,13 +23,13 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label for="password">Password</label>
-                        <input id="password" name="password" type="password" class="form-control" autofocus required />
+                        <input id="password" name="password" th:value = "${customer.password}"  type="password" class="form-control" autofocus required />
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
                         <label for="confirmPassword">Confirm Password</label>
-                        <input id="confirmPassword" name="confirmPassword" type="password" class="form-control" autofocus required />
+                        <input id="confirmPassword" th:value = "${customer.confirmPassword}"  name="confirmPassword" type="password" class="form-control" autofocus required />
                     </div>
                 </div>
             </div>

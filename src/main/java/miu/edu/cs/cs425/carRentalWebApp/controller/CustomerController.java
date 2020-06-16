@@ -9,6 +9,7 @@ import miu.edu.cs.cs425.carRentalWebApp.service.CarService;
 import miu.edu.cs.cs425.carRentalWebApp.service.CustomerService;
 import miu.edu.cs.cs425.carRentalWebApp.service.ReservationService;
 import miu.edu.cs.cs425.carRentalWebApp.service.dto.CarReservationDto;
+import miu.edu.cs.cs425.carRentalWebApp.service.dto.NewCustomerDto;
 import miu.edu.cs.cs425.carRentalWebApp.service.dto.NewReservationDto;
 import miu.edu.cs.cs425.carRentalWebApp.service.dto.PlaceRerservationInfoDto;
 import org.springframework.stereotype.Controller;
@@ -16,7 +17,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Controller
@@ -49,16 +49,14 @@ public class CustomerController {
 
     @GetMapping(value = "/new")
     public String displayAddCustomerForm(Model model) {
-        Customer customer = new Customer();
+        NewCustomerDto customer = new NewCustomerDto();
         customer.setAddress(new Address());
         model.addAttribute("customer", customer);
         return "customer/new";
     }
 
     @PostMapping(value = "/new")
-    public String addCustomerForm(@ModelAttribute("customer") Customer customer) {
-        customer.setCreateDate(LocalDateTime.now());
-        customer.setLastUpdate(LocalDateTime.now());
+    public String addCustomerForm(@ModelAttribute("customer") NewCustomerDto customer) {
         customerService.addCustomer(customer);
         return "redirect:/customer/list";
     }
