@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:replace="fragments/head_default_tags :: head_default_tags">head default tags come here.</th:block>
+    <title>Online Car Rental | Home</title>
+</head>
+<body>
+<nav th:replace="fragments/clerk_nav :: clerk_nav"></nav>
+
+<div style="padding-top:1em;" class="container">
+    <h3>Reservation & Car Fleet Management</h3>
+    <hr/>
+    <div style="font-size: 1em">
+        <img width="100%" th:src="@{/images/car-man-banner.jpg}"/><br/><br/>
+        <p>Use this space to manage <a title="Reservation Management" th:href="@{/clerk/list}">customer reservations</a>
+            and <a title="Car Fleet Management" th:href="@{/car/list}">car fleet</a> in this online car rental system.</p>
+    </div>
+
+</div>
+
+<div th:replace="fragments/footer :: footer"></div>
+<th:block th:replace="fragments/js_scripts :: js_scripts">js scripts come here.</th:block>
+</body>
+</html>

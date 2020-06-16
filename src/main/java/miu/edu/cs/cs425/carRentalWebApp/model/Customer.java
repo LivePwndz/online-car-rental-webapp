@@ -26,6 +26,7 @@ public class Customer {
     @NotBlank(message = "email can't be empty")
     private String email;
     private String password;
+    private RoleName roleName;
 
     @NotNull(message = "Create date can't be null")
     @DateTimeFormat(pattern = "yyyy-MM-dd-HH-mm-ss.zzz")
@@ -165,6 +166,14 @@ public class Customer {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public RoleName getRoleName() {
+        return roleName;
+    }
+
+    public void setRoleName(RoleName roleName) {
+        this.roleName = roleName;
     }
 
     @Override

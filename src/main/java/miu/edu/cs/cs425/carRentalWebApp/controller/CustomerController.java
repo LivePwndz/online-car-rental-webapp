@@ -20,7 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 import java.util.List;
 
 @Controller
-@RequestMapping(value = {"/", "/customer"})
+@RequestMapping(value = {"/customer"})
 public class CustomerController {
     private final CustomerService customerService;
     private final CarService carService;
@@ -33,9 +33,8 @@ public class CustomerController {
         this.reservationService = reservationService;
     }
 
-    @GetMapping(value = {"/", "/carRentalWebApp/customer", "/customer"})
+    @GetMapping()
     public String displayCustomerHome() {
-
         return "customer/index";
     }
 

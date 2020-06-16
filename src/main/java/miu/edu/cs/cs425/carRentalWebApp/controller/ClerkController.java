@@ -32,6 +32,11 @@ public class ClerkController {
         this.carService = carService;
     }
 
+    @GetMapping
+    public String displayHome() {
+        return "clerk/index";
+    }
+
     @GetMapping(value = "/list")
     public String displayLisfOfClerks(Model model) {
         List<Clerk> clerks = clerkService.getAllClerck();

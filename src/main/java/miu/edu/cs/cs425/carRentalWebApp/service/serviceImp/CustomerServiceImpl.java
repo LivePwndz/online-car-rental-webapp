@@ -2,6 +2,7 @@ package miu.edu.cs.cs425.carRentalWebApp.service.serviceImp;
 
 import miu.edu.cs.cs425.carRentalWebApp.model.Address;
 import miu.edu.cs.cs425.carRentalWebApp.model.Customer;
+import miu.edu.cs.cs425.carRentalWebApp.model.RoleName;
 import miu.edu.cs.cs425.carRentalWebApp.repository.CustomerRepository;
 import miu.edu.cs.cs425.carRentalWebApp.service.CustomerService;
 import miu.edu.cs.cs425.carRentalWebApp.service.dto.NewCustomerDto;
@@ -49,6 +50,7 @@ public class CustomerServiceImpl implements CustomerService {
         customer.setLastUpdate(LocalDateTime.now());
         customer.setDrivingLicense(newCustomerDto.getDrivingLicense());
         customer.setPhoneNo(newCustomerDto.getPhoneNo());
+        customer.setRoleName(RoleName.CUSTOMER);
 
         Address address = newCustomerDto.getAddress();
 

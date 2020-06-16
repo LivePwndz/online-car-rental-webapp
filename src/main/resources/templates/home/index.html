@@ -5,14 +5,41 @@
     <title>Online Car Rental | Home</title>
 </head>
 <body>
-<nav th:replace="fragments/admin_nav :: admin_nav"></nav>
+<nav th:replace="fragments/home_nav :: home_nav"></nav>
 
 <div style="padding-top:1em;" class="container">
-    <h3>Welcome! Car & Clerk Management</h3>
+    <div>
+        <span class="h2" style="margin-right: 10px;">The Quickest most natural way to rent a car online</span>
+        <a style="line-height: 2;" class="btn btn-outline-success btn-lg" th:href="@{/customer/car/dates?startDate=&endDate=}">Rent Now!</a>
+    </div>
+
     <hr/>
     <div style="font-size: 1em">
-        <img width="100%" th:src="@{/images/car-man-banner.jpg}"/><br/><br/>
-        <p>Use this space to manage <a title="Car Management" th:href="@{/car/list}">cars</a> and <a title="Clerk Management" th:href="@{/clerk/list}">clerks</a> in this online car rental system.</p>
+        <img width="100%" th:src="@{/images/car-cus-banner-white-bg.jpg}"/><br/><br/>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Diverse fleet</h5>
+                    <p class="card-text">Our diverse fleet of cars makes it easy for you to choose the right car for the
+                        job</p>
+                    <a th:href="@{/car/all/list}" class="btn btn-primary">Browse Our Fleet</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Car Delivery/Pickup</h5>
+                    <p class="card-text">
+                        Place your reservation and our team will deliver it at a preferred location.
+                    </p>
+                    <a th:href="@{/customer/car/dates?startDate=&endDate=}" class="btn btn-primary">Make Reservation</a>
+                </div>
+            </div>
+        </div>
     </div>
 
 </div>
