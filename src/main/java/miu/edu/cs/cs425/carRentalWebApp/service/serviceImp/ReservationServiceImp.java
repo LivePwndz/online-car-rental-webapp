@@ -3,6 +3,7 @@ package miu.edu.cs.cs425.carRentalWebApp.service.serviceImp;
 import miu.edu.cs.cs425.carRentalWebApp.model.*;
 import miu.edu.cs.cs425.carRentalWebApp.repository.*;
 import miu.edu.cs.cs425.carRentalWebApp.service.ReservationService;
+import miu.edu.cs.cs425.carRentalWebApp.service.dto.CheckInNotificationDto;
 import miu.edu.cs.cs425.carRentalWebApp.service.dto.CheckoutNotificationDto;
 import miu.edu.cs.cs425.carRentalWebApp.service.dto.NewReservationDto;
 import miu.edu.cs.cs425.carRentalWebApp.service.dto.PlaceRerservationInfoDto;
@@ -23,13 +24,15 @@ public class ReservationServiceImp implements ReservationService {
     private final CustomerRepository customerRepository;
     private final ClerkRepository clerkRepository;
     private final CheckoutRecordRepository checkoutRecordRepository;
+    private final CheckInRecordRepository checkInRecordRepository;
 
-    public ReservationServiceImp(ReservationRepository reservationRepository, CarRepository carRepository, CustomerRepository customerRepository, ClerkRepository clerkRepository, CheckoutRecordRepository checkoutRecordRepository) {
+    public ReservationServiceImp(ReservationRepository reservationRepository, CarRepository carRepository, CustomerRepository customerRepository, ClerkRepository clerkRepository, CheckoutRecordRepository checkoutRecordRepository, CheckInRecordRepository checkInRecordRepository) {
         this.reservationRepository = reservationRepository;
         this.carRepository = carRepository;
         this.customerRepository = customerRepository;
         this.clerkRepository = clerkRepository;
         this.checkoutRecordRepository = checkoutRecordRepository;
+        this.checkInRecordRepository = checkInRecordRepository;
     }
 
     @Override
@@ -86,6 +89,10 @@ public class ReservationServiceImp implements ReservationService {
     @Override
     public CheckoutNotificationDto addNewCheckoutRecord(Long reservationId) {
         CarReservation carReservation = getCarReservation(reservationId);
+        if(!ReservationStatus.PENDING_CHECKOUT.equals(carReservation.getStatus())){
+            throw new IllegalStateException("Reservation status "+carReservation.getStatus()+" not valid for checkout.");
+        }
+
         Clerk clerk = getClerk(1L);
 
         CheckoutRecord checkoutRecord = new CheckoutRecord();
@@ -109,6 +116,36 @@ public class ReservationServiceImp implements ReservationService {
                 , clerk.getFirstName()
                 , ReservationUtils.formatLocalDateToUIString(carReservation.getCreateDate().toLocalDate())
                 , ReservationUtils.formatLocalDateToUIString(carReservation.getEndDate()) );
+    }
+
+    @Override
+    public CheckInNotificationDto addNewCheckInRecord(Long reservationId) {
+        CarReservation carReservation = getCarReservation(reservationId);
+        if(!ReservationStatus.CHECKED_OUT.equals(carReservation.getStatus())){
+            throw new IllegalStateException("Reservation status "+carReservation.getStatus()+" not valid for check-in.");
+        }
+
+        Clerk clerk = getClerk(1L);
+
+        CheckInRecord checkInRecord = new CheckInRecord();
+        checkInRecord.setClerk(clerk);
+        checkInRecord.setReservation(carReservation);
+        checkInRecord.setCreateDate(LocalDateTime.now());
+        checkInRecord.setLastUpdate(LocalDateTime.now());
+
+        CheckInRecord savedCheckInRecord = checkInRecordRepository.save(checkInRecord);
+        Car car = carReservation.getCar();
+        Customer customer = carReservation.getCustomer();
+
+        carReservation.setStatus(ReservationStatus.CHECKED_OUT);
+        carReservation.setLastUpdate(LocalDateTime.now());
+        reservationRepository.save(carReservation);
+
+        return new CheckInNotificationDto(car.getModel()
+                , car.getPlateNo()
+                , customer.getFirstName()
+                , customer.getLastName()
+                , clerk.getFirstName() );
     }
 
     private Clerk getClerk(long clerkId) {

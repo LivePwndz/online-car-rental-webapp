@@ -22,27 +22,29 @@
                     <span class="card-title h5">
                         Check-in Details
                     </span>
-                    <table class="table table-sm  table-borderless" th:object="${checkoutNotificationDto}">
+                    <table class="table table-sm  table-borderless" th:object="${checkInNotificationDto}">
                         <tbody>
                         <tr>
                             <th scope="row">Car</th>
-                            <td th:text="${checkoutNotificationDto.carModel}">2019 Ford Fiesta</td>
+                            <td th:text="${checkInNotificationDto.carModel}">2019 Ford Fiesta</td>
                         </tr>
 
                         <tr>
                             <th scope="row">License Plate</th>
-                            <td th:text="${checkoutNotificationDto.carLicensePlate}">JBS 1782 Jefferson, IA</td>
+                            <td th:text="${checkInNotificationDto.carLicensePlate}">JBS 1782 Jefferson, IA</td>
                         </tr>
 
                         <tr>
                             <th scope="row">Customer Name</th>
-                            <td><span th:text="${checkoutNotificationDto.customerFirstName}">First Name</span> <span th:text="${checkoutNotificationDto.customerLastName}">Last Name</span></td>
+                            <td>
+                                <span th:text="${checkInNotificationDto.customerFirstName}">First Name</span>
+                                <span th:text="${checkInNotificationDto.customerLastName}">Last Name</span></td>
                         </tr>
 
 
                         <tr>
                             <th scope="row">Check-in Clerk Name</th>
-                            <td th:text="${checkoutNotificationDto.checkoutClerkName}">Mr. Trump Pence</td>
+                            <td th:text="${checkInNotificationDto.checkInClerkName}">Mr. Trump Pence</td>
                         </tr>
                         </tbody>
                     </table>

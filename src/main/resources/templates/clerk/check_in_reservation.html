@@ -81,40 +81,40 @@
         <div class="col-sm-6">
             <div class="card">
                 <div class="card-body">
-                    <form class="form-inline" method="post" th:action="@{/clerk/reservation/check-in}" th:object="${newCarCheckoutDto}">
-                        <input type="hidden" name="reservationId" th:value="${newCarCheckoutDto.reservationId}"/>
+                    <form class="form-inline" method="post" th:action="@{/clerk/reservation/check-in}" th:object="${newCarCheckInDto}">
+                        <input type="hidden" name="reservationId" th:value="${newCarCheckInDto.reservationId}"/>
                         <button type="submit" class="btn btn-success btn-block">Check in Car</button>
                     </form>
-                    <table class="table table-sm" th:object="${newCarCheckoutDto}">
+                    <table class="table table-sm" th:object="${newCarCheckInDto}">
                         <tbody>
                         <tr>
                             <th scope="row">Car</th>
-                            <td th:text="${newCarCheckoutDto.carModel}">2019 Ford Fiesta</td>
+                            <td th:text="${newCarCheckInDto.carModel}">2019 Ford Fiesta</td>
                         </tr>
 
                         <tr>
                             <th scope="row">License Plate</th>
-                            <td th:text="${newCarCheckoutDto.carLicensePlate}">JBS 1782 Jefferson, IA</td>
+                            <td th:text="${newCarCheckInDto.carLicensePlate}">JBS 1782 Jefferson, IA</td>
                         </tr>
 
                         <tr>
                             <th scope="row">Customer Name</th>
-                            <td><span th:text="${newCarCheckoutDto.customerFirstName}">First Name</span> <span th:text="${newCarCheckoutDto.customerLastName}">Last Name</span></td>
+                            <td>
+                                <span th:text="${newCarCheckInDto.customerFirstName}">First Name</span>
+                                <span th:text="${newCarCheckInDto.customerLastName}">Last Name</span>
+                            </td>
                         </tr>
-
                         <tr>
                             <th scope="row">Reservation Code</th>
-                            <td th:text="${newCarCheckoutDto.reservationCode}">MLNC-22020-06-23</td>
+                            <td th:text="${newCarCheckInDto.reservationCode}">MLNC-22020-06-23</td>
                         </tr>
-
                         <tr>
-                            <th scope="row">Checkout Clerk Name</th>
-                            <td >Mr. Trump Pence</td>
+                            <th scope="row">Previously Checked Out by</th>
+                            <td th:text="${newCarCheckInDto.checkoutClerkName}">Mr. Trump Pence</td>
                         </tr>
-
                         <tr>
-                            <th scope="row">Checkout Date</th>
-                            <td >Jun 20, 2020</td>
+                            <th scope="row">Previously Checked out on Date</th>
+                            <td th:text="${newCarCheckInDto.checkoutDateStr}">Jun 20, 2020</td>
                         </tr>
 
                         </tbody>

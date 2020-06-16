@@ -10,27 +10,27 @@ public class CheckoutRecord {
     private Long checkoutId;
     @NotNull(message="Reservation Id can't be empty")
     @OneToOne
-    private CarReservation reservationId;
+    private CarReservation reservation;
     @NotNull(message="Clerk Id can't be empty")
     @ManyToOne
-    private Clerk clerckId;
+    private Clerk clerk;
     private LocalDateTime createDate;
     private LocalDateTime lastUpdate;
 
     public CheckoutRecord() {
     }
 
-    public CheckoutRecord(CarReservation reservationId, Clerk clerckId, LocalDateTime createDate, LocalDateTime lastUpdate) {
-        this.reservationId = reservationId;
-        this.clerckId = clerckId;
+    public CheckoutRecord(CarReservation reservation, Clerk clerk, LocalDateTime createDate, LocalDateTime lastUpdate) {
+        this.reservation = reservation;
+        this.clerk = clerk;
         this.createDate = createDate;
         this.lastUpdate = lastUpdate;
     }
 
-    public CheckoutRecord(Long checkoutId, CarReservation reservationId, Clerk clerckId, LocalDateTime createDate, LocalDateTime lastUpdate) {
+    public CheckoutRecord(Long checkoutId, CarReservation reservation, Clerk clerk, LocalDateTime createDate, LocalDateTime lastUpdate) {
         this.checkoutId = checkoutId;
-        this.reservationId = reservationId;
-        this.clerckId = clerckId;
+        this.reservation = reservation;
+        this.clerk = clerk;
         this.createDate = createDate;
         this.lastUpdate = lastUpdate;
     }
@@ -43,20 +43,20 @@ public class CheckoutRecord {
         this.checkoutId = checkoutId;
     }
 
-    public CarReservation getReservationId() {
-        return reservationId;
+    public CarReservation getReservation() {
+        return reservation;
     }
 
     public void setReservation(CarReservation reservationId) {
-        this.reservationId = reservationId;
+        this.reservation = reservationId;
     }
 
-    public Clerk getClerckId() {
-        return clerckId;
+    public Clerk getClerk() {
+        return clerk;
     }
 
     public void setClerk(Clerk clerckId) {
-        this.clerckId = clerckId;
+        this.clerk = clerckId;
     }
 
     public LocalDateTime getCreateDate() {
@@ -79,8 +79,8 @@ public class CheckoutRecord {
     public String toString() {
         return "CheckoutRecord{" +
                 "checkoutId=" + checkoutId +
-                ", reservationId=" + reservationId +
-                ", clerckId=" + clerckId +
+                ", reservationId=" + reservation +
+                ", clerckId=" + clerk +
                 ", createDate=" + createDate +
                 ", updateDate=" + lastUpdate +
                 '}';

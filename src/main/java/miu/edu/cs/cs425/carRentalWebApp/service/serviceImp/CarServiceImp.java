@@ -2,10 +2,13 @@ package miu.edu.cs.cs425.carRentalWebApp.service.serviceImp;
 
 import miu.edu.cs.cs425.carRentalWebApp.model.Car;
 import miu.edu.cs.cs425.carRentalWebApp.model.CarReservation;
+import miu.edu.cs.cs425.carRentalWebApp.model.CheckoutRecord;
 import miu.edu.cs.cs425.carRentalWebApp.model.Customer;
 import miu.edu.cs.cs425.carRentalWebApp.repository.CarRepository;
+import miu.edu.cs.cs425.carRentalWebApp.repository.CheckoutRecordRepository;
 import miu.edu.cs.cs425.carRentalWebApp.service.CarService;
 import miu.edu.cs.cs425.carRentalWebApp.service.dto.CarReservationDto;
+import miu.edu.cs.cs425.carRentalWebApp.service.dto.NewCarCheckInDto;
 import miu.edu.cs.cs425.carRentalWebApp.service.dto.NewCarCheckoutDto;
 import org.springframework.stereotype.Service;
 
@@ -21,10 +24,12 @@ import java.util.Optional;
 
 @Service
 public class CarServiceImp implements CarService {
-    private CarRepository carRepository;
+    private final CarRepository carRepository;
+    private final CheckoutRecordRepository checkoutRecordRepository;
 
-    public CarServiceImp(CarRepository carRepository) {
+    public CarServiceImp(CarRepository carRepository, CheckoutRecordRepository checkoutRecordRepository) {
         this.carRepository = carRepository;
+        this.checkoutRecordRepository = checkoutRecordRepository;
     }
 
     @Override
@@ -116,6 +121,25 @@ public class CarServiceImp implements CarService {
                 , customer.getDrivingLicense(), carReservation.getCode()
                 , ReservationUtils.formatLocalDateToUIString(carReservation.getCreateDate().toLocalDate())
                 , ReservationUtils.formatLocalDateToUIString(carReservation.getEndDate()));
+    }
+
+    @Override
+    public NewCarCheckInDto getNewCheckInDto(CarReservation carReservation) {
+        Car car = carReservation.getCar();
+        Customer customer = carReservation.getCustomer();
+        Optional<CheckoutRecord> checkoutRecordOptional = checkoutRecordRepository.findByReservation(carReservation);
+        if(!checkoutRecordOptional.isPresent()) throw new EntityNotFoundException("Checkout record for reservation with id "+carReservation.getId()+" not found.");
+
+        CheckoutRecord checkoutRecord = checkoutRecordOptional.get();
+        return new NewCarCheckInDto(
+                carReservation.getId()
+                , car.getModel()
+                , car.getPlateNo()
+                , customer.getFirstName()
+                , customer.getLastName()
+                , customer.getDrivingLicense()
+                , checkoutRecord.getClerk().getFirstName()
+                , ReservationUtils.formatLocalDateToUIString(checkoutRecord.getCreateDate().toLocalDate()));
     }
 
 

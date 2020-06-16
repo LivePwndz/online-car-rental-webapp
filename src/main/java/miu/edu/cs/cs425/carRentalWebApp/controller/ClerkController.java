@@ -7,9 +7,7 @@ import miu.edu.cs.cs425.carRentalWebApp.model.ReservationStatus;
 import miu.edu.cs.cs425.carRentalWebApp.service.CarService;
 import miu.edu.cs.cs425.carRentalWebApp.service.ClerkService;
 import miu.edu.cs.cs425.carRentalWebApp.service.ReservationService;
-import miu.edu.cs.cs425.carRentalWebApp.service.dto.CarReservationDto;
-import miu.edu.cs.cs425.carRentalWebApp.service.dto.CheckoutNotificationDto;
-import miu.edu.cs.cs425.carRentalWebApp.service.dto.NewCarCheckoutDto;
+import miu.edu.cs.cs425.carRentalWebApp.service.dto.*;
 import miu.edu.cs.cs425.carRentalWebApp.service.serviceImp.ReservationUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -84,7 +82,7 @@ public class ClerkController {
         if (reservationStatus.equals(ReservationStatus.PENDING_CHECKOUT)) {
             return getPendingCheckoutReservationDetails(model, carReservation);
         } else{
-            return getCheckoutReservationDetails(model, carReservation);
+            return getCheckInReservationDetails(model, carReservation);
         }
 
 
@@ -102,21 +100,21 @@ public class ClerkController {
         return "clerk/checkout_reservation";
     }
 
-    private String getCheckoutReservationDetails(Model model, CarReservation carReservation) {
+    private String getCheckInReservationDetails(Model model, CarReservation carReservation) {
         String startDateStr = ReservationUtils.formatLocalDateToStandardString(carReservation.getStartDate());
         String endDateStr = ReservationUtils.formatLocalDateToStandardString(carReservation.getEndDate());
-        CarReservationDto reservationDto = carService.getReservationDto(carReservation.getCar().getId(), startDateStr, endDateStr);
 
-        NewCarCheckoutDto newCarCheckoutDto = carService.getNewCheckoutDto(carReservation);
+        CarReservationDto reservationDto = carService.getReservationDto(carReservation.getCar().getId(), startDateStr, endDateStr);
+        NewCarCheckInDto newCarCheckInDto = carService.getNewCheckInDto(carReservation);
+
         model.addAttribute("reservationDto", reservationDto);
-        model.addAttribute("newCarCheckoutDto", newCarCheckoutDto);
+        model.addAttribute("newCarCheckInDto", newCarCheckInDto);
 
         return "clerk/check_in_reservation";
     }
 
     @PostMapping(value = "/reservation/checkout")
     public String checkoutCar(Model model, @ModelAttribute("newCarCheckoutDto") NewCarCheckoutDto newCarCheckoutDto) {
-        // TODO add new car checkout record
         CheckoutNotificationDto checkoutNotificationDto = reservationService.addNewCheckoutRecord(newCarCheckoutDto.getReservationId());
         model.addAttribute("checkoutNotificationDto", checkoutNotificationDto);
         return "clerk/checkout_reservation_notification";
@@ -124,9 +122,8 @@ public class ClerkController {
 
     @PostMapping(value = "/reservation/check-in")
     public String checkInCar(Model model, @ModelAttribute("newCarCheckoutDto") NewCarCheckoutDto newCarCheckoutDto) {
-        // TODO add new car checkout record
-
-        model.addAttribute("checkoutNotificationDto", new CheckoutNotificationDto());
+        CheckInNotificationDto checkInNotificationDto = reservationService.addNewCheckInRecord(newCarCheckoutDto.getReservationId());
+        model.addAttribute("checkInNotificationDto", checkInNotificationDto);
         return "clerk/check_in_reservation_notification";
     }
 

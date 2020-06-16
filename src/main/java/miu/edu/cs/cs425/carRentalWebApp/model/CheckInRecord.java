@@ -6,14 +6,14 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 @Entity
-public class CarCheckInRecord {
+public class CheckInRecord {
 @Id
 @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @OneToOne
     @JoinColumn(name = "checkIn_reservation_id_fk")
     @NotNull(message="reservation cant't be null")
-    private CarReservation carReservation;
+    private CarReservation reservation;
     @ManyToOne
     @JoinColumn(name = "checkIn_clerk_id_fk")
     @NotNull(message="clerk cant't be null")
@@ -25,19 +25,19 @@ public class CarCheckInRecord {
     @DateTimeFormat(pattern = "yyyy-MM-dd-HH-mm-ss.zzz")
     private LocalDateTime lastUpdate;
 
-    public CarCheckInRecord() {
+    public CheckInRecord() {
            }
 
-    public CarCheckInRecord(Long id, CarReservation reservationId, Clerk clerk, LocalDateTime createDate, LocalDateTime lastUpdate) {
+    public CheckInRecord(Long id, CarReservation reservationId, Clerk clerk, LocalDateTime createDate, LocalDateTime lastUpdate) {
         this.id = id;
-        carReservation = reservationId;
+        reservation = reservationId;
         this.clerk = clerk;
         this.createDate = createDate;
         this.lastUpdate = lastUpdate;
     }
 
-    public CarCheckInRecord(CarReservation reservationId, Clerk clerk, LocalDateTime createDate, LocalDateTime lastUpdate) {
-        carReservation = reservationId;
+    public CheckInRecord(CarReservation reservationId, Clerk clerk, LocalDateTime createDate, LocalDateTime lastUpdate) {
+        reservation = reservationId;
         this.clerk = clerk;
         this.createDate = createDate;
         this.lastUpdate = lastUpdate;
@@ -51,12 +51,12 @@ public class CarCheckInRecord {
         this.id = id;
     }
 
-    public CarReservation getCarReservation() {
-        return carReservation;
+    public CarReservation getReservation() {
+        return reservation;
     }
 
-    public void setCarReservation(CarReservation carReservation) {
-        this.carReservation = carReservation;
+    public void setReservation(CarReservation reservation) {
+        this.reservation = reservation;
     }
 
     public Clerk getClerk() {
@@ -87,7 +87,7 @@ public class CarCheckInRecord {
     public String toString() {
         return "CheckInRecord{" +
                 "id=" + id +
-                ", ReservationId=" + carReservation +
+                ", ReservationId=" + reservation +
                 ", clerkId=" + clerk +
                 ", createDate=" + createDate +
                 ", lastUpdate=" + lastUpdate +

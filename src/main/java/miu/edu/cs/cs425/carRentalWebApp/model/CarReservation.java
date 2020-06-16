@@ -21,7 +21,7 @@ public class CarReservation {
     @Transient
     private BigDecimal cost;
 
-    private ReservationStatus status;
+    private ReservationStatus status = ReservationStatus.DRAFT;
 
     @NotNull(message = "Start date can't be null")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
