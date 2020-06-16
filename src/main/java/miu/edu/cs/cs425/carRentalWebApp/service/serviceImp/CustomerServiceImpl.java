@@ -6,6 +6,7 @@ import miu.edu.cs.cs425.carRentalWebApp.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -43,23 +44,35 @@ public class CustomerServiceImpl implements CustomerService {
 
         @Override
         public Customer updateCustomer(Customer customer) {
-            Customer existingCustomer= customerRepository.findById(customer.getId()).orElse(null);
-            if(existingCustomer!=null){
-                existingCustomer.setFirstName(customer.getFirstName());
-                existingCustomer.setMiddleName(customer.getMiddleName());
-                existingCustomer.setLastName(customer.getLastName());
-                existingCustomer.setEmail(customer.getEmail());
-                existingCustomer.setLastUpdate(LocalDateTime.now());
-                existingCustomer.setDrivingLicense(customer.getDrivingLicense());
-                existingCustomer.setPhoneNo(customer.getPhoneNo());
-                existingCustomer.getAddress().setHouseNumber(customer.getAddress().getHouseNumber());
-                existingCustomer.getAddress().setCity(customer.getAddress().getCity());
-                existingCustomer.getAddress().setState(customer.getAddress().getState());
-                existingCustomer.getAddress().setZipCode(customer.getAddress().getZipCode());
-                existingCustomer.getAddress().setStreet(customer.getAddress().getStreet());
-                return customerRepository.save(existingCustomer);
-        }
+            Optional<Customer> existingCustomerOptional = customerRepository.findById(customer.getId());
+            if(!existingCustomerOptional.isPresent()){
+                throw new EntityNotFoundException("Customer with id "+customer.getId()+" not found.");
+            }
 
-        return null;
-    }
+            Customer existingCustomer = existingCustomerOptional.get();
+
+            String email = customer.getEmail();
+            Optional<Customer> customerOptional = customerRepository.findByEmail(email);
+            if(customerOptional.isPresent()){
+                Customer customerByEmail = customerOptional.get();
+                if(!customerByEmail.getId().equals(existingCustomer.getId())){
+                    throw new IllegalStateException("Customer with email "+email+" already exist.");
+                }
+            }
+            
+            existingCustomer.setFirstName(customer.getFirstName());
+            existingCustomer.setMiddleName(customer.getMiddleName());
+            existingCustomer.setLastName(customer.getLastName());
+            existingCustomer.setEmail(customer.getEmail());
+            existingCustomer.setLastUpdate(LocalDateTime.now());
+            existingCustomer.setDrivingLicense(customer.getDrivingLicense());
+            existingCustomer.setPhoneNo(customer.getPhoneNo());
+            existingCustomer.getAddress().setHouseNumber(customer.getAddress().getHouseNumber());
+            existingCustomer.getAddress().setCity(customer.getAddress().getCity());
+            existingCustomer.getAddress().setState(customer.getAddress().getState());
+            existingCustomer.getAddress().setZipCode(customer.getAddress().getZipCode());
+            existingCustomer.getAddress().setStreet(customer.getAddress().getStreet());
+            return customerRepository.save(existingCustomer);
+
+        }
 }
