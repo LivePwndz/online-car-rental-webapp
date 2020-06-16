@@ -16,15 +16,17 @@ public class Customer {
     private Long id;
     @NotBlank(message = "Drving license can not be empty")
     private String drivingLicense;
-    @NotBlank(message="First Name can't be empty")
+    @NotBlank(message = "First Name can't be empty")
     private String firstName;
     private String middleName;
-    @NotBlank(message="Last Name can't be empty")
+    @NotBlank(message = "Last Name can't be empty")
     private String lastName;
     @NotBlank(message = "Phone number is required")
     private String phoneNo;
-    @NotBlank(message="email can't be empty")
+    @NotBlank(message = "email can't be empty")
     private String email;
+    private String password;
+
     @NotNull(message = "Create date can't be null")
     @DateTimeFormat(pattern = "yyyy-MM-dd-HH-mm-ss.zzz")
     private LocalDateTime createDate;
@@ -36,14 +38,14 @@ public class Customer {
     @JoinColumn(name = "address_id", nullable = false)
     private Address address;
 
-    @OneToMany( mappedBy = "customer")
+    @OneToMany(mappedBy = "customer")
     private List<CarReservation> carReservations;
 
     public Customer() {
     }
 
     public Customer(@NotNull String drivingLicense, @NotBlank(message = "First Name can't be empty") String firstName, String middleName, @NotBlank(message = "Last Name can't be empty") String lastName,
-                    @NotBlank(message="Phone number is required") String phoneNo, @NotBlank(message = "email can't be empty") String email, @NotNull(message = "Create date can't be null") LocalDateTime createDate, @NotNull(message = "Last Update date can't be null") LocalDateTime lastUpdate, Address address) {
+                    @NotBlank(message = "Phone number is required") String phoneNo, @NotBlank(message = "email can't be empty") String email, @NotNull(message = "Create date can't be null") LocalDateTime createDate, @NotNull(message = "Last Update date can't be null") LocalDateTime lastUpdate, Address address) {
         this.drivingLicense = drivingLicense;
         this.firstName = firstName;
         this.middleName = middleName;
@@ -56,13 +58,13 @@ public class Customer {
     }
 
     public Customer(Long id, @NotNull String drivingLicense, @NotBlank(message = "First Name can't be empty") String firstName, String middleName, @NotBlank(message = "Last Name can't be empty") String lastName,
-                    @NotBlank(message="Phone number is required") String phoneNo, @NotBlank(message = "email can't be empty") String email, @NotNull(message = "Create date can't be null") LocalDateTime createDate, @NotNull(message = "Last Update date can't be null") LocalDateTime lastUpdate, Address address) {
+                    @NotBlank(message = "Phone number is required") String phoneNo, @NotBlank(message = "email can't be empty") String email, @NotNull(message = "Create date can't be null") LocalDateTime createDate, @NotNull(message = "Last Update date can't be null") LocalDateTime lastUpdate, Address address) {
         this.id = id;
         this.drivingLicense = drivingLicense;
         this.firstName = firstName;
         this.middleName = middleName;
         this.lastName = lastName;
-        this.phoneNo=phoneNo;
+        this.phoneNo = phoneNo;
         this.email = email;
         this.createDate = createDate;
         this.lastUpdate = lastUpdate;
@@ -109,9 +111,13 @@ public class Customer {
         this.lastName = lastName;
     }
 
-    public String getPhoneNo() { return phoneNo; }
+    public String getPhoneNo() {
+        return phoneNo;
+    }
 
-    public void setPhoneNo(String phoneNo) { this.phoneNo = phoneNo; }
+    public void setPhoneNo(String phoneNo) {
+        this.phoneNo = phoneNo;
+    }
 
     public String getEmail() {
         return email;
@@ -151,6 +157,14 @@ public class Customer {
 
     public void setCarReservations(List<CarReservation> carReservations) {
         this.carReservations = carReservations;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     @Override

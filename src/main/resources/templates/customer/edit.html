@@ -8,22 +8,46 @@
 <nav th:replace="fragments/customer_nav :: customer_nav"></nav>
 <div style="padding-top:1em;" class="container">
     <div style="margin-bottom: 1em;">
-        <h2>Add Customer</h2>
+        <h2>Edit Customer</h2>
     </div>
 
     <form id="newCustomerForm" method="post" th:action="@{/customer/update}" th:object="${customer}">
         <fieldset class="form-group">
             <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input id="email" name="email" type="email" class="form-control" th:value="${customer.email}"
+                               autofocus required>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input id="password" name="password" type="password" class="form-control" autofocus required>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="confirmPassword">Confirm Password</label>
+                        <input id="confirmPassword" name="confirmPassword" type="password" class="form-control"
+                               autofocus required>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+        <fieldset class="form-group">
+            <div class="row">
                 <div class="col-md-12">
                     <div class="form-group">
-                        <label for="id">Customer Id </label>
-                        <input id="id" name="id" type="text" class="form-control" th:value = "${customer.id}" readonly autofocus required>
-
+                        <input id="id" name="id" hidden type="text" class="form-control" th:value="${customer.id}"
+                               readonly autofocus>
                     </div>
 
                     <div class="form-group">
                         <label for="drivingLicense">Driving License</label>
-                        <input id="drivingLicense" name="drivingLicense" type="text" class="form-control" th:value = "${customer.drivingLicense}" autofocus required>
+                        <input id="drivingLicense" name="drivingLicense" type="text" class="form-control"
+                               th:value="${customer.drivingLicense}" autofocus required>
 
                     </div>
                 </div>
@@ -32,73 +56,67 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label for="firstName">First Name</label>
-                        <input id="firstName" name="firstName" type="text" class="form-control" th:value = "${customer.firstName}"                                required>
+                        <input id="firstName" name="firstName" type="text" class="form-control"
+                               th:value="${customer.firstName}" required>
 
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
                         <label for="middleName">Middle Name</label>
-                        <input id="middleName" name="middleName" type="text" class="form-control" th:value = "${customer.middleName}"                                required>
+                        <input id="middleName" name="middleName" type="text" class="form-control"
+                               th:value="${customer.middleName}">
                     </div>
                 </div>
-
                 <div class="col-md-4">
                     <div class="form-group">
                         <label for="lastName">Last Name</label>
-                        <input id="lastName" name="lastName" type="text" class="form-control" th:value = "${customer.lastName}"                                required>
+                        <input id="lastName" name="lastName" type="text" class="form-control"
+                               th:value="${customer.lastName}" required>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
                         <label for="phoneNo">Phone No</label>
-                        <input id="phoneNo" name="phoneNo" type="text" class="form-control" th:value = "${customer.phoneNo}"                                required>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label for="email"> Email</label>
-                        <input id="email" name="email" type="text" class="form-control" th:value = "${customer.email}"                                required>
+                        <input id="phoneNo" name="phoneNo" type="text" class="form-control"
+                               th:value="${customer.phoneNo}" required>
                     </div>
                 </div>
 
             </div>
         </fieldset>
-
         <fieldset class="form-group">
             <legend>Address</legend>
-            <!-- div class="form-group">
-                <label th:for="${'address.houseNumber'}">House Number</label>
-                <input type="text" class="form-control" name="houseNumber" id="houseNumber" th:field="*{address.houseNumber}" >
-            </div-->
-
             <div class="form-group">
                 <label for="houseNumber">House Number</label>
-                <input type="text" class="form-control" name="address.houseNumber" id="houseNumber" th:value="${customer.address.houseNumber}" >
+                <input type="text" class="form-control" name="address.houseNumber" id="houseNumber"
+                       th:value="${customer.address.houseNumber}" required>
             </div>
             <div class="form-group">
                 <label for="street">Street</label>
-                <input type="text" class="form-control" name="address.street" id="street" placeholder="1234 Main St" th:value = "${customer.address.street}">
+                <input type="text" class="form-control" name="address.street" id="street" placeholder="1234 Main St"
+                       th:value="${customer.address.street}" required>
             </div>
 
             <div class="form-row">
                 <div class="form-group col-md-5">
                     <label for="city">City</label>
-                    <input type="text" class="form-control" name="address.city" id="city" th:value = "${customer.address.city}">
+                    <input type="text" class="form-control" name="address.city" id="city"
+                           th:value="${customer.address.city}" required>
                 </div>
                 <div class="form-group col-md-5">
                     <label for="state">State</label>
-                    <select id="state" class="form-control" name="address.state" th:value = "${customer.address.state}">
-                        <option selected>Choose...</option>
-                        <option>Iowa</option>
+                    <select id="state" class="form-control" name="address.state" th:value="${customer.address.state}" required>
+                        <option selected>Iowa</option>
                         <option>Illinois</option>
                         <option>California</option>
                         <option>Texas</option>
                     </select>
                 </div>
                 <div class="form-group col-md-2">
-                    <label for="zipCode">ZIP code</label>
-                    <input type="text" class="form-control" name="address.zipCode" id="zipCode" th:value = "${customer.address.zipCode}">
+                    <label for="zipCode">ZIP</label>
+                    <input type="text" class="form-control" name="address.zipCode" id="zipCode"
+                           th:value="${customer.address.zipCode}" required>
                 </div>
             </div>
 

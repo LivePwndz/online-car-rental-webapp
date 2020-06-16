@@ -59,7 +59,7 @@ public class CustomerServiceImpl implements CustomerService {
                     throw new IllegalStateException("Customer with email "+email+" already exist.");
                 }
             }
-            
+
             existingCustomer.setFirstName(customer.getFirstName());
             existingCustomer.setMiddleName(customer.getMiddleName());
             existingCustomer.setLastName(customer.getLastName());
