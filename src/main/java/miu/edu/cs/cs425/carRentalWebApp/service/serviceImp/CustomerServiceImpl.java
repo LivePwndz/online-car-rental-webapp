@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
+
 @Service
 public class CustomerServiceImpl implements CustomerService {
    @Autowired
@@ -24,6 +26,12 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public Customer addCustomer(Customer customer) {
+        String email = customer.getEmail();
+        Optional<Customer> customerOptional = customerRepository.findByEmail(email);
+        if(customerOptional.isPresent()){
+            throw new IllegalStateException("Customer with email "+email+" already exist.");
+        }
+
         return customerRepository.save(customer);
     }
 
