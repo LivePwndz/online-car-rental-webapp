@@ -86,16 +86,16 @@ public class CustomerController {
     public ModelAndView editCustomerForm(@PathVariable Long id) {
 
         ModelAndView modelAndView = new ModelAndView("customer/edit");
-        Customer customer = customerService.getCustomerById(id);
+        NewCustomerDto customer = customerService.getCustomerById(id);
         modelAndView.addObject("customer", customer);
 
         return modelAndView;
     }
 
     @PostMapping(value = {"/customer/update"})
-    public String updateCustomer(@ModelAttribute("customer") Customer customer) {
+    public String updateCustomer(@ModelAttribute("customer") NewCustomerDto newCustomerDto) {
 
-        Customer savedCustomer = customerService.updateCustomer(customer);
+        NewCustomerDto savedCustomer = customerService.updateCustomer(newCustomerDto);
         return "redirect:/customer/list";
     }
 

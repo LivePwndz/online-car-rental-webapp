@@ -40,12 +40,13 @@ public class CheckoutRecordTest {
         address.setState("IOWA");
 
         Customer customer = new Customer();
+        customer.setUser( new User());
         customer.setDrivingLicense("I12ABBB");
-        customer.setFirstName("Alex");
-        customer.setMiddleName("James");
-        customer.setLastName("Smith");
+        customer.getUser().setFirstName("Alex");
+        customer.getUser().setMiddleName("James");
+        customer.getUser().setLastName("Smith");
         customer.setPhoneNo("+1000000000");
-        customer.setEmail(email);
+        customer.getUser().setEmail(email);
         customer.setCreateDate(LocalDateTime.now());
         customer.setLastUpdate(LocalDateTime.now());
         customer.setAddress(address);

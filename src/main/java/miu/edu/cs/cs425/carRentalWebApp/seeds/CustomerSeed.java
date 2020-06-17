@@ -3,6 +3,7 @@ package miu.edu.cs.cs425.carRentalWebApp.seeds;
 import miu.edu.cs.cs425.carRentalWebApp.model.Address;
 import miu.edu.cs.cs425.carRentalWebApp.model.Customer;
 import miu.edu.cs.cs425.carRentalWebApp.model.RoleName;
+import miu.edu.cs.cs425.carRentalWebApp.model.User;
 import miu.edu.cs.cs425.carRentalWebApp.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -33,12 +34,14 @@ public class CustomerSeed implements CommandLineRunner, Ordered {
     }
 
     Customer customerSeederForLogin() {
-        Customer customer = initCustomer("andy1@onlinecarrental.com");
+        Customer customer = initCustomer("andy@online.com");
         customer.setDrivingLicense("IA-30929-NORICH-K");
-        customer.setFirstName("Andualema");
-        customer.setLastName("TheMan");
-        customer.setPassword(passwordEncoder.encode("aaa"));
-        customer.setRoleName(RoleName.CUSTOMER);
+
+
+        customer.getUser().setFirstName("Andualema");
+        customer.getUser().setLastName("TheMan");
+        customer.getUser().setPassword(passwordEncoder.encode("aaa"));
+        customer.getUser().setRoleName(RoleName.CUSTOMER);
         return customerRepository.save(customer);
     }
 
@@ -51,12 +54,22 @@ public class CustomerSeed implements CommandLineRunner, Ordered {
         address.setState("IOWA");
 
         Customer customer = new Customer();
+        User user = new User();
+        user.setPassword("");
+        user.setEmail(email);
+        user.setRoleName(RoleName.CUSTOMER);
+        user.setCreateDate(LocalDateTime.now());
+        user.setLastUpdate(LocalDateTime.now());
+
+        customer.setUser(user);
+
+
         customer.setDrivingLicense("I12ABC");
-        customer.setFirstName("Alex");
-        customer.setMiddleName("James");
-        customer.setLastName("Smith");
+        customer.getUser().setFirstName("Alex");
+        customer.getUser().setMiddleName("James");
+        customer.getUser().setLastName("Smith");
         customer.setPhoneNo("+1000000000");
-        customer.setEmail(email);
+        customer.getUser().setEmail(email);
         customer.setCreateDate(LocalDateTime.now());
         customer.setLastUpdate(LocalDateTime.now());
         customer.setAddress(address);

@@ -111,8 +111,8 @@ public class ReservationServiceImp implements ReservationService {
 
         return new CheckoutNotificationDto(car.getModel()
                 , car.getPlateNo()
-                , customer.getFirstName()
-                , customer.getLastName()
+                , customer.getUser().getFirstName()
+                , customer.getUser().getLastName()
                 , clerk.getFirstName()
                 , ReservationUtils.formatLocalDateToUIString(carReservation.getCreateDate().toLocalDate())
                 , ReservationUtils.formatLocalDateToUIString(carReservation.getEndDate()) );
@@ -143,8 +143,8 @@ public class ReservationServiceImp implements ReservationService {
 
         return new CheckInNotificationDto(car.getModel()
                 , car.getPlateNo()
-                , customer.getFirstName()
-                , customer.getLastName()
+                , customer.getUser().getFirstName()
+                , customer.getUser().getLastName()
                 , clerk.getFirstName() );
     }
 

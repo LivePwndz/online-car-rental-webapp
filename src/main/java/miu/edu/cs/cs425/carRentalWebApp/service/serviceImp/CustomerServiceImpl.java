@@ -3,6 +3,7 @@ package miu.edu.cs.cs425.carRentalWebApp.service.serviceImp;
 import miu.edu.cs.cs425.carRentalWebApp.model.Address;
 import miu.edu.cs.cs425.carRentalWebApp.model.Customer;
 import miu.edu.cs.cs425.carRentalWebApp.model.RoleName;
+import miu.edu.cs.cs425.carRentalWebApp.model.User;
 import miu.edu.cs.cs425.carRentalWebApp.repository.CustomerRepository;
 import miu.edu.cs.cs425.carRentalWebApp.service.CustomerService;
 import miu.edu.cs.cs425.carRentalWebApp.service.dto.NewCustomerDto;
@@ -32,14 +33,18 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public Customer getCustomerById(Long id) {
-        return customerRepository.findById(id).orElse(null);
+    public NewCustomerDto getCustomerById(Long id) {
+        Optional<Customer> customerOptional = customerRepository.findById(id);
+        if (!customerOptional.isPresent()) {
+            throw new EntityNotFoundException("Customer with id " + id + " not found.");
+        }
+        return initNewCustomerDto(customerOptional.get());
     }
 
     @Override
     public NewCustomerDto addCustomer(NewCustomerDto newCustomerDto) {
         String email = newCustomerDto.getEmail();
-        Optional<Customer> customerOptional = customerRepository.findByEmail(email);
+        Optional<Customer> customerOptional = customerRepository.findByUserEmail(email);
         if (customerOptional.isPresent()) {
             throw new IllegalStateException("Customer with email " + email + " already exist.");
         }
@@ -49,29 +54,37 @@ public class CustomerServiceImpl implements CustomerService {
         }
 
         Customer customer = new Customer();
-        customer.setFirstName(newCustomerDto.getFirstName());
-        customer.setMiddleName(newCustomerDto.getMiddleName());
-        customer.setLastName(newCustomerDto.getLastName());
-        customer.setEmail(newCustomerDto.getEmail());
-        customer.setPassword(passwordEncoder.encode(newCustomerDto.getPassword()));
+        customer.setUser(new User());
+
+        customer.getUser().setFirstName(newCustomerDto.getFirstName());
+        customer.getUser().setMiddleName(newCustomerDto.getMiddleName());
+        customer.getUser().setLastName(newCustomerDto.getLastName());
+        customer.getUser().setEmail(newCustomerDto.getEmail());
+        customer.getUser().setPassword(passwordEncoder.encode(newCustomerDto.getPassword()));
         customer.setCreateDate(LocalDateTime.now());
         customer.setLastUpdate(LocalDateTime.now());
+        customer.getUser().setCreateDate(LocalDateTime.now());
+        customer.getUser().setLastUpdate(LocalDateTime.now());
         customer.setDrivingLicense(newCustomerDto.getDrivingLicense());
         customer.setPhoneNo(newCustomerDto.getPhoneNo());
-        customer.setRoleName(RoleName.CUSTOMER);
+        customer.getUser().setRoleName(RoleName.CUSTOMER);
 
         Address address = newCustomerDto.getAddress();
 
         customer.setAddress(address);
         Customer savedCustomer = customerRepository.save(customer);
 
+        return initNewCustomerDto(savedCustomer);
+    }
+
+    private NewCustomerDto initNewCustomerDto(Customer savedCustomer) {
         return new NewCustomerDto(savedCustomer.getId()
                 , savedCustomer.getDrivingLicense()
-                , savedCustomer.getFirstName()
-                , savedCustomer.getMiddleName()
-                , savedCustomer.getLastName()
+                , savedCustomer.getUser().getFirstName()
+                , savedCustomer.getUser().getMiddleName()
+                , savedCustomer.getUser().getLastName()
                 , savedCustomer.getPhoneNo()
-                , savedCustomer.getEmail()
+                , savedCustomer.getUser().getEmail()
                 , null
                 , null
                 , savedCustomer.getCreateDate()
@@ -86,16 +99,16 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public Customer updateCustomer(Customer customer) {
-        Optional<Customer> existingCustomerOptional = customerRepository.findById(customer.getId());
+    public NewCustomerDto updateCustomer(NewCustomerDto newCustomerDto) {
+        Optional<Customer> existingCustomerOptional = customerRepository.findById(newCustomerDto.getId());
         if (!existingCustomerOptional.isPresent()) {
-            throw new EntityNotFoundException("Customer with id " + customer.getId() + " not found.");
+            throw new EntityNotFoundException("Customer with id " + newCustomerDto.getId() + " not found.");
         }
 
         Customer existingCustomer = existingCustomerOptional.get();
 
-        String email = customer.getEmail();
-        Optional<Customer> customerOptional = customerRepository.findByEmail(email);
+        String email = newCustomerDto.getEmail();
+        Optional<Customer> customerOptional = customerRepository.findByUserEmail(email);
         if (customerOptional.isPresent()) {
             Customer customerByEmail = customerOptional.get();
             if (!customerByEmail.getId().equals(existingCustomer.getId())) {
@@ -103,19 +116,22 @@ public class CustomerServiceImpl implements CustomerService {
             }
         }
 
-        existingCustomer.setFirstName(customer.getFirstName());
-        existingCustomer.setMiddleName(customer.getMiddleName());
-        existingCustomer.setLastName(customer.getLastName());
-        existingCustomer.setEmail(customer.getEmail());
+        existingCustomer.getUser().setFirstName(newCustomerDto.getFirstName());
+        existingCustomer.getUser().setMiddleName(newCustomerDto.getMiddleName());
+        existingCustomer.getUser().setLastName(newCustomerDto.getLastName());
+        existingCustomer.getUser().setEmail(newCustomerDto.getEmail());
+        existingCustomer.getUser().setLastUpdate(LocalDateTime.now());
+        existingCustomer.setDrivingLicense(newCustomerDto.getDrivingLicense());
+        existingCustomer.setPhoneNo(newCustomerDto.getPhoneNo());
+        existingCustomer.getAddress().setHouseNumber(newCustomerDto.getAddress().getHouseNumber());
+        existingCustomer.getAddress().setCity(newCustomerDto.getAddress().getCity());
+        existingCustomer.getAddress().setState(newCustomerDto.getAddress().getState());
+        existingCustomer.getAddress().setZipCode(newCustomerDto.getAddress().getZipCode());
+        existingCustomer.getAddress().setStreet(newCustomerDto.getAddress().getStreet());
         existingCustomer.setLastUpdate(LocalDateTime.now());
-        existingCustomer.setDrivingLicense(customer.getDrivingLicense());
-        existingCustomer.setPhoneNo(customer.getPhoneNo());
-        existingCustomer.getAddress().setHouseNumber(customer.getAddress().getHouseNumber());
-        existingCustomer.getAddress().setCity(customer.getAddress().getCity());
-        existingCustomer.getAddress().setState(customer.getAddress().getState());
-        existingCustomer.getAddress().setZipCode(customer.getAddress().getZipCode());
-        existingCustomer.getAddress().setStreet(customer.getAddress().getStreet());
-        return customerRepository.save(existingCustomer);
+        existingCustomer.getUser().setLastUpdate(LocalDateTime.now());
+
+        return initNewCustomerDto(customerRepository.save(existingCustomer));
 
     }
 

@@ -21,8 +21,6 @@ public class ClerkSeed implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         clerkSeeder("james@miu.edu");
-        System.out.println("Encoded password for admin: " + passwordEncoder.encode("admin"));
-
     }
 
     Clerk clerkSeeder(String email) {

@@ -113,8 +113,8 @@ public class CarServiceImp implements CarService {
                 carReservation.getId()
                 , car.getModel()
                 , car.getPlateNo()
-                , customer.getFirstName()
-                , customer.getLastName()
+                , customer.getUser().getFirstName()
+                , customer.getUser().getLastName()
                 , customer.getDrivingLicense(), carReservation.getCode()
                 , ReservationUtils.formatLocalDateToUIString(carReservation.getCreateDate().toLocalDate())
                 , ReservationUtils.formatLocalDateToUIString(carReservation.getEndDate()));
@@ -132,8 +132,8 @@ public class CarServiceImp implements CarService {
                 carReservation.getId()
                 , car.getModel()
                 , car.getPlateNo()
-                , customer.getFirstName()
-                , customer.getLastName()
+                , customer.getUser().getFirstName()
+                , customer.getUser().getLastName()
                 , customer.getDrivingLicense()
                 , checkoutRecord.getClerk().getFirstName()
                 , ReservationUtils.formatLocalDateToUIString(checkoutRecord.getCreateDate().toLocalDate()));
