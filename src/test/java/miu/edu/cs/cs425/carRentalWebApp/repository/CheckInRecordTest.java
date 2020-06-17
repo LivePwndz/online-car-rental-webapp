@@ -1,6 +1,7 @@
 package miu.edu.cs.cs425.carRentalWebApp.repository;
 
 import miu.edu.cs.cs425.carRentalWebApp.model.CheckInRecord;
+import miu.edu.cs.cs425.carRentalWebApp.seeds.UserSeed;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,12 +17,14 @@ public class CheckInRecordTest {
     private CheckInRecordRepository checkInRecordRepository;
     @Autowired
     private ReservationRepository reservationRepository;
+
     @Autowired
-    private ClerkRepository clerkRepository;
+    private UserSeed userSeed;
+
 
     private CheckInRecord initialCarCheckInRecord() {
         CheckInRecord checkInRecord = new CheckInRecord();
-        checkInRecord.setClerk(clerkRepository.findById(1L).orElse(null));
+        checkInRecord.setClerk(userSeed.getSeededClerk());
         checkInRecord.setReservation(reservationRepository.findById(1L).orElse(null));
         checkInRecord.setCreateDate(LocalDateTime.now());
         checkInRecord.setLastUpdate(LocalDateTime.now());
@@ -45,6 +48,7 @@ public class CheckInRecordTest {
             Assertions.assertTrue(ex.getMessage().contains("reservation cant't be null"));
         }
     }
+
     @Test
     public void shouldNotAddCarCheckInRecordWithNullClerk() {
         try {

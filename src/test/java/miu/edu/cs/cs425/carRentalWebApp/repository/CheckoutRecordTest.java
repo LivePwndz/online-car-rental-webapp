@@ -1,6 +1,7 @@
 package miu.edu.cs.cs425.carRentalWebApp.repository;
 
 import miu.edu.cs.cs425.carRentalWebApp.model.*;
+import miu.edu.cs.cs425.carRentalWebApp.seeds.UserSeed;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,7 @@ public class CheckoutRecordTest {
     private CarRepository carRepository;
 
     @Autowired
-    ClerkRepository clerkRepository;
+    private UserSeed userSeed;
 
     @Autowired
     private CustomerRepository customerRepository;
@@ -31,7 +32,7 @@ public class CheckoutRecordTest {
     @Autowired
     CheckoutRecordRepository checkoutRecordRepository;
 
-    Customer customerSeeder(String email){
+    Customer customerSeeder(String email) {
         Address address = new Address();
         address.setHouseNumber("1000A");
         address.setStreet("1000 N 4th");
@@ -40,7 +41,7 @@ public class CheckoutRecordTest {
         address.setState("IOWA");
 
         Customer customer = new Customer();
-        customer.setUser( new User());
+        customer.setUser(new User());
         customer.setDrivingLicense("I12ABBB");
         customer.getUser().setFirstName("Alex");
         customer.getUser().setMiddleName("James");
@@ -50,19 +51,12 @@ public class CheckoutRecordTest {
         customer.setCreateDate(LocalDateTime.now());
         customer.setLastUpdate(LocalDateTime.now());
         customer.setAddress(address);
-        return  customerRepository.save(customer);
+        return customerRepository.save(customer);
     }
-    private CheckoutRecord initCheckoutRecord(){
-        CheckoutRecord checkoutRecord = new CheckoutRecord();
-        Clerk clerk = new Clerk();
-        //clerk.setId(5L);
-        clerk.setFirstName("clerk1");
-        clerk.setLastName("clerkLastName");
-        clerk.setEmail("clerk Email");
-        clerk.setLastUpdate(LocalDateTime.now());
-        clerk.setCreateDate(LocalDateTime.now());
 
-        clerkRepository.save(clerk);
+    private CheckoutRecord initCheckoutRecord() {
+        CheckoutRecord checkoutRecord = new CheckoutRecord();
+
 
         Car car = new Car();
         car.setPlateNo("IA220AA-2020");
@@ -80,7 +74,6 @@ public class CheckoutRecordTest {
         Customer customer = customerSeeder("randomemail@reservationcustoms.com");
 
 
-
         CarReservation carReservation = new CarReservation();
         carReservation.setStartDate(LocalDate.now());
         carReservation.setEndDate(LocalDate.now().plusDays(20));
@@ -88,35 +81,38 @@ public class CheckoutRecordTest {
         carReservation.setCustomer(customer);
         reservationRepository.save(carReservation);
 
-        checkoutRecord.setClerk(clerk);
+        checkoutRecord.setClerk(userSeed.getSeededClerk());
         checkoutRecord.setReservation(carReservation);
         checkoutRecord.setCreateDate(LocalDateTime.now());
         checkoutRecord.setLastUpdate(LocalDateTime.now());
         return checkoutRecord;
     }
+
     @Test
-    public void shouldAddCheckoutRecord(){
+    public void shouldAddCheckoutRecord() {
         CheckoutRecord checkoutRecord = initCheckoutRecord();
         CheckoutRecord savedRecord = checkoutRecordRepository.save(checkoutRecord);
         Assertions.assertEquals(1, savedRecord.getCheckoutId());
     }
+
     @Test
-    public void shouldNotAddCheckoutRecordWhenReservationIdIsEmpty(){
+    public void shouldNotAddCheckoutRecordWhenReservationIdIsEmpty() {
         try {
             CheckoutRecord checkoutRecord = initCheckoutRecord();
             checkoutRecord.setReservation(null);
             CheckoutRecord savedRecord = checkoutRecordRepository.save(checkoutRecord);
-        }catch (Exception ex){
+        } catch (Exception ex) {
             Assertions.assertTrue(ex.getMessage().contains("Reservation Id can't be empty"));
         }
     }
+
     @Test
-    public void shouldNotAddCheckoutRecordWhenClerkIdIsEmpty(){
+    public void shouldNotAddCheckoutRecordWhenClerkIdIsEmpty() {
         try {
             CheckoutRecord checkoutRecord = initCheckoutRecord();
             checkoutRecord.setClerk(null);
             CheckoutRecord savedRecord = checkoutRecordRepository.save(checkoutRecord);
-        }catch (Exception ex){
+        } catch (Exception ex) {
             Assertions.assertTrue(ex.getMessage().contains("Clerk Id can't be empty"));
         }
     }

@@ -46,11 +46,11 @@ public class ReservationUtils {
         return localDate.format(standardDateFormat);
     }
 
-    public static String getAuthenticatedCustomerUIDisplayName() {
+    public static String getAuthenticatedUserUIDisplayName() {
         return getOnlineCarRentalUserDetails().getUser().getFirstName();
     }
 
-    public static Long getAuthenticatedCustomerId() {
+    public static Long getAuthenticatedUserId() {
         return getOnlineCarRentalUserDetails().getUser().getId();
     }
 

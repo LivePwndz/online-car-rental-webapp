@@ -15,6 +15,10 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="form-group">
+                        <input id="id" name="id" hidden type="text" class="form-control" th:value="${clerk.id}"
+                               readonly autofocus>
+                    </div>
+                    <div class="form-group">
                         <label for="email">Email</label>
                         <input th:value = "${clerk.email}" id="email" name="email" type="text" class="form-control"
                                autofocus required>

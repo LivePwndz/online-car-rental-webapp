@@ -29,6 +29,8 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 , "/customer/register"
                 , "/customer/car/all/list"
                 , "/customer/car/dates/**"
+                , "/clerk/new"
+                , "/car/new"
         );
     }
 

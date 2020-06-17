@@ -3,10 +3,8 @@ package miu.edu.cs.cs425.carRentalWebApp.service.serviceImp;
 import miu.edu.cs.cs425.carRentalWebApp.model.*;
 import miu.edu.cs.cs425.carRentalWebApp.repository.*;
 import miu.edu.cs.cs425.carRentalWebApp.service.ReservationService;
-import miu.edu.cs.cs425.carRentalWebApp.service.dto.CheckInNotificationDto;
-import miu.edu.cs.cs425.carRentalWebApp.service.dto.CheckoutNotificationDto;
-import miu.edu.cs.cs425.carRentalWebApp.service.dto.NewReservationDto;
-import miu.edu.cs.cs425.carRentalWebApp.service.dto.PlaceRerservationInfoDto;
+import miu.edu.cs.cs425.carRentalWebApp.service.UserService;
+import miu.edu.cs.cs425.carRentalWebApp.service.dto.*;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.util.StringUtils;
 
@@ -22,17 +20,17 @@ public class ReservationServiceImp implements ReservationService {
     private final ReservationRepository reservationRepository;
     private final CarRepository carRepository;
     private final CustomerRepository customerRepository;
-    private final ClerkRepository clerkRepository;
     private final CheckoutRecordRepository checkoutRecordRepository;
     private final CheckInRecordRepository checkInRecordRepository;
+    private final UserService userService;
 
-    public ReservationServiceImp(ReservationRepository reservationRepository, CarRepository carRepository, CustomerRepository customerRepository, ClerkRepository clerkRepository, CheckoutRecordRepository checkoutRecordRepository, CheckInRecordRepository checkInRecordRepository) {
+    public ReservationServiceImp(ReservationRepository reservationRepository, CarRepository carRepository, CustomerRepository customerRepository, CheckoutRecordRepository checkoutRecordRepository, CheckInRecordRepository checkInRecordRepository, UserService userService) {
         this.reservationRepository = reservationRepository;
         this.carRepository = carRepository;
         this.customerRepository = customerRepository;
-        this.clerkRepository = clerkRepository;
         this.checkoutRecordRepository = checkoutRecordRepository;
         this.checkInRecordRepository = checkInRecordRepository;
+        this.userService = userService;
     }
 
     @Override
@@ -93,7 +91,8 @@ public class ReservationServiceImp implements ReservationService {
             throw new IllegalStateException("Reservation status "+carReservation.getStatus()+" not valid for checkout.");
         }
 
-        Clerk clerk = getClerk(1L);
+
+        User clerk = userService.getUserById(ReservationUtils.getAuthenticatedUserId());
 
         CheckoutRecord checkoutRecord = new CheckoutRecord();
         checkoutRecord.setClerk(clerk);
@@ -125,7 +124,7 @@ public class ReservationServiceImp implements ReservationService {
             throw new IllegalStateException("Reservation status "+carReservation.getStatus()+" not valid for check-in.");
         }
 
-        Clerk clerk = getClerk(1L);
+        User clerk = userService.getUserById(ReservationUtils.getAuthenticatedUserId());
 
         CheckInRecord checkInRecord = new CheckInRecord();
         checkInRecord.setClerk(clerk);
@@ -137,7 +136,7 @@ public class ReservationServiceImp implements ReservationService {
         Car car = carReservation.getCar();
         Customer customer = carReservation.getCustomer();
 
-        carReservation.setStatus(ReservationStatus.CHECKED_OUT);
+        carReservation.setStatus(ReservationStatus.CHECKED_IN);
         carReservation.setLastUpdate(LocalDateTime.now());
         reservationRepository.save(carReservation);
 
@@ -148,14 +147,6 @@ public class ReservationServiceImp implements ReservationService {
                 , clerk.getFirstName() );
     }
 
-    private Clerk getClerk(long clerkId) {
-        Optional<Clerk> carReservationOptional = clerkRepository.findById(clerkId);
-        if(!carReservationOptional.isPresent()){
-            throw new EntityNotFoundException("Clerk with id "+clerkId+" not found.");
-        }
-
-        return carReservationOptional.get();
-    }
 
     private CarReservation getCarReservation(Long reservationId) {
         Optional<CarReservation> carReservationOptional = reservationRepository.findById(reservationId);

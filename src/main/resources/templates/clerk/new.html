@@ -12,16 +12,30 @@
     </div>
 
     <form id="newClerkForm" method="post" action="/clerk/new" th:object="${clerk}">
-        <fieldset>
+        <fieldset class="form-group">
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-md-4">
                     <div class="form-group">
                         <label for="email">Email</label>
-                        <input th:value = "${clerk.email}" id="email" name="email" type="text" class="form-control"
-                               autofocus required>
+                        <input id="email" name="email" type="email" class="form-control" th:value = "${clerk.email}" autofocus required />
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input id="password" name="password" th:value = "${clerk.password}"  type="password" class="form-control" autofocus required />
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="confirmPassword">Confirm Password</label>
+                        <input id="confirmPassword" th:value = "${clerk.confirmPassword}"  name="confirmPassword" type="password" class="form-control" autofocus required />
                     </div>
                 </div>
             </div>
+        </fieldset>
+        <fieldset>
+
             <div class="row">
                 <div class="col-md-4">
                     <div class="form-group">

@@ -13,7 +13,7 @@ public class AdminController {
 
     @GetMapping
     public String displayHome(Model model) {
-        model.addAttribute("displayName", ReservationUtils.getAuthenticatedCustomerUIDisplayName());
+        model.addAttribute("displayName", ReservationUtils.getAuthenticatedUserUIDisplayName());
         return "admin/index";
     }
 

@@ -19,20 +19,31 @@ public class UserSeed implements CommandLineRunner, Ordered {
     @Autowired
     private PasswordEncoder passwordEncoder;
     private User seededAdmin;
+    private User seededClerk;
 
     @Override
     public void run(String... args) throws Exception {
         seededAdmin = adminSeederForLogin();
+        seededClerk = clerkSeederForLogin();
     }
 
 
 
     User adminSeederForLogin() {
-        User customer = initUser("jean@online.com");
+        User customer = initUser("admin@online.com");
         customer.setFirstName("Jean");
         customer.setLastName("de Dieu");
         customer.setPassword(passwordEncoder.encode("aaa"));
         customer.setRoleName(RoleName.ADMIN);
+        return userRepository.save(customer);
+    }
+
+    User clerkSeederForLogin() {
+        User customer = initUser("clerk@online.com");
+        customer.setFirstName("Robert");
+        customer.setLastName("Ogoppa");
+        customer.setPassword(passwordEncoder.encode("aaa"));
+        customer.setRoleName(RoleName.CLERK);
         return userRepository.save(customer);
     }
 
@@ -57,6 +68,10 @@ public class UserSeed implements CommandLineRunner, Ordered {
 
     public User getSeededAdmin() {
         return seededAdmin;
+    }
+
+    public User getSeededClerk() {
+        return seededClerk;
     }
 
     @Override

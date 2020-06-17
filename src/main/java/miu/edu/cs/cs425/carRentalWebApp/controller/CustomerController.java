@@ -34,7 +34,7 @@ public class CustomerController {
 
     @GetMapping()
     public String displayCustomerHome(Model model, Principal principal) {
-        model.addAttribute("displayName", ReservationUtils.getAuthenticatedCustomerUIDisplayName());
+        model.addAttribute("displayName", ReservationUtils.getAuthenticatedUserUIDisplayName());
         return "customer/index";
     }
 
@@ -108,7 +108,7 @@ public class CustomerController {
     public String displayCarReservationDatesForGuest(Principal principal, Model model, @RequestParam String startDate, @RequestParam String endDate) {
         model.addAttribute("reservationStartDate", startDate);
         model.addAttribute("reservationEndDate", endDate);
-        model.addAttribute("displayName", ReservationUtils.getAuthenticatedCustomerUIDisplayName());
+        model.addAttribute("displayName", ReservationUtils.getAuthenticatedUserUIDisplayName());
         return "customer/sec_dates";
     }
 
@@ -127,7 +127,7 @@ public class CustomerController {
         List<Car> cars = carService.getAllCars();
         model.addAttribute("cars", cars);
         model.addAttribute("count", cars.size());
-        model.addAttribute("displayName", ReservationUtils.getAuthenticatedCustomerUIDisplayName());
+        model.addAttribute("displayName", ReservationUtils.getAuthenticatedUserUIDisplayName());
         return "customer/sec_all_car_list";
     }
 
@@ -169,7 +169,7 @@ public class CustomerController {
         NewCarCheckoutDto newCarCheckoutDto = carService.getNewCheckoutDto(carReservation);
         model.addAttribute("reservationDto", reservationDto);
         model.addAttribute("newCarCheckoutDto", newCarCheckoutDto);
-        model.addAttribute("displayName", ReservationUtils.getAuthenticatedCustomerUIDisplayName());
+        model.addAttribute("displayName", ReservationUtils.getAuthenticatedUserUIDisplayName());
 
         return "customer/sec_reservation";
     }
@@ -195,7 +195,7 @@ public class CustomerController {
         List<CarReservation> carReservations = reservationService.getAllReservations();
         model.addAttribute("reservations", carReservations);
         model.addAttribute("count", carReservations.size());
-        model.addAttribute("displayName", ReservationUtils.getAuthenticatedCustomerUIDisplayName());
+        model.addAttribute("displayName", ReservationUtils.getAuthenticatedUserUIDisplayName());
         return "customer/sec_reservation_list";
     }
 

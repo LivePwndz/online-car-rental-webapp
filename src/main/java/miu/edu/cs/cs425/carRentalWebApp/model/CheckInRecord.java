@@ -17,7 +17,7 @@ public class CheckInRecord {
     @ManyToOne
     @JoinColumn(name = "checkIn_clerk_id_fk")
     @NotNull(message="clerk cant't be null")
-    private Clerk clerk;
+    private User clerk;
     @NotNull(message = "Create date can't be null")
     @DateTimeFormat(pattern = "yyyy-MM-dd-HH-mm-ss.zzz")
     private LocalDateTime createDate;
@@ -28,7 +28,7 @@ public class CheckInRecord {
     public CheckInRecord() {
            }
 
-    public CheckInRecord(Long id, CarReservation reservationId, Clerk clerk, LocalDateTime createDate, LocalDateTime lastUpdate) {
+    public CheckInRecord(Long id, CarReservation reservationId, User clerk, LocalDateTime createDate, LocalDateTime lastUpdate) {
         this.id = id;
         reservation = reservationId;
         this.clerk = clerk;
@@ -36,7 +36,7 @@ public class CheckInRecord {
         this.lastUpdate = lastUpdate;
     }
 
-    public CheckInRecord(CarReservation reservationId, Clerk clerk, LocalDateTime createDate, LocalDateTime lastUpdate) {
+    public CheckInRecord(CarReservation reservationId, User clerk, LocalDateTime createDate, LocalDateTime lastUpdate) {
         reservation = reservationId;
         this.clerk = clerk;
         this.createDate = createDate;
@@ -59,11 +59,11 @@ public class CheckInRecord {
         this.reservation = reservation;
     }
 
-    public Clerk getClerk() {
+    public User getClerk() {
         return clerk;
     }
 
-    public void setClerk(Clerk clerk) {
+    public void setClerk(User clerk) {
         this.clerk = clerk;
     }
 

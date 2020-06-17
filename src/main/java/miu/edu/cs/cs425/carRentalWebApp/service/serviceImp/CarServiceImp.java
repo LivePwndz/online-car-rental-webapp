@@ -50,7 +50,7 @@ public class CarServiceImp implements CarService {
 
     @Override
     public void addNewCar(Car car) {
-
+        carRepository.save(car);
     }
 
     @Override

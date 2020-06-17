@@ -23,7 +23,7 @@ public class HomeController {
 
     @GetMapping("/sec")
     public String displayHomeForCustomer(Principal principal, Model model) {
-        model.addAttribute("displayName", ReservationUtils.getAuthenticatedCustomerUIDisplayName());
+        model.addAttribute("displayName", ReservationUtils.getAuthenticatedUserUIDisplayName());
         return "home/sec_index";
     }
 

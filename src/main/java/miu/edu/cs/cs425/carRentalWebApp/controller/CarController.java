@@ -3,7 +3,6 @@ package miu.edu.cs.cs425.carRentalWebApp.controller;
 
 import miu.edu.cs.cs425.carRentalWebApp.model.Car;
 import miu.edu.cs.cs425.carRentalWebApp.service.CarService;
-import miu.edu.cs.cs425.carRentalWebApp.service.serviceImp.ReservationUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -26,14 +25,14 @@ public class CarController {
         List<Car> cars = carService.getAllCars();
         model.addAttribute("cars", cars);
         model.addAttribute("carCount", cars.size());
-        model.addAttribute("displayName", ReservationUtils.getAuthenticatedCustomerUIDisplayName());
+        // model.addAttribute("displayName", ReservationUtils.getAuthenticatedUserUIDisplayName());
         return "car/list";
     }
 
     @GetMapping(value = "/new")
     public String displayAddCarForm(Model model){
         model.addAttribute("car", new Car());
-        model.addAttribute("displayName", ReservationUtils.getAuthenticatedCustomerUIDisplayName());
+        // model.addAttribute("displayName", ReservationUtils.getAuthenticatedUserUIDisplayName());
         return "car/new";
     }
 
@@ -50,7 +49,7 @@ public class CarController {
     public String displayEditCarForm(Model model, @PathVariable() Long carId ){
         Car car = carService.findCarById(carId);
         model.addAttribute("car", car);
-        model.addAttribute("displayName", ReservationUtils.getAuthenticatedCustomerUIDisplayName());
+        //model.addAttribute("displayName", ReservationUtils.getAuthenticatedUserUIDisplayName());
         return "car/edit";
     }
 

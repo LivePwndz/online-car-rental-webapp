@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:replace="fragments/head_default_tags :: head_default_tags">head default tags come here.</th:block>
+    <title>Online Car Rental | Reservation Management</title>
+</head>
+<body>
+<nav th:replace="fragments/clerk_nav :: clerk_nav"></nav>
+
+<div style="padding-top:1em;" class="container">
+    <h3>Manage Reservations</h3>
+    <div>
+        <!--span style="float:right; margin-bottom: 10px;">
+                <a class="btn btn-outline-success btn-lg" th:href="@{/customer/sec/car/dates?startDate=&endDate=}">Make New Reservation</a>
+            </span-->
+    </div>
+    <!--hr/-->
+
+
+    <div style="font-size: 1em">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Reservation Code</th>
+                <th scope="col">Car</th>
+                <th scope="col">From Date</th>
+                <th scope="col">To Date</th>
+                <th scope="col">Cost(USD)</th>
+                <th scope="col">Status</th>
+                <th scope="col">Created On</th>
+                <th scope="col">Updated At</th>
+                <th scope="col">&nbsp;</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="reservation,iterStat : ${reservations}">
+                <th scope="row" th:text="${iterStat.count}+${'.'}"></th>
+                <td th:text="${reservation.code}"></td>
+                <td th:text="${reservation.car.model}"></td>
+                <td th:text="${reservation.startDate}"></td>
+                <td th:text="${reservation.endDate}"></td>
+                <td th:text="${reservation.cost}"></td>
+                <td th:text="${reservation.status}"></td>
+                <td th:text="${reservation.createDate}"></td>
+                <td th:text="${reservation.lastUpdate}"></td>
+                <td><a th:href="@{'/clerk/reservation/' + ${reservation.id}}">Details</a></td>
+            </tr>
+            <tr th:if="${count < 1}">
+                <td colspan="10" th:align="center">No Reservation found</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<div th:replace="fragments/footer :: footer"></div>
+<th:block th:replace="fragments/js_scripts :: js_scripts">js scripts come here.</th:block>
+</body>
+</html>

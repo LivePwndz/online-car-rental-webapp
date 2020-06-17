@@ -2,7 +2,6 @@ package miu.edu.cs.cs425.carRentalWebApp.controller;
 
 
 import miu.edu.cs.cs425.carRentalWebApp.model.CarReservation;
-import miu.edu.cs.cs425.carRentalWebApp.model.Clerk;
 import miu.edu.cs.cs425.carRentalWebApp.model.ReservationStatus;
 import miu.edu.cs.cs425.carRentalWebApp.service.CarService;
 import miu.edu.cs.cs425.carRentalWebApp.service.ClerkService;
@@ -14,7 +13,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Controller
@@ -34,51 +32,54 @@ public class ClerkController {
 
     @GetMapping
     public String displayHome(Model model) {
-        model.addAttribute("displayName", ReservationUtils.getAuthenticatedCustomerUIDisplayName());
+        model.addAttribute("displayName", ReservationUtils.getAuthenticatedUserUIDisplayName());
         return "clerk/index";
     }
 
+    @GetMapping(value = "/sec/car/reservation/list")
+    public String displayAuthenticatedCustomerReservationList(Model model) {
+        List<CarReservation> carReservations = reservationService.getAllReservations();
+        model.addAttribute("reservations", carReservations);
+        model.addAttribute("count", carReservations.size());
+        model.addAttribute("displayName", ReservationUtils.getAuthenticatedUserUIDisplayName());
+        return "clerk/sec_reservation_list";
+    }
+
+
+
     @GetMapping(value = "/list")
     public String displayLisfOfClerks(Model model) {
-        List<Clerk> clerks = clerkService.getAllClerck();
+        List<NewUserDto> clerks = clerkService.getAllClecks();
         model.addAttribute("clerks", clerks);
         model.addAttribute("clerkCount", clerks.size());
-        model.addAttribute("displayName", ReservationUtils.getAuthenticatedCustomerUIDisplayName());
+        //model.addAttribute("displayName", ReservationUtils.getAuthenticatedUserUIDisplayName());
         return "clerk/list";
     }
 
     @GetMapping(value = "/new")
     public String displayAddClerkForm(Model model) {
-        model.addAttribute("clerk", new Clerk());
-        model.addAttribute("displayName", ReservationUtils.getAuthenticatedCustomerUIDisplayName());
+        model.addAttribute("clerk", new NewUserDto());
+        model.addAttribute("displayName", ReservationUtils.getAuthenticatedUserUIDisplayName());
         return "clerk/new";
     }
 
     @PostMapping(value = "/new")
-    public String addClerkForm(@ModelAttribute("clerk") Clerk clerk) {
-        clerk.setCreateDate(LocalDateTime.now());
-        clerk.setLastUpdate(LocalDateTime.now());
+    public String addClerkForm(@ModelAttribute("clerk") NewUserDto clerk) {
         clerkService.addNewClerk(clerk);
         return "redirect:/clerk/list";
     }
 
     @GetMapping(value = "/edit/{clerkId}")
     public String displayEditClerkForm(Model model, @PathVariable() Long clerkId) {
-        Clerk clerk = clerkService.findClerkById(clerkId);
+        NewUserDto clerk = clerkService.findClerkById(clerkId);
         model.addAttribute("clerk", clerk);
-        model.addAttribute("displayName", ReservationUtils.getAuthenticatedCustomerUIDisplayName());
+        //model.addAttribute("displayName", ReservationUtils.getAuthenticatedUserUIDisplayName());
         return "clerk/edit";
     }
 
     @PostMapping(value = "/edit/{clerkId}")
-    public String editClerkForm(@ModelAttribute("clerk") Clerk clerkUpdate, @PathVariable() Long clerkId) {
-        Clerk savedClerk = clerkService.findClerkById(clerkId);
-        savedClerk.setFirstName(clerkUpdate.getFirstName());
-        savedClerk.setMiddleName(clerkUpdate.getMiddleName());
-        savedClerk.setLastUpdate(clerkUpdate.getLastUpdate());
-        savedClerk.setEmail(clerkUpdate.getEmail());
-        savedClerk.setLastUpdate(LocalDateTime.now());
-        clerkService.addNewClerk(savedClerk);
+    public String editClerkForm(@ModelAttribute("clerk") NewUserDto clerkUpdate, @PathVariable() Long clerkId) {
+        clerkService.updateClerk(clerkUpdate);
         return "redirect:/clerk/list";
     }
 
@@ -104,7 +105,7 @@ public class ClerkController {
         NewCarCheckoutDto newCarCheckoutDto = carService.getNewCheckoutDto(carReservation);
         model.addAttribute("reservationDto", reservationDto);
         model.addAttribute("newCarCheckoutDto", newCarCheckoutDto);
-        model.addAttribute("displayName", ReservationUtils.getAuthenticatedCustomerUIDisplayName());
+        model.addAttribute("displayName", ReservationUtils.getAuthenticatedUserUIDisplayName());
 
         return "clerk/checkout_reservation";
     }
@@ -118,7 +119,7 @@ public class ClerkController {
 
         model.addAttribute("reservationDto", reservationDto);
         model.addAttribute("newCarCheckInDto", newCarCheckInDto);
-        model.addAttribute("displayName", ReservationUtils.getAuthenticatedCustomerUIDisplayName());
+        model.addAttribute("displayName", ReservationUtils.getAuthenticatedUserUIDisplayName());
 
         return "clerk/check_in_reservation";
     }
@@ -127,7 +128,7 @@ public class ClerkController {
     public String checkoutCar(Model model, @ModelAttribute("newCarCheckoutDto") NewCarCheckoutDto newCarCheckoutDto) {
         CheckoutNotificationDto checkoutNotificationDto = reservationService.addNewCheckoutRecord(newCarCheckoutDto.getReservationId());
         model.addAttribute("checkoutNotificationDto", checkoutNotificationDto);
-        model.addAttribute("displayName", ReservationUtils.getAuthenticatedCustomerUIDisplayName());
+        model.addAttribute("displayName", ReservationUtils.getAuthenticatedUserUIDisplayName());
         return "clerk/checkout_reservation_notification";
     }
 
@@ -135,7 +136,7 @@ public class ClerkController {
     public String checkInCar(Model model, @ModelAttribute("newCarCheckoutDto") NewCarCheckoutDto newCarCheckoutDto) {
         CheckInNotificationDto checkInNotificationDto = reservationService.addNewCheckInRecord(newCarCheckoutDto.getReservationId());
         model.addAttribute("checkInNotificationDto", checkInNotificationDto);
-        model.addAttribute("displayName", ReservationUtils.getAuthenticatedCustomerUIDisplayName());
+        model.addAttribute("displayName", ReservationUtils.getAuthenticatedUserUIDisplayName());
         return "clerk/check_in_reservation_notification";
     }
 

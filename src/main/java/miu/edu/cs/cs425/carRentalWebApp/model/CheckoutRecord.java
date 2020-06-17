@@ -13,21 +13,21 @@ public class CheckoutRecord {
     private CarReservation reservation;
     @NotNull(message="Clerk Id can't be empty")
     @ManyToOne
-    private Clerk clerk;
+    private User clerk;
     private LocalDateTime createDate;
     private LocalDateTime lastUpdate;
 
     public CheckoutRecord() {
     }
 
-    public CheckoutRecord(CarReservation reservation, Clerk clerk, LocalDateTime createDate, LocalDateTime lastUpdate) {
+    public CheckoutRecord(CarReservation reservation,User clerk, LocalDateTime createDate, LocalDateTime lastUpdate) {
         this.reservation = reservation;
         this.clerk = clerk;
         this.createDate = createDate;
         this.lastUpdate = lastUpdate;
     }
 
-    public CheckoutRecord(Long checkoutId, CarReservation reservation, Clerk clerk, LocalDateTime createDate, LocalDateTime lastUpdate) {
+    public CheckoutRecord(Long checkoutId, CarReservation reservation, User clerk, LocalDateTime createDate, LocalDateTime lastUpdate) {
         this.checkoutId = checkoutId;
         this.reservation = reservation;
         this.clerk = clerk;
@@ -51,12 +51,12 @@ public class CheckoutRecord {
         this.reservation = reservationId;
     }
 
-    public Clerk getClerk() {
+    public User getClerk() {
         return clerk;
     }
 
-    public void setClerk(Clerk clerckId) {
-        this.clerk = clerckId;
+    public void setClerk(User clerck) {
+        this.clerk = clerck;
     }
 
     public LocalDateTime getCreateDate() {

@@ -34,7 +34,7 @@ public class CustomerSeed implements CommandLineRunner, Ordered {
     }
 
     Customer customerSeederForLogin() {
-        Customer customer = initCustomer("andy@online.com");
+        Customer customer = initCustomer("customer@online.com");
         customer.setDrivingLicense("IA-30929-NORICH-K");
 
 

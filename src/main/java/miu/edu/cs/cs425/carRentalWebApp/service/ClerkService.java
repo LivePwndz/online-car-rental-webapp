@@ -1,13 +1,12 @@
 package miu.edu.cs.cs425.carRentalWebApp.service;
 
-import miu.edu.cs.cs425.carRentalWebApp.model.Clerk;
+import miu.edu.cs.cs425.carRentalWebApp.service.dto.NewUserDto;
 
 import java.util.List;
 
 public interface ClerkService {
-   List<Clerk> getAllClerck();
-   Clerk findClerkById(Long id);
-   void updateClerk(Clerk clerk);
-   void addNewClerk(Clerk clerk);
-   void deleteClerk(Long clerkId);
+   List<NewUserDto> getAllClecks();
+   NewUserDto findClerkById(Long id);
+   void updateClerk(NewUserDto newUserDto);
+   void addNewClerk(NewUserDto newUserDto);
 }

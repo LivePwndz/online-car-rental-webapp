@@ -1,49 +1,49 @@
-package miu.edu.cs.cs425.carRentalWebApp.model;
+package miu.edu.cs.cs425.carRentalWebApp.service.dto;
 
-import org.springframework.format.annotation.DateTimeFormat;
+import miu.edu.cs.cs425.carRentalWebApp.model.RoleName;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-@Entity
-public class Clerk {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class NewUserDto {
     private Long id;
-    @NotBlank(message = "First name can't be empty")
     private String firstName;
     private String middleName;
-    @NotBlank(message = "Last Name can't be empty")
     private String lastName;
-    @NotBlank(message = "email can't be empty")
     private String email;
-    @NotNull(message = "Create date can't be null")
-    @DateTimeFormat(pattern = "yyyy-MM-dd-HH-mm-ss.zzz")
+    private String password;
+    private RoleName roleName;
+    private String confirmPassword;
     private LocalDateTime createDate;
-    @NotNull(message = "Last Update date can't be null")
-    @DateTimeFormat(pattern = "yyyy-MM-dd-HH-mm-ss.zzz")
     private LocalDateTime lastUpdate;
-    public Clerk() {
+
+    public RoleName getRoleName() {
+        return roleName;
     }
 
-    public Clerk(@NotBlank(message = "First name can't be empty") String firstName, String middleName, @NotBlank(message = "Last Name can't be empty") String lastName, @NotBlank(message = "email can't be empty") String email, @NotNull LocalDateTime createDate, @NotNull LocalDateTime lastUpdate) {
+    public void setRoleName(RoleName roleName) {
+        this.roleName = roleName;
+    }
+
+    public NewUserDto() {
+    }
+
+    public NewUserDto(String firstName, String middleName, String lastName, String email, RoleName roleName, LocalDateTime createDate, LocalDateTime lastUpdate) {
         this.firstName = firstName;
         this.middleName = middleName;
         this.lastName = lastName;
         this.email = email;
+        this.roleName = roleName;
         this.createDate = createDate;
         this.lastUpdate = lastUpdate;
     }
 
-    public Clerk(Long id, @NotBlank(message = "First name can't be empty") String firstName, String middleName, @NotBlank(message = "Last Name can't be empty") String lastName, @NotBlank(message = "email can't be empty") String email, @NotNull LocalDateTime createDate, @NotNull LocalDateTime lastUpdate) {
+    public NewUserDto(Long id, String firstName, String middleName, String lastName, String email, RoleName roleName, LocalDateTime createDate, LocalDateTime lastUpdate) {
         this.id = id;
         this.firstName = firstName;
         this.middleName = middleName;
         this.lastName = lastName;
         this.email = email;
+        this.roleName = roleName;
         this.createDate = createDate;
         this.lastUpdate = lastUpdate;
     }
@@ -88,6 +88,22 @@ public class Clerk {
         this.email = email;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getConfirmPassword() {
+        return confirmPassword;
+    }
+
+    public void setConfirmPassword(String confirmPassword) {
+        this.confirmPassword = confirmPassword;
+    }
+
     public LocalDateTime getCreateDate() {
         return createDate;
     }
@@ -102,18 +118,5 @@ public class Clerk {
 
     public void setLastUpdate(LocalDateTime lastUpdate) {
         this.lastUpdate = lastUpdate;
-    }
-
-    @Override
-    public String toString() {
-        return "Clerk{" +
-                "id=" + id +
-                ", firstName='" + firstName + '\'' +
-                ", middleName='" + middleName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", email='" + email + '\'' +
-                ", createDate=" + createDate +
-                ", lastUpdate=" + lastUpdate +
-                '}';
     }
 }

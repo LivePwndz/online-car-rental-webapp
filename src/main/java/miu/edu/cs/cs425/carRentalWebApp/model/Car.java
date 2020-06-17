@@ -36,7 +36,7 @@ public class Car {
     @Min(1)
     @NotNull(message = "nuOfDoors is required")
     private int nuOfDoors;
-    @NotNull(message = "photoUrl is required")
+
     private String photoUrl;
     @NotNull(message = "Create date can't be null")
     @DateTimeFormat(pattern = "yyyy-MM-dd-HH-mm-ss.zzz")

@@ -9,17 +9,17 @@
     <div class="collapse navbar-collapse" id="navbarColor01">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item" style="border-left: white 1px solid; padding-left: 2em; padding-right: 2em;">
-                <a class="nav-link" title="My Reservations" th:href="@{/customer/list}">Reservations</a>
+                <a class="nav-link" title="Reservations" th:href="@{/clerk/sec/car/reservation/list}">Reservations</a>
             </li>
-            <li class="nav-item" style="border-left: white 1px solid; padding-left: 2em; padding-right: 2em;">
+            <!--li class="nav-item" style="border-left: white 1px solid; padding-left: 2em; padding-right: 2em;">
                 <a class="nav-link" title="Our Fleet" th:href="@{/car/all/list}">Car Fleet</a>
-            </li>
+            </li-->
         </ul>
         <form class="form-inline my-2 my-lg-0">
-            <span style="color:#fff;padding-left: 2em; padding-right: 1em;">Welcome, Clerk</span>
+            <span style="color:#fff;padding-left: 2em; padding-right: 1em;">Welcome, <span th:text="${displayName}">Clerk</span></span>
             <!--<a style="color: #ffffff; margin-right: 0em;" class="nav-link" href="#">John Doe</a>-->
             <!--<input class="form-control mr-sm-2" type="text" placeholder="Search">-->
-            <a href="#" class="btn btn-outline-success">Logout</a>
+            <a href="/logout" class="btn btn-outline-success">Sign Out</a>
         </form>
     </div>
 </nav>
