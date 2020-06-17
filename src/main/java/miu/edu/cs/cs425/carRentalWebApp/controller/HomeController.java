@@ -1,6 +1,7 @@
 package miu.edu.cs.cs425.carRentalWebApp.controller;
 
 
+import miu.edu.cs.cs425.carRentalWebApp.model.RoleName;
 import miu.edu.cs.cs425.carRentalWebApp.service.serviceImp.ReservationUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -8,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.nio.file.AccessDeniedException;
 import java.security.Principal;
 
 @Controller
@@ -15,7 +17,7 @@ import java.security.Principal;
 public class HomeController {
 
     @GetMapping
-    public String displayHome() {
+    public String displayHome(Model model) {
         return "home/index";
     }
 
@@ -26,8 +28,18 @@ public class HomeController {
     }
 
     @PostMapping("/login/success")
-    public String displayLoggedUserHomePage() {
-        return "redirect:/customer";
+    public String displayLoggedUserHomePage() throws AccessDeniedException {
+        RoleName roleName = ReservationUtils.getAuthenticatedUserRoleName();
+
+        if(RoleName.CUSTOMER.equals(roleName)) {
+            return "redirect:/customer";
+        }else if(RoleName.ADMIN.equals(roleName)) {
+            return "redirect:/admin";
+        }else if(RoleName.CLERK.equals(roleName)) {
+            return "redirect:/clerk";
+        } else {
+            throw new AccessDeniedException("Access denied. Role name "+roleName+" not known.");
+        }
     }
 
 

@@ -1,5 +1,5 @@
 <nav th:fragment="admin_nav" class="navbar navbar-expand-lg navbar-dark bg-primary">
-    <a style="padding-right: 2em;" class="navbar-brand" th:href="@{/home}">Online Car Rental</a>
+    <a style="padding-right: 2em;" class="navbar-brand" th:href="@{/admin}">Online Car Rental</a>
 
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01"
             aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
@@ -17,10 +17,10 @@
             </li>
         </ul>
         <form class="form-inline my-2 my-lg-0">
-            <span style="color:#fff;padding-left: 2em; padding-right: 1em;">Welcome, Admin</span>
+            <span style="color:#fff;padding-left: 2em; padding-right: 1em;">Welcome, <span th:text="${displayName}">Admin</span></span>
             <!--<a style="color: #ffffff; margin-right: 0em;" class="nav-link" href="#">John Doe</a>-->
             <!--<input class="form-control mr-sm-2" type="text" placeholder="Search">-->
-            <!-- a href="#" class="btn btn-secondary">Sign In</a-->
+            <a href="/logout" class="btn btn-outline-success">Sign Out</a>
         </form>
     </div>
 </nav>

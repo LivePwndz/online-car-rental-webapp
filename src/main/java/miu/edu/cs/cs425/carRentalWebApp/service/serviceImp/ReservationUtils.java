@@ -1,5 +1,6 @@
 package miu.edu.cs.cs425.carRentalWebApp.service.serviceImp;
 
+import miu.edu.cs.cs425.carRentalWebApp.model.RoleName;
 import miu.edu.cs.cs425.carRentalWebApp.security.OnlineCarRentalUserDetails;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -46,11 +47,11 @@ public class ReservationUtils {
     }
 
     public static String getAuthenticatedCustomerUIDisplayName() {
-        return getOnlineCarRentalUserDetails().getCustomer().getFirstName();
+        return getOnlineCarRentalUserDetails().getUser().getFirstName();
     }
 
     public static Long getAuthenticatedCustomerId() {
-        return getOnlineCarRentalUserDetails().getCustomer().getId();
+        return getOnlineCarRentalUserDetails().getUser().getId();
     }
 
     private static OnlineCarRentalUserDetails getOnlineCarRentalUserDetails() {
@@ -60,5 +61,9 @@ public class ReservationUtils {
         }
 
         return (OnlineCarRentalUserDetails) authentication.getPrincipal();
+    }
+
+    public static RoleName getAuthenticatedUserRoleName() {
+        return getOnlineCarRentalUserDetails().getUser().getRoleName();
     }
 }

@@ -1,6 +1,6 @@
 package miu.edu.cs.cs425.carRentalWebApp.security;
 
-import miu.edu.cs.cs425.carRentalWebApp.model.Customer;
+import miu.edu.cs.cs425.carRentalWebApp.model.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -9,25 +9,26 @@ import java.util.Collection;
 import java.util.Collections;
 
 public class OnlineCarRentalUserDetails implements UserDetails {
-    private Customer customer;
-    public OnlineCarRentalUserDetails(Customer customer) {
-        this.customer = customer;
+    private User user;
+
+    public OnlineCarRentalUserDetails(User user) {
+        this.user = user;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        SimpleGrantedAuthority authority = new SimpleGrantedAuthority(customer.getRoleName().toString());
+        SimpleGrantedAuthority authority = new SimpleGrantedAuthority(user.getRoleName().toString());
         return Collections.singleton(authority);
     }
 
     @Override
     public String getPassword() {
-        return customer.getPassword();
+        return user.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return customer.getEmail();
+        return user.getEmail();
     }
 
     @Override
@@ -50,7 +51,7 @@ public class OnlineCarRentalUserDetails implements UserDetails {
         return true;
     }
 
-    public Customer getCustomer() {
-        return customer;
+    public User getUser() {
+        return user;
     }
 }
