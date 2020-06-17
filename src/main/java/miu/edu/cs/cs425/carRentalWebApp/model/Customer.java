@@ -24,6 +24,7 @@ public class Customer {
     @NotBlank(message = "Phone number is required")
     private String phoneNo;
     @NotBlank(message = "email can't be empty")
+    @Column( unique = true)
     private String email;
     private String password;
     private RoleName roleName;

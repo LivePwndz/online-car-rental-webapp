@@ -1,5 +1,6 @@
 package miu.edu.cs.cs425.carRentalWebApp.service.dto;
 
+import miu.edu.cs.cs425.carRentalWebApp.model.ReservationStatus;
 import miu.edu.cs.cs425.carRentalWebApp.model.TransmissionType;
 
 import java.math.BigDecimal;
@@ -13,6 +14,7 @@ public class CarReservationDto {
         private TransmissionType transmissionType;
         private int nuOfSeats;
         private int nuOfDoors;
+        private ReservationStatus status = ReservationStatus.DRAFT;
         private String photoUrl;
         private String durationDescription;
         private BigDecimal totalCostOfReservation;
@@ -20,7 +22,7 @@ public class CarReservationDto {
         private BigDecimal totalCostOfRent;
         private int totalNoOfDays;
 
-        public CarReservationDto(Long carId, String plateNo, String model, int maxNoDays, BigDecimal pricePerDay, TransmissionType transmissionType, int nuOfSeats, int nuOfDoors, String photoUrl) {
+        public CarReservationDto(Long carId, String plateNo, String model, int maxNoDays, BigDecimal pricePerDay, TransmissionType transmissionType, int nuOfSeats, int nuOfDoors, ReservationStatus status, String photoUrl) {
                 this.carId = carId;
                 this.plateNo = plateNo;
                 this.model = model;
@@ -29,6 +31,7 @@ public class CarReservationDto {
                 this.transmissionType = transmissionType;
                 this.nuOfSeats = nuOfSeats;
                 this.nuOfDoors = nuOfDoors;
+                this.status = status;
                 this.photoUrl = photoUrl;
         }
 
@@ -142,5 +145,13 @@ public class CarReservationDto {
 
         public void setTotalNoOfDays(int totalNoOfDays) {
                 this.totalNoOfDays = totalNoOfDays;
+        }
+
+        public ReservationStatus getStatus() {
+                return status;
+        }
+
+        public void setStatus(ReservationStatus status) {
+                this.status = status;
         }
 }

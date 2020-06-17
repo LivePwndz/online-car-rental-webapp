@@ -9,25 +9,8 @@
 
 <div style="padding-top:1em;" class="container">
     <div>
-        <form class="form-inline" method="get" th:action="@{/customer/car/dates}">
-            <label class="h4" style="margin-right: 10px;">List of cars available</label>
-            <label class="sr-only" for="startDate">FROM</label>
-            <div class="input-group mr-sm-2">
-                <div class="input-group-prepend">
-                    <div class="input-group-text">FROM</div>
-                </div>
-                <input readonly th:value="${reservationStartDate}" name="startDate" type="date" class="form-control" id="startDate" placeholder="Select Date">
-            </div>
-
-            <label class="sr-only" for="endDate">TO</label>
-            <div class="input-group mr-sm-2">
-                <div class="input-group-prepend">
-                    <div class="input-group-text">TO</div>
-                </div>
-                <input readonly th:value="${reservationEndDate}" name="endDate" type="date" class="form-control" id="endDate" placeholder="Select Date">
-            </div>
-            <button type="submit" class="btn btn-outline-success">Change Dates</button>
-        </form>
+        <span class="h4" style="margin-right: 10px;">Our car catalog</span>
+        <a style="line-height: 1;" class="btn btn-outline-success btn-lg" th:href="@{/customer/car/dates?startDate=&endDate=}">Rent Now!</a>
     </div>
     <hr/>
 
@@ -59,21 +42,20 @@
                             </tr>
                             </tbody>
                         </table>
-                        <a th:href="@{'/customer/car/reserve/'+${car.id}+'?startDate='+${reservationStartDate}+'&endDate='+${reservationEndDate}}" class="btn btn-primary">Select</a>
                     </div>
                 </div>
             </div>
             <th:block th:if="${iterStat.count%3 == 0}">
-    </div><div class="row" style="padding-bottom: 15px">
-    </th:block>
-    </th:block>
-</div>
+                </div><div class="row" style="padding-bottom: 15px">
+            </th:block>
+        </th:block>
+    </div>
 
-    <th:block th:if="${count < 1}">
+    <th:block th:if="${count == 0}">
         <div class="col-sm-12">
             <div class="card" style="width: 100%;">
                 <div class="card-body">
-                    <h5 class="card-title text-center">Oops! Looks like no car is available on the selected dates. <a th:href="@{'/customer/car/dates?startDate='+${reservationStartDate}+'&endDate='+${reservationEndDate}}" class="btn btn-link">Change dates?</a></h5>
+                    <h5 class="card-title">Car catalog empty</h5>
                 </div>
             </div>
         </div>

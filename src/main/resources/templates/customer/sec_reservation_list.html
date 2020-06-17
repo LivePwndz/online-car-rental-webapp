@@ -11,7 +11,7 @@
     <h3>Manage Reservations</h3>
     <div>
         <span style="float:right; margin-bottom: 10px;">
-                <a class="btn btn-outline-success btn-lg" th:href="@{/customer/car/reserve}">Make New Reservation</a>
+                <a class="btn btn-outline-success btn-lg" th:href="@{/customer/sec/car/dates?startDate=&endDate=}">Make New Reservation</a>
             </span>
     </div>
     <!--hr/-->
@@ -26,11 +26,10 @@
                 <th scope="col">Car</th>
                 <th scope="col">From Date</th>
                 <th scope="col">To Date</th>
-                <th scope="col">Cost</th>
+                <th scope="col">Cost(USD)</th>
                 <th scope="col">Status</th>
                 <th scope="col">Created On</th>
                 <th scope="col">Updated At</th>
-                <th scope="col">&nbsp;</th>
                 <th scope="col">&nbsp;</th>
             </tr>
             </thead>
@@ -41,20 +40,14 @@
                 <td th:text="${reservation.car.model}"></td>
                 <td th:text="${reservation.startDate}"></td>
                 <td th:text="${reservation.endDate}"></td>
+                <td th:text="${reservation.cost}"></td>
                 <td th:text="${reservation.status}"></td>
                 <td th:text="${reservation.createDate}"></td>
                 <td th:text="${reservation.lastUpdate}"></td>
-                <td><a th:href="@{'/clerk/reservation/' + ${reservation.id}}">Details</a></td>
-                <td>
-                    <a data-toggle="modal" data-target="#confirmDeleteModal"
-                       th:href="@{'/customer/car/reserve/delete/' + ${reservation.id}}">Delete</a>
-                    <!--                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">-->
-                    <!--                            Launch demo modal-->
-                    <!--                        </button>-->
-                </td>
+                <td><a th:href="@{'/customer/sec/reservation/' + ${reservation.id}}">Details</a></td>
             </tr>
             <tr th:if="${count < 1}">
-                <td colspan="11" th:align="center">No Reservation found</td>
+                <td colspan="10" th:align="center">No Reservation found</td>
             </tr>
             </tbody>
         </table>

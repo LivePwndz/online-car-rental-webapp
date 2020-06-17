@@ -1,5 +1,10 @@
 package miu.edu.cs.cs425.carRentalWebApp.service.serviceImp;
 
+import miu.edu.cs.cs425.carRentalWebApp.security.OnlineCarRentalUserDetails;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.Period;
@@ -38,5 +43,22 @@ public class ReservationUtils {
 
     public static String formatLocalDateToStandardString(LocalDate localDate) {
         return localDate.format(standardDateFormat);
+    }
+
+    public static String getAuthenticatedCustomerUIDisplayName() {
+        return getOnlineCarRentalUserDetails().getCustomer().getFirstName();
+    }
+
+    public static Long getAuthenticatedCustomerId() {
+        return getOnlineCarRentalUserDetails().getCustomer().getId();
+    }
+
+    private static OnlineCarRentalUserDetails getOnlineCarRentalUserDetails() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if(authentication == null || authentication instanceof AnonymousAuthenticationToken){
+            throw new IllegalStateException("Access denied. This resource may require authentication.");
+        }
+
+        return (OnlineCarRentalUserDetails) authentication.getPrincipal();
     }
 }

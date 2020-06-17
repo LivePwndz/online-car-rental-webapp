@@ -96,7 +96,7 @@ public class ClerkController {
     private String getPendingCheckoutReservationDetails(Model model, CarReservation carReservation) {
         String startDateStr = ReservationUtils.formatLocalDateToStandardString(carReservation.getStartDate());
         String endDateStr = ReservationUtils.formatLocalDateToStandardString(carReservation.getEndDate());
-        CarReservationDto reservationDto = carService.getReservationDto(carReservation.getCar().getId(), startDateStr, endDateStr);
+        CarReservationDto reservationDto = carService.getReservationDto(carReservation.getCar().getId(), startDateStr, endDateStr, carReservation.getStatus());
 
         NewCarCheckoutDto newCarCheckoutDto = carService.getNewCheckoutDto(carReservation);
         model.addAttribute("reservationDto", reservationDto);
@@ -109,7 +109,7 @@ public class ClerkController {
         String startDateStr = ReservationUtils.formatLocalDateToStandardString(carReservation.getStartDate());
         String endDateStr = ReservationUtils.formatLocalDateToStandardString(carReservation.getEndDate());
 
-        CarReservationDto reservationDto = carService.getReservationDto(carReservation.getCar().getId(), startDateStr, endDateStr);
+        CarReservationDto reservationDto = carService.getReservationDto(carReservation.getCar().getId(), startDateStr, endDateStr, carReservation.getStatus());
         NewCarCheckInDto newCarCheckInDto = carService.getNewCheckInDto(carReservation);
 
         model.addAttribute("reservationDto", reservationDto);

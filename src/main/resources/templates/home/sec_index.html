@@ -9,26 +9,8 @@
 
 <div style="padding-top:1em;" class="container">
     <div>
-        <form class="form-inline" method="get" th:action="@{/customer/car/dates/list}">
-            <label class="h4" style="margin-right: 10px;">When do you need a car? </label>
-            <label class="sr-only" for="startDate">FROM</label>
-            <div class="input-group mr-sm-2">
-                <div class="input-group-prepend">
-                    <div class="input-group-text">FROM</div>
-                </div>
-                <input required type="date" th:value="${reservationStartDate}" name="startDate" class="form-control" id="startDate" title="Select From Date">
-            </div>
-
-            <label class="sr-only" for="endDate">TO</label>
-            <div class="input-group mr-sm-2">
-                <div class="input-group-prepend">
-                    <div class="input-group-text">TO</div>
-                </div>
-                <input required type="date" th:value="${reservationEndDate}" name="endDate" class="form-control" id="endDate" title="Select To Date">
-            </div>
-            <button type="submit" class="btn btn-outline-success">Submit</button>
-        </form>
-
+        <span class="h2" style="margin-right: 10px;">The Quickest most natural way to rent a car online</span>
+        <a style="line-height: 2;" class="btn btn-outline-success btn-lg" th:href="@{/customer/sec/car/dates?startDate=&endDate=}">Rent Now!</a>
     </div>
 
     <hr/>
@@ -43,7 +25,7 @@
                     <h5 class="card-title">Diverse fleet</h5>
                     <p class="card-text">Our diverse fleet of cars makes it easy for you to choose the right car for the
                         job</p>
-                    <a th:href="@{/car/all/list}" class="btn btn-primary">Browse Our Fleet</a>
+                    <a th:href="@{/customer/sec/car/all/list}" class="btn btn-primary">Browse Our Fleet</a>
                 </div>
             </div>
         </div>
@@ -54,7 +36,7 @@
                     <p class="card-text">
                         Place your reservation and our team will deliver it at a preferred location.
                     </p>
-                    <a href="#" class="btn btn-primary">Make Reservation</a>
+                    <a th:href="@{/customer/sec/car/dates?startDate=&endDate=}" class="btn btn-primary">Make Reservation</a>
                 </div>
             </div>
         </div>

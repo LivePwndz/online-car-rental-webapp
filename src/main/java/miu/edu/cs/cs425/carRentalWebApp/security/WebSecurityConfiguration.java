@@ -17,14 +17,18 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Autowired
     private UserDetailsService userDetailsService;
+
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/"
-                ,"/home"
-                ,"/css/**"
-                ,"/images/**"
+        web.ignoring().antMatchers(
+                "/"
+                , "/home"
+                , "/css/**"
+                , "/images/**"
                 , "/js/**"
                 , "/customer/register"
+                , "/customer/car/all/list"
+                , "/customer/car/dates/**"
         );
     }
 
@@ -32,7 +36,8 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests().anyRequest().authenticated()
                 .and().formLogin().successForwardUrl("/login/success")
-                .and().logout().logoutSuccessUrl("/");
+                .and().logout().logoutSuccessUrl("/")
+                .and().anonymous();
     }
 
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -41,7 +46,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 
     @Bean
-    public  PasswordEncoder passwordEncoder(){
+    public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 

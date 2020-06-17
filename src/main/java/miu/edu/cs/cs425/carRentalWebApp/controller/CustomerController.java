@@ -1,22 +1,19 @@
 package miu.edu.cs.cs425.carRentalWebApp.controller;
 
 
-import miu.edu.cs.cs425.carRentalWebApp.model.Address;
-import miu.edu.cs.cs425.carRentalWebApp.model.Car;
-import miu.edu.cs.cs425.carRentalWebApp.model.CarReservation;
-import miu.edu.cs.cs425.carRentalWebApp.model.Customer;
+import miu.edu.cs.cs425.carRentalWebApp.model.*;
 import miu.edu.cs.cs425.carRentalWebApp.service.CarService;
 import miu.edu.cs.cs425.carRentalWebApp.service.CustomerService;
 import miu.edu.cs.cs425.carRentalWebApp.service.ReservationService;
-import miu.edu.cs.cs425.carRentalWebApp.service.dto.CarReservationDto;
-import miu.edu.cs.cs425.carRentalWebApp.service.dto.NewCustomerDto;
-import miu.edu.cs.cs425.carRentalWebApp.service.dto.NewReservationDto;
-import miu.edu.cs.cs425.carRentalWebApp.service.dto.PlaceRerservationInfoDto;
+import miu.edu.cs.cs425.carRentalWebApp.service.dto.*;
+import miu.edu.cs.cs425.carRentalWebApp.service.serviceImp.ReservationUtils;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.security.Principal;
 import java.util.List;
 
 @Controller
@@ -27,6 +24,8 @@ public class CustomerController {
     private final ReservationService reservationService;
 
 
+
+
     public CustomerController(CustomerService customerService, CarService carService, ReservationService reservationService) {
         this.customerService = customerService;
         this.carService = carService;
@@ -34,7 +33,8 @@ public class CustomerController {
     }
 
     @GetMapping()
-    public String displayCustomerHome() {
+    public String displayCustomerHome(Model model, Principal principal) {
+        model.addAttribute("displayName", ReservationUtils.getAuthenticatedCustomerUIDisplayName());
         return "customer/index";
     }
 
@@ -53,7 +53,6 @@ public class CustomerController {
         model.addAttribute("customer", customer);
         return "customer/new";
     }
-
 
 
     @PostMapping(value = "/new")
@@ -89,6 +88,7 @@ public class CustomerController {
         ModelAndView modelAndView = new ModelAndView("customer/edit");
         Customer customer = customerService.getCustomerById(id);
         modelAndView.addObject("customer", customer);
+
         return modelAndView;
     }
 
@@ -100,20 +100,37 @@ public class CustomerController {
     }
 
     @GetMapping(value = "/car/dates", params = {"startDate", "endDate"})
-    public String displayCarReservationDates(Model model, @RequestParam String startDate, @RequestParam String endDate) {
+    public String displayCarReservationDatesForLoggedInCustomer(Model model, @RequestParam String startDate, @RequestParam String endDate) {
+        return "customer/dates_for_anonymous_customer";
+    }
+
+    @GetMapping(value = "/sec/car/dates", params = {"startDate", "endDate"})
+    public String displayCarReservationDatesForGuest(Principal principal, Model model, @RequestParam String startDate, @RequestParam String endDate) {
         model.addAttribute("reservationStartDate", startDate);
         model.addAttribute("reservationEndDate", endDate);
-        return "customer/dates";
+        model.addAttribute("displayName", ReservationUtils.getAuthenticatedCustomerUIDisplayName());
+        return "customer/sec_dates";
     }
 
 
     @GetMapping(value = "/car/all/list")
-    public String displayLisfOfCars(Model model) {
+    public String displayLisfOfCarsForGuest(Model model) {
         List<Car> cars = carService.getAllCars();
         model.addAttribute("cars", cars);
         model.addAttribute("count", cars.size());
         return "customer/all_car_list";
     }
+
+    @GetMapping(value = "/sec/car/all/list")
+    public String displayLisfOfCars(Authentication authentication,Principal principal, Model model) {
+
+        List<Car> cars = carService.getAllCars();
+        model.addAttribute("cars", cars);
+        model.addAttribute("count", cars.size());
+        model.addAttribute("displayName", ReservationUtils.getAuthenticatedCustomerUIDisplayName());
+        return "customer/sec_all_car_list";
+    }
+
 
     @GetMapping(value = "/car/dates/list", params = {"startDate", "endDate"})
     public String displayListOfCarsAvailable(Model model, @RequestParam String startDate, @RequestParam String endDate) {
@@ -133,10 +150,28 @@ public class CustomerController {
             , @RequestParam String endDate) {
 
         NewReservationDto newReservationDto = new NewReservationDto(carId, startDate, endDate);
-        CarReservationDto reservationDto = carService.getReservationDto(carId, startDate, endDate);
+        CarReservationDto reservationDto = carService.getReservationDto(carId, startDate, endDate, ReservationStatus.DRAFT);
         model.addAttribute("reservationDto", reservationDto);
         model.addAttribute("newReservationDto", newReservationDto);
         return "customer/place_reservation";
+    }
+
+    @GetMapping(value = "/sec/reservation/{reservationId}")
+    public String displayLoggedCustomerCarReservationDetails(Model model
+            , @PathVariable Long reservationId) {
+
+        CarReservation carReservation = reservationService.findById(reservationId);
+        String startDateStr = ReservationUtils.formatLocalDateToStandardString(carReservation.getStartDate());
+        String endDateStr = ReservationUtils.formatLocalDateToStandardString(carReservation.getEndDate());
+
+        CarReservationDto reservationDto = carService.getReservationDto(carReservation.getCar().getId(), startDateStr, endDateStr, carReservation.getStatus());
+
+        NewCarCheckoutDto newCarCheckoutDto = carService.getNewCheckoutDto(carReservation);
+        model.addAttribute("reservationDto", reservationDto);
+        model.addAttribute("newCarCheckoutDto", newCarCheckoutDto);
+        model.addAttribute("displayName", ReservationUtils.getAuthenticatedCustomerUIDisplayName());
+
+        return "customer/sec_reservation";
     }
 
     @PostMapping(value = "/car/reserve")
@@ -154,5 +189,15 @@ public class CustomerController {
         model.addAttribute("count", carReservations.size());
         return "customer/reservation_list";
     }
+
+    @GetMapping(value = "/sec/car/reserve/list")
+    public String displayAuthenticatedCustomerReservationList(Model model) {
+        List<CarReservation> carReservations = reservationService.getAllReservations();
+        model.addAttribute("reservations", carReservations);
+        model.addAttribute("count", carReservations.size());
+        model.addAttribute("displayName", ReservationUtils.getAuthenticatedCustomerUIDisplayName());
+        return "customer/sec_reservation_list";
+    }
+
 
 }

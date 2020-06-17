@@ -1,9 +1,6 @@
 package miu.edu.cs.cs425.carRentalWebApp.service.serviceImp;
 
-import miu.edu.cs.cs425.carRentalWebApp.model.Car;
-import miu.edu.cs.cs425.carRentalWebApp.model.CarReservation;
-import miu.edu.cs.cs425.carRentalWebApp.model.CheckoutRecord;
-import miu.edu.cs.cs425.carRentalWebApp.model.Customer;
+import miu.edu.cs.cs425.carRentalWebApp.model.*;
 import miu.edu.cs.cs425.carRentalWebApp.repository.CarRepository;
 import miu.edu.cs.cs425.carRentalWebApp.repository.CheckoutRecordRepository;
 import miu.edu.cs.cs425.carRentalWebApp.service.CarService;
@@ -64,7 +61,7 @@ public class CarServiceImp implements CarService {
     }
 
     @Override
-    public CarReservationDto getReservationDto(Long carId, String startDateStr, String endDateStr) {
+    public CarReservationDto getReservationDto(Long carId, String startDateStr, String endDateStr, ReservationStatus reservationStatus) {
         Car car = findCarById(carId);
         CarReservationDto dto = new CarReservationDto(
                 car.getId()
@@ -75,7 +72,7 @@ public class CarServiceImp implements CarService {
                 , car.getTransmissionType()
                 , car.getNuOfSeats()
                 , car.getNuOfDoors()
-                , car.getPhotoUrl());
+                , reservationStatus, car.getPhotoUrl());
 
         BigDecimal costOfDelivery = BigDecimal.valueOf(0);
         dto.setCostOfDelivery(costOfDelivery);

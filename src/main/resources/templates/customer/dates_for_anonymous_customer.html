@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:replace="fragments/head_default_tags :: head_default_tags">head default tags come here.</th:block>
+    <title>Online Car Rental | Home</title>
+</head>
+<body>
+<nav th:replace="fragments/home_nav :: home_nav"></nav>
+
+<div style="padding-top:1em;" class="container">
+    <th:block th:if="${count < 1}">
+        <div class="col-sm-12">
+            <div class="card" style="width: 100%;">
+                <div class="card-body">
+                    <h5 class="card-title text-center">Oops! At the moment only signed up customers are allowed to rent cars.
+                        <span><a th:href="@{/customer/register}" class="btn btn-success mr-1">Sign Up</a>
+                            <span class="mr-1">or</span>
+                            <a th:href="@{/login}" class="btn btn-outline-success mr-1">Sign In</a>
+                            <span class="mr-1">?</span>
+                        </span>
+                    </h5>
+                </div>
+            </div>
+        </div>
+    </th:block>
+
+</div>
+
+<div th:replace="fragments/footer :: footer"></div>
+<th:block th:replace="fragments/js_scripts :: js_scripts">js scripts come here.</th:block>
+</body>
+</html>

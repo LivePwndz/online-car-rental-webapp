@@ -3,11 +3,14 @@ package miu.edu.cs.cs425.carRentalWebApp.seeds;
 import miu.edu.cs.cs425.carRentalWebApp.model.Car;
 import miu.edu.cs.cs425.carRentalWebApp.model.CarReservation;
 import miu.edu.cs.cs425.carRentalWebApp.model.Customer;
+import miu.edu.cs.cs425.carRentalWebApp.model.ReservationStatus;
 import miu.edu.cs.cs425.carRentalWebApp.repository.CarRepository;
 import miu.edu.cs.cs425.carRentalWebApp.repository.ReservationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.core.Ordered;
 import org.springframework.stereotype.Component;
+import org.thymeleaf.util.StringUtils;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -16,7 +19,7 @@ import java.time.LocalDateTime;
 import static miu.edu.cs.cs425.carRentalWebApp.model.TransmissionType.MANUAL;
 
 @Component
-public class CarReservationSeeder implements CommandLineRunner {
+public class CarReservationSeeder implements CommandLineRunner, Ordered {
 
     @Autowired
     private ReservationRepository reservationRepository;
@@ -30,8 +33,14 @@ public class CarReservationSeeder implements CommandLineRunner {
     private void seedReservation1() {
         CarReservation carReservation = initReservation();
         carReservation.setStartDate(LocalDate.now().plusDays(1));
-        carReservation.setStartDate(LocalDate.now().plusDays(3));
-        reservationRepository.save(carReservation);
+        carReservation.setEndDate(LocalDate.now().plusDays(3));
+        carReservation.setCreateDate(LocalDateTime.now());
+        carReservation.setLastUpdate(LocalDateTime.now());
+
+        carReservation.setStatus(ReservationStatus.PENDING_CHECKOUT);
+        carReservation.setCode(StringUtils.randomAlphanumeric(4)+" - "+carReservation.getEndDate()+carReservation.getCar().getId());
+        CarReservation savedCarReservation = reservationRepository.save(carReservation);
+        System.out.println(savedCarReservation);
 
     }
 
@@ -51,7 +60,7 @@ public class CarReservationSeeder implements CommandLineRunner {
         car.setLastUpdate(LocalDateTime.of(2020, 01, 02, 2, 2, 2, 2));
         Car savedCar = carRepository.save(car);
 
-        Customer customer = customerSeed.customerSeeder("randomemail@reservationcustom.com");
+        Customer customer = customerSeed.getSeededCustomer();
 
         CarReservation carReservation = new CarReservation();
         carReservation.setStartDate(LocalDate.now());
@@ -65,5 +74,10 @@ public class CarReservationSeeder implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         seedReservation1();
+    }
+
+    @Override
+    public int getOrder() {
+        return 1;
     }
 }

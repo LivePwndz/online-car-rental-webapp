@@ -15,7 +15,8 @@ public class CarReservation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column( unique = true)
+
+    @Column(unique = true)
     private String code;
 
     @Transient
@@ -26,10 +27,12 @@ public class CarReservation {
     @NotNull(message = "Start date can't be null")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate startDate;
+
     @NotNull(message = "End date can't be null")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate endDate;
-    @NotNull(message="Car cant't be null")
+
+    @NotNull(message = "Car cant't be null")
     @ManyToOne
     @JoinColumn(name = "reservation_car_id_fk")
     private Car car;
@@ -148,9 +151,13 @@ public class CarReservation {
     public String toString() {
         return "CarReservation{" +
                 "id=" + id +
+                ", code='" + code + '\'' +
+                ", cost=" + cost +
+                ", status=" + status +
                 ", startDate=" + startDate +
                 ", endDate=" + endDate +
-                ", car=" + car +
+                ", createDate=" + createDate +
+                ", lastUpdate=" + lastUpdate +
                 '}';
     }
 }
