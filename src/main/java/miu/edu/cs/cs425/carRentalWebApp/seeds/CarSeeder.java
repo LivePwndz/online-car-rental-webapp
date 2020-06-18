@@ -89,8 +89,8 @@ public class CarSeeder implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         seedCar1();
-        seedCar2();
-        seedCar3();
-        seedCar4();
+        // seedCar2();
+        // seedCar3();
+        // seedCar4();
     }
 }
